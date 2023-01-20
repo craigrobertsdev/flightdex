@@ -4,9 +4,36 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <title>FlightDex!</title>
 </head>
 <body>
-  
+  <header>
+    <h1>Welcome to FlightDex!</h1>
+    <h2>Your #1 Flight & Event searcher!</h2>
+  </header>
+  <!--This will be the form to input dates & destinations etc!-->
+  <form>
+    <!--Location Input-->
+    <label>Leaving from?</label><br>
+    <input type="text"><br>
+    <label>Going to?</label><br>
+    <input type="text"><br>
+    
+    <!--Class Input-->
+    <input type="radio" name="class">
+    <label>First Class</label>
+    <input type="radio" name="class">
+    <label>Business Class</label>
+    <input type="radio" name="class">
+    <label>Economy Class</label>
+
+    <!--Return/One-Way Input-->
+    <!--Still need to add labels to either side of the toggle switch-->
+    <label class="switch">
+      <input type="checkbox">
+      <span class="slider round"></span>
+    </label>
+  </form>
 </body>
 </html>
