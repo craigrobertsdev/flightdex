@@ -1,21 +1,35 @@
+// generate new access-token whenever app starts
+const TOKENUrl = "https://api.amadeus.com/v1/security/oauth2/token"
 
-
-// This is testAPI
-let requestUrl = "https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=SYD&destinationLocationCode=BKK&departureDate=2023-05-02&adults=1&nonStop=false&max=250"
-
-fetch(requestUrl,{
-    method: 'GET', 
-    headers: {accept: "application/vnd.amadeus+json"}, 
-    headers: {Authorization: "Bearer 6rvCivQIzbTb5OOZ5pFuju5X18kv"}
-})
-.then(function (response) {
+fetch(TOKENUrl, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded'
+  },
+  body: 'grant_type=client_credentials&client_id=FgVXIVlEeBmSHOG5GhRdPceveA3CExUw&client_secret=IGDvlEYHGKe0dUiI'
+}).then(function (response) {
   return response.json();
 })
-.then(function (data) {
-  console.log('Fetch Response \n-------------');
-  console.log(data);
-});
+  .then(function (data) {
+    console.log(data);
+    console.log(data.access_token);
+    getDATA(data);
+  });
 
-// this will be changed to production API when I get used to it more
-// works well 
-// will be tested wheather how long it lasts because of access token
+// fetching data with the new generated access-token
+function getDATA(data) {
+  let accessToken = data.token_type +" " +data.access_token;
+  console.log(accessToken);
+
+  let requestUrl = "https://api.amadeus.com/v2/shopping/flight-offers?originLocationCode=SYD&destinationLocationCode=BKK&departureDate=2023-05-02&adults=1&nonStop=false&max=250"
+
+  fetch(requestUrl, {
+    headers: {Authorization: accessToken}
+  })
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      console.log(data);
+    });
+}
