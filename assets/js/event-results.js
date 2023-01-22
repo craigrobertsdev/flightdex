@@ -145,7 +145,7 @@ $(searchButton).on('click', function (event) {
     options.radius = convertToMiles($(radiusInput).val());
   }
 
-  if ($(keywordInput.val())) {
+  if ($(keywordInput).val()) {
     options.keyword = $(keywordInput).val();
   }
 
