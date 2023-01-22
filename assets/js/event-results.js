@@ -15,24 +15,26 @@ const resultsSection = $('#results');
 const filterOptions = $('#filter-options');
 const radiusInput = $('#radius-input');
 const keywordInput = $('#keyword-input');
-const filterButton = $('#filter-button');
 const searchButton = $('#event-search-button');
 
 // test query string
-const queryString = '?lat=41.881832&long=-87.623177&arrival=2023-02-25&departure=2023-03-15'.split('&'); //location.search
+const searchString = '?lat=41.881832&long=-87.623177&arrival=2023-02-25&departure=2023-03-15';
+// remove ? from start of searchString
+const queryString = searchString.substring(1, searchString.length).split('&'); //location.search
 
 // stores different options for building a query string
 const options = {};
 
-const latitude = queryString[0].split('=')[1];
-const longitude = queryString[1].split('=')[1];
+const latitude = queryString.find((option) => option.startsWith('lat')).split('=')[1];
+const longitude = queryString.find((option) => option.startsWith('long')).split('=')[1];
 
-options.startDateTime = queryString[2].split('=')[1];
-options.endDateTime = queryString[3].split('=')[1];
+options.startDateTime = queryString.find((option) => option.startsWith('arrival')).split('=')[1];
+options.endDateTime = queryString.find((option) => option.startsWith('departure')).split('=')[1];
 options.geoPoint = Geohash.encode(latitude, longitude, 6);
+
 // Default radius to search for from accommodation location. Can be modified by user in radiusInput
 options.radius = 30;
-
+// search string to be passed to the API. Built each time a search is to be completed based on user entered data.
 let url = buildUrl(options);
 
 // data from API query
@@ -40,10 +42,11 @@ let resultData;
 
 // takes an options object, iterates over it and produces a query string that the TicketMaster API accepts.
 function buildUrl(options) {
-  let urlArr = ['https://app.ticketmaster.com/discovery/v2/events.json?apikey=Rokm7oUpGBonFqFDXXiA7tcSkqAaiQh4&size=200'];
+  const urlArr = ['https://app.ticketmaster.com/discovery/v2/events.json?apikey=Rokm7oUpGBonFqFDXXiA7tcSkqAaiQh4&size=200'];
 
   for (let key in options) {
     urlArr.push('&', key, '=', options[key]);
+    // add time value to either start or end time to satisfy API requirement
     if (key === 'endDateTime' || key === 'startDateTime') {
       urlArr.push('T00:00:00Z');
     }
@@ -53,7 +56,6 @@ function buildUrl(options) {
 }
 
 function getEvents(url) {
-  // TODO - replace hard coded string with generated url for final version
   fetch(url)
     .then((response) => {
       // if fetch request successful, return response in JSON format
@@ -64,11 +66,15 @@ function getEvents(url) {
     // save response data for future use
     .then((data) => {
       resultData = data._embedded.events;
-      console.log(resultData);
       determineEventTypes();
       displayResults(resultData);
     })
     .catch((reason) => {
+      console.log(resultData);
+      if (!resultData) {
+        $(resultsSection).html('There were no results matching your request');
+        return;
+      }
       console.log('There was an error in processing the request: ' + reason);
     });
 }
@@ -94,7 +100,9 @@ function displayResults(resultData) {
       .text('Tickets from $' + priceRangeMin)
       .addClass('price-range');
 
-    const genreEl = $('<p></p>').text(genre).addClass('genre');
+    const genreEl = $('<p></p>')
+      .text('Event Type: ' + genre)
+      .addClass('genre');
     const eventUrlEl = $('<a></a>').attr('href', eventUrl).attr('target', '_blank').text('Link to event booking').addClass('link');
 
     $(resultsSection).append(eventHeaderEl, dateTimeEl, priceRangeEl, genreEl, eventUrlEl);
@@ -102,10 +110,10 @@ function displayResults(resultData) {
 }
 
 // Adds functionality to the filter button to filter displayed results by the user selected event type
-$(filterButton).on('click', function filterByEventType(event) {
+$(filterOptions).on('change', function (event) {
   event.preventDefault();
   const eventType = $(filterOptions).val();
-
+  console.log(eventType);
   const filteredOptions = resultData.filter((event) => {
     return event.classifications[0].segment.name === eventType;
   });
@@ -132,23 +140,21 @@ function determineEventTypes() {
 // when user click search button, a new query string is created with currently entered values and data is retrieved from the API
 $(searchButton).on('click', function (event) {
   event.preventDefault();
-  const queryOpts = {};
   if ($(radiusInput).val()) {
     // API uses miles but site is built for users who deal in km
-    radius = convertToMiles($(radiusInput).val());
-    queryOpts.radius = radius;
+    options.radius = convertToMiles($(radiusInput).val());
   }
 
   if ($(keywordInput.val())) {
-    queryOpts.keyword = $(keywordInput.val());
+    options.keyword = $(keywordInput).val();
   }
 
-  const queryString = buildUrl(queryOpts);
+  const queryString = buildUrl(options);
   getEvents(queryString);
 });
 
 function convertToMiles(km) {
-  return km * 0.621371;
+  return Math.floor(km * 0.621371);
 }
 
 getEvents(url);
