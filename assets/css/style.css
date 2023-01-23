@@ -3,11 +3,9 @@ header {
 }
 
 #input {
-  position: absolute;
-  top: 50%;
-  left: 50%;
+  margin:auto;
+  background-color: white;
   width: 80%;
-  transform: translate(-50%, -50%);
   border: 2px lightgray solid;
   border-radius: 25px;
   padding: 20px;
@@ -17,9 +15,6 @@ header {
   margin: auto;
 }
 
-#tagline {
-  position: fixed;
-  bottom: 0;
-  margin: auto;
-  text-align:center;
-}
+h2 {
+  padding: 20px;
+  }
