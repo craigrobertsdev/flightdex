@@ -1,6 +1,9 @@
-const userdeparture = document.querySelector("#departue");
+const userdeparture = document.querySelector("#departure");
 const departureDate = document.querySelector("#datepicker");
 const arrival = document.querySelector("#arrival");
+const first = document.querySelector('#first');
+const business = document.querySelector('#business');
+const economy = document.querySelector('#economy');
 const search = document.querySelector("#search");
 
 
@@ -9,6 +12,9 @@ let token_type = " ";
 let accessToken = " ";
 let DEiatacode = " ";
 let ARiatacode = " ";
+let selectedClass = " ";
+let ways = " ";
+
 
 
 search.addEventListener("click", getToken) // it runs when the toggle switch btn clicked
@@ -50,6 +56,7 @@ function DEgetIATAcodeDATA(data) {
       console.log('data Response \n-------------');
       console.log(data);
       DEiatacode = data.data[0].iataCode;
+      localStorage.setItem('departurecityname', DEiatacode);
     });
 }
 
@@ -67,6 +74,7 @@ function ARgetIATAcodeDATA(data) {
     .then(function (data) {
       console.log('data Response \n-------------');
       ARiatacode = data.data[0].iataCode;
+      localStorage.setItem('arrivalcityname', ARiatacode);
       getDATA();
     });
 }
@@ -74,19 +82,29 @@ function ARgetIATAcodeDATA(data) {
 
 // fetching data with the new generated access-token
 function getDATA() {
-  const checkedEl = document.querySelector('input:checked');
-  if(checkedEl) {
-    selectedClass = checkedEl.value;
-  }
-
+  DEiatacode = localStorage.getItem('departurecityname');
+  ARiatacode =  localStorage.getItem('arrivalcityname');
   let FetchHEADER = token_type + " " + accessToken;
-  let DEdateformatchange = departureDate.value.split('/');
+  let dateformatchange = departureDate.value.split(' ');
+  console.log(dateformatchange);
+  let DEdateformatchange = dateformatchange[0].split('/');
+  let ARdateformatchange = dateformatchange[2].split('/');
   console.log(DEdateformatchange);
-  let DEdateforquery = DEdateformatchange[2] + "-" + DEdateformatchange[0]+"-"+DEdateformatchange[1];
+  console.log(ARdateformatchange);
+
+  let DEdateforquery = DEdateformatchange[2] + "-" + DEdateformatchange[0] + "-" + DEdateformatchange[1];
+  let ARdateforquery = ARdateformatchange[2] + "-" + ARdateformatchange[0] + "-" + ARdateformatchange[1];
   console.log(DEdateforquery);
+  console.log(ARdateforquery);
 
 
-  let requestUrl = "https://api.amadeus.com/v2/shopping/flight-offers?originLocationCode=" + DEiatacode + "&destinationLocationCode=" + ARiatacode + "&departureDate=" + DEdateforquery + "&returnDate=2023-01-25&adults=1&travelClass=" +selectedClass+ "&nonStop=false&max=250";
+  var select = document.getElementById("select");
+  var value = select.value;
+  selectedClass = value;
+ 
+  console.log(value);
+
+  let requestUrl = "https://api.amadeus.com/v2/shopping/flight-offers?originLocationCode=" + DEiatacode + "&destinationLocationCode=" + ARiatacode + "&departureDate=" + DEdateforquery + "&returnDate=" + ARdateforquery + "&adults=1&travelClass=" + selectedClass + "&nonStop=false&max=250";
 
   fetch(requestUrl, {
     headers: { Authorization: FetchHEADER }
@@ -98,7 +116,7 @@ function getDATA() {
       console.log("final data --------");
       console.log(data);
       localStorage.setItem('finaldata', JSON.stringify(data));
-      window.location.href = "./flight-results.html";
+      //window.location.href = "./flight-results.html";
     });
 }
 

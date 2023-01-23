@@ -29,14 +29,14 @@
     <div class="columns">
         <div class="column is-5 is-offset-1">
           <div class="control is-loading">
-            <input class="input is-rounded" type="text" placeholder="Leaving From?" id="departure">
+            <input  id="departure" class="input is-rounded" placeholder="Leaving From?">
           </div>
         </div>
       
         <!--Location Input - add Autocomplete-->
         <div class="column is-5">
           <div class="control is-loading">
-            <input class="input is-rounded" type="text" placeholder="Going To?" id="arrival">
+            <input id="arrival" class="input is-rounded"  placeholder="Going To?">
           </div>
         </div>
     </div>
@@ -44,7 +44,7 @@
     <div class="columns"> 
       <!--Departure Date Picker-->
       <div class="column is-10 is-offset-1">
-        <input type="date">
+        <input id="datepicker" type="date">
       </div>
     </div>
     
@@ -52,17 +52,17 @@
       <!--Class Input-->
       <div class="column is-6 has-text-right">
         <div class="select is-rounded">
-          <select>
-            <option id="economy" value="ECONOMY">Economy Class</option>
-            <option id="business" value="BUSINESS">Business Class</option>
-            <option id="first" value="FIRST">First Class</option>
+          <select id="select">
+            <option id="economy" value="ECONOMY" onclick = 'economyclass()'>Economy Class</option>
+            <option id="business" value="BUSINESS" onclick = 'businessclass()'>Business Class</option>
+            <option id="first" value="FIRST" onclick = 'firstclass()'>First Class</option>
           </select>
         </div>
       </div>
       
       <div class="column has-text-left">
         <div class="select is-rounded">
-          <select>
+          <select >
             <option>Return</option>
             <option>One Way</option>
           </select>
@@ -88,7 +88,7 @@
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script src="./assets/js/bulma-calendar.js"></script>
-  <script src="./assets/js/search-results.js"></script>
+  <script src="./assets/js/search-results.js"></script>-->
   <script src="./assets/js/index.js"></script>
   
   
