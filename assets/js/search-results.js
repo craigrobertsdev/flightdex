@@ -50,6 +50,7 @@ function DEgetIATAcodeDATA(data) {
     .then(function (data) {
       console.log('data Response \n-------------');
       console.log(data);
+      localStorage.setItem('departurecityname', JSON.stringify(data));
       DEiatacode = data.data[0].iataCode;
     });
 }
@@ -67,6 +68,7 @@ function ARgetIATAcodeDATA(data) {
     })
     .then(function (data) {
       console.log('data Response \n-------------');
+      localStorage.setItem('arrivalcityname', JSON.stringify(data));
       ARiatacode = data.data[0].iataCode;
       getDATA();
     });
@@ -75,7 +77,7 @@ function ARgetIATAcodeDATA(data) {
 
 // fetching data with the new generated access-token
 function getDATA() {
-  const checkedEl = document.querySelector('input:checked');
+  const checkedEl = document.querySelector('input:checked'); //need to fix//
   let selectedClass = " ";
   if(checkedEl) {
     selectedClass = checkedEl.value;
@@ -100,6 +102,7 @@ function getDATA() {
       console.log("final data --------");
       console.log(data);
       localStorage.setItem('finaldata', JSON.stringify(data));
+      window.location.href = "./flight-results.html";
     });
 }
 
