@@ -1,4 +1,3 @@
-
 const userdeparture = document.querySelector("#departue");
 const departureDate = document.querySelector("#datepicker");
 const arrival = document.querySelector("#arrival");
@@ -76,7 +75,6 @@ function ARgetIATAcodeDATA(data) {
 // fetching data with the new generated access-token
 function getDATA() {
   const checkedEl = document.querySelector('input:checked');
-  let selectedClass = " ";
   if(checkedEl) {
     selectedClass = checkedEl.value;
   }
@@ -100,6 +98,7 @@ function getDATA() {
       console.log("final data --------");
       console.log(data);
       localStorage.setItem('finaldata', JSON.stringify(data));
+      window.location.href = "./flight-results.html";
     });
 }
 
