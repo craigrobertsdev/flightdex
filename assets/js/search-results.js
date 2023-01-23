@@ -56,7 +56,8 @@ function DEgetIATAcodeDATA(data) {
       console.log('data Response \n-------------');
       console.log(data);
       DEiatacode = data.data[0].iataCode;
-      localStorage.setItem('departurecityname', DEiatacode);
+      localStorage.setItem('departurecitycode', DEiatacode);
+      localStorage.setItem('departurecitynamedata', JSON.stringify(data));
     });
 }
 
@@ -74,7 +75,8 @@ function ARgetIATAcodeDATA(data) {
     .then(function (data) {
       console.log('data Response \n-------------');
       ARiatacode = data.data[0].iataCode;
-      localStorage.setItem('arrivalcityname', ARiatacode);
+      localStorage.setItem('arrivalcitycode', ARiatacode);
+      localStorage.setItem('arrivalcitynamedata', JSON.stringify(data));
       getDATA();
     });
 }
@@ -82,8 +84,8 @@ function ARgetIATAcodeDATA(data) {
 
 // fetching data with the new generated access-token
 function getDATA() {
-  DEiatacode = localStorage.getItem('departurecityname');
-  ARiatacode =  localStorage.getItem('arrivalcityname');
+  DEiatacode = localStorage.getItem('departurecitycode');
+  ARiatacode =  localStorage.getItem('arrivalcitycode');
   let FetchHEADER = token_type + " " + accessToken;
   let dateformatchange = departureDate.value.split(' ');
   console.log(dateformatchange);
