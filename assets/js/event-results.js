@@ -2,6 +2,9 @@ import Geohash from 'https://cdn.jsdelivr.net/npm/latlon-geohash@2.0.0';
 
 // Example API call   'https://app.ticketmaster.com/discovery/v2/events.json?countryCode=US&apikey=Rokm7oUpGBonFqFDXXiA7tcSkqAaiQh4';
 // &apikey=Rokm7oUpGBonFqFDXXiA7tcSkqAaiQh4
+
+// open weather reverse geocoding
+// http://api.openweathermap.org/geo/1.0/reverse?lat={lat}&lon={lon}&limit={limit}&appid=7d23a37898f652dad9213e544cd70c75
 // expected query string format: ?lat={laitude}&long={longitude}&arrival={arrivalDate}&departure={departureDate}
 
 /* 
@@ -11,11 +14,14 @@ import Geohash from 'https://cdn.jsdelivr.net/npm/latlon-geohash@2.0.0';
   User has option to enter their location. If they do so, the events will display the distance from them using Leaflet
 */
 
+const titleText = $('#title');
 const resultsSection = $('#results');
 const filterOptions = $('#filter-options');
 const radiusInput = $('#radius-input');
 const keywordInput = $('#keyword-input');
 const searchButton = $('#event-search-button');
+const startDateInput = $('#start-date');
+const endDateInput = $('#end-date');
 
 // test query string
 const searchString = '?lat=41.881832&long=-87.623177&arrival=2023-02-25&departure=2023-03-15';
@@ -36,7 +42,7 @@ options.geoPoint = Geohash.encode(latitude, longitude, 6);
 options.radius = 30;
 // search string to be passed to the API. Built each time a search is to be completed based on user entered data.
 let url = buildUrl(options);
-
+let location = '';
 // data from API query
 let resultData;
 
@@ -65,12 +71,25 @@ function getEvents(url) {
     })
     // save response data for future use
     .then((data) => {
+      // if there are no search results, throw an error
+      if (!data._embedded) {
+        resultData = null;
+        throw new Error();
+      }
       resultData = data._embedded.events;
-      determineEventTypes();
-      displayResults(resultData);
+      return fetch(`http://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&appid=7d23a37898f652dad9213e544cd70c75`)
+        .then((response) => {
+          console.log(response);
+          return response.json();
+        })
+        .then((data) => {
+          console.log(data);
+          location = data[0].name;
+          determineEventTypes();
+          displayResults(resultData);
+        });
     })
     .catch((reason) => {
-      console.log(resultData);
       if (!resultData) {
         $(resultsSection).html('There were no results matching your request');
         return;
@@ -81,6 +100,7 @@ function getEvents(url) {
 
 // clears the current resultData section and displays the currently filtered options
 function displayResults(resultData) {
+  $(titleText).text(`Showing events for ${location}`);
   $(resultsSection).html('');
   for (let i = 0; i < 10; i++) {
     const eventName = resultData[i].name;
@@ -95,7 +115,7 @@ function displayResults(resultData) {
     const startDateEl = $('<span></span>').text('Date: ' + startDate);
     const startTimeEl = $('<span></span>').text('Time: ' + startTime);
     $(dateTimeEl).append(startDateEl, startTimeEl);
-    
+
     const priceRangeEl = $('<p></p>')
       .text('Tickets from $' + priceRangeMin)
       .addClass('price-range');
@@ -149,8 +169,17 @@ $(searchButton).on('click', function (event) {
     options.keyword = $(keywordInput).val();
   }
 
+  if ($(startDateInput).val()) {
+    options.startDateTime = $(startDateInput).val();
+  }
+
+  if ($(endDateInput).val()) {
+    options.endDateTime = $(endDateInput).val();
+  }
+
   const queryString = buildUrl(options);
   getEvents(queryString);
+  determineEventTypes();
 });
 
 function convertToMiles(km) {
