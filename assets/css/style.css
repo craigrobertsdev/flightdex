@@ -15,9 +15,6 @@ header {
   margin: auto;
 }
 
-#tagline {
-  position: fixed;
-  bottom: 0;
-  margin: auto;
-  text-align:center;
-}
+h2 {
+  padding: 20px;
+  }
