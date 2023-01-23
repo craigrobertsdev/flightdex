@@ -118,8 +118,13 @@ function getDATA() {
       console.log("final data --------");
       console.log(data);
       localStorage.setItem('finaldata', JSON.stringify(data));
-      //window.location.href = "./flight-results.html";
+      setInterval(goingNextpage, 5000);
     });
+}
+
+
+function goingNextpage() {
+  window.location.href = "./flight-results.html";
 }
 
 timeInterval = setInterval(() => {
