@@ -11,14 +11,16 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
   <!--Linked CSS-->
   <link rel="stylesheet" href="./assets/css/style.css">
+  <link rel="stylesheet" href="./assets/css/bulma-calendar.css">
+  
   
   <title>FlightDex!</title>
 </head>
 
 <body>
   <header>
-      <h1 class="title has-text-centered">Welcome to FlightDex!</h1>
-      <h2 class="subtitle has-text-centered">Your #1 Flight & Event searcher!</h2>
+      <h1 class="title has-text-centered">Welcome to FlightDex! </h1>
+      <h2 class="subtitle has-text-centered">Your #1 Flight & Event searcher! </h2>
   </header>
   
   <!--This will be the form to input dates & destinations etc!-->
@@ -27,40 +29,22 @@
     <div class="columns">
         <div class="column is-5 is-offset-1">
           <div class="control is-loading">
-            <input class="input is-rounded" type="text" placeholder="Leaving From?">
+            <input class="input is-rounded" type="text" placeholder="Leaving From?" id="departure">
           </div>
         </div>
       
         <!--Location Input - add Autocomplete-->
         <div class="column is-5">
           <div class="control is-loading">
-            <input class="input is-rounded" type="text" placeholder="Going To?">
+            <input class="input is-rounded" type="text" placeholder="Going To?" id="arrival">
           </div>
         </div>
     </div>
-  <form>
-    <!--Location Input-->
-    <label>Leaving from?</label><br>
-    <input id="departue" ><br>
     
     <div class="columns"> 
-      <!--Departure Date Picker (can do in bulma extention but need more info)-->
-      <div class="column is-2 is-offset-4">
-        <input
-          type="text"
-          class="form-control"
-          id="datepicker"
-          autocomplete="off"
-        />
-      </div>
-      <!--Return Date Picker (can do in bulma extention but need more info)-->
-      <div class="column is-2">
-        <input
-          type="text"
-          class="form-control"
-          id="datepicker"
-          autocomplete="off"
-        />
+      <!--Departure Date Picker-->
+      <div class="column is-10 is-offset-1">
+        <input type="date">
       </div>
     </div>
     
@@ -69,9 +53,9 @@
       <div class="column is-6 has-text-right">
         <div class="select is-rounded">
           <select>
-            <option>Economy Class</option>
-            <option>Business Class</option>
-            <option>First Class</option>
+            <option id="economy" value="ECONOMY">Economy Class</option>
+            <option id="business" value="BUSINESS">Business Class</option>
+            <option id="first" value="FIRST">First Class</option>
           </select>
         </div>
       </div>
@@ -89,14 +73,15 @@
     
     <div class="columns is-centered">
       <div class="column is-full has-text-centered">
-        <button id="searchBtn" class="button is-rounded">Search</button>
+        <button id="search" class="button is-rounded">Search</button>
       </div>
     </div>
   </div>
 
   <footer>
-    <h2 id="tagline" class="subtitle">Your next dream vacation is just one search away!</h2>
+    <h2 id="tagline" class="subtitle has-text-centered">Your next dream vacation is just one search away!</h2>
   </footer>
+
 
     <!--Location Input-->
     <label>Going to?</label><br>
@@ -131,8 +116,10 @@
   <!--Linked JS & jQuery-->
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="./assets/js/bulma-calendar.js"></script>
   <script src="./assets/js/search-results.js"></script>
   <script src="./assets/js/index.js"></script>
+  
   
 </body>
 </html>
