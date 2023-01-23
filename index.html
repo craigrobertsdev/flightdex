@@ -26,7 +26,7 @@
   <form>
     <!--Location Input-->
     <label>Leaving from?</label><br>
-    <input type="text"><br>
+    <input id="departue" ><br>
     
     <!--Departure Date Picker-->
     <div>
@@ -40,7 +40,7 @@
     
     <!--Location Input-->
     <label>Going to?</label><br>
-    <input type="text"><br>
+    <input id="arrival"><br>
 
     <!--Return Date Picker-->
     <div>
@@ -53,17 +53,17 @@
     </div>
     
     <!--Class Input-->
-    <input type="radio" name="class">
+    <input id="first" value="FIRST" type="radio" name="class">
     <label>First Class</label>
-    <input type="radio" name="class">
+    <input id="business" value="BUSINESS" type="radio" name="class">
     <label>Business Class</label>
-    <input type="radio" name="class">
+    <input id="economy" value="ECONOMY" type="radio" name="class">
     <label>Economy Class</label>
 
     <!--Return/One-Way Input-->
     <!--Still need to add labels to either side of the toggle switch-->
     <label class="switch">
-      <input type="checkbox">
+      <a href="./flight-results.html"><input id="search" type="checkbox"></a>
       <span class="slider round"></span>
     </label>
   </form>
@@ -73,6 +73,8 @@
   <!--Linked JS & jQuery-->
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="./assets/js/search-results.js"></script>
   <script src="./assets/js/index.js"></script>
+  
 </body>
 </html>
