@@ -38,6 +38,10 @@
           </div>
         </div>
     </div>
+  <form>
+    <!--Location Input-->
+    <label>Leaving from?</label><br>
+    <input id="departue" ><br>
     
     <div class="columns"> 
       <!--Departure Date Picker (can do in bulma extention but need more info)-->
@@ -94,10 +98,41 @@
     <h2 id="tagline" class="subtitle">Your next dream vacation is just one search away!</h2>
   </footer>
 
+    <!--Location Input-->
+    <label>Going to?</label><br>
+    <input id="arrival"><br>
+
+    <!--Return Date Picker-->
+    <div>
+      <input
+        type="text"
+        class="form-control"
+        id="datepicker"
+        autocomplete="off"
+      />
+    </div>
+    
+    <!--Class Input-->
+    <input id="first" value="FIRST" type="radio" name="class">
+    <label>First Class</label>
+    <input id="business" value="BUSINESS" type="radio" name="class">
+    <label>Business Class</label>
+    <input id="economy" value="ECONOMY" type="radio" name="class">
+    <label>Economy Class</label>
+
+    <!--Return/One-Way Input-->
+    <!--Still need to add labels to either side of the toggle switch-->
+    <label class="switch">
+      <a href="./flight-results.html"><input id="search" type="checkbox"></a>
+      <span class="slider round"></span>
+    </label>
+  </form>
+
   <!--Linked JS & jQuery-->
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <script src="./assets/js/index.js"></script>
   <script src="./assets/js/search-results.js"></script>
+  <script src="./assets/js/index.js"></script>
+  
 </body>
 </html>

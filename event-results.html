@@ -8,10 +8,24 @@
     <title>Search for Nearby Events</title>
   </head>
   <body>
+    <section id="search-section">
+      <label for="filter-options">Filter events by category</label><br />
+      <select id="filter-options">
+        <option selected value="all">All</option>
+      </select>
+      <button id="filter-button">Filter</button>
+      <label for="keyword-input">Enter keyword to search for</label><br />
+      <input id="keyword-input" />
+      <p>
+        <label for="radius-input">How far away do you want the search radius to be?</label><br />
+        <input id="radius-input" /><span>km</span>
+      </p>
+      <button id="event-search-button">Search</button>
+    </section>
     <section id="results"><a href="" target=""</section>
     <script src="./assets/js/event-results.js" type="module"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <!-- 3/4 of page for event display-->
+
     <!-- Leaflet library link to give distance between person's accommodation location and the event location -->
     <script
       src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
