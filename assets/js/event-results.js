@@ -95,7 +95,7 @@ function displayResults(resultData) {
     const startDateEl = $('<span></span>').text('Date: ' + startDate);
     const startTimeEl = $('<span></span>').text('Time: ' + startTime);
     $(dateTimeEl).append(startDateEl, startTimeEl);
-
+    
     const priceRangeEl = $('<p></p>')
       .text('Tickets from $' + priceRangeMin)
       .addClass('price-range');
