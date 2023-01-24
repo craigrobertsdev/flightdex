@@ -8,21 +8,27 @@
     <title>Search for Nearby Events</title>
   </head>
   <body>
+    <h1 id="title"></h1>
     <section id="search-section">
       <label for="filter-options">Filter events by category</label><br />
       <select id="filter-options">
         <option selected value="all">All</option>
       </select>
-      <button id="filter-button">Filter</button>
       <label for="keyword-input">Enter keyword to search for</label><br />
       <input id="keyword-input" />
       <p>
         <label for="radius-input">How far away do you want the search radius to be?</label><br />
         <input id="radius-input" /><span>km</span>
       </p>
+      <p>
+        <label for="start-date">Enter start search date</label>
+        <input type="date" id="start-date" />
+        <label for="end-date">Enter end search date</label>
+        <input type="date" id="end-date" />
+      </p>
       <button id="event-search-button">Search</button>
     </section>
-    <section id="results"><a href="" target=""</section>
+    <section id="results"><a href="" target=""></a></section>
     <script src="./assets/js/event-results.js" type="module"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 
@@ -30,8 +36,7 @@
     <script
       src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
       integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
-      crossorigin="">
-    </script>
+      crossorigin=""></script>
 
     <!-- 1/4 of page for weather on day of event-->
   </body>
