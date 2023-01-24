@@ -1,5 +1,4 @@
 const userdeparture = document.querySelector("#departure");
-const departureDate = document.querySelector("#datepicker");
 const arrival = document.querySelector("#arrival");
 const first = document.querySelector('#first');
 const business = document.querySelector('#business');
@@ -15,13 +14,15 @@ let ARiatacode = " ";
 let DEdateforquery = " ";
 let ARdateforquery = " ";
 let selectedClass = " ";
+let passenager = " ";
 let ways = " ";
 
 
 
 search.addEventListener("click", getToken); // it runs when the toggle switch btn clicked
 
-// generate new access-token whenever app starts
+// generate new access-token whenever app starts 
+// if user stays in search page(index page) for more than 20 mins, it will generated new access-token
 function getToken() {
   const TOKENUrl = "https://api.amadeus.com/v1/security/oauth2/token"
 
@@ -42,7 +43,7 @@ function getToken() {
     });
 }
 
-// fetching iATA code data with city keyword with the new generated access-token
+// getting departure IATA code from finding cityname API 
 function DEgetIATAcodeDATA(data) {
   let FetchHEADER = data.token_type + " " + data.access_token;
 
@@ -63,6 +64,7 @@ function DEgetIATAcodeDATA(data) {
     });
 }
 
+// getting arrival IATA code from finding cityname API 
 function ARgetIATAcodeDATA(data) {
   let FetchHEADER = data.token_type + " " + data.access_token;
 
@@ -84,9 +86,10 @@ function ARgetIATAcodeDATA(data) {
 }
 
 
-// fetching data with the new generated access-token
+// making querydata function (date,seatclass,oneway or return)
 function makingQueryDATA() {
-  let dateformatchange = departureDate.value.split(' ');
+  const traveldate = localStorage.getItem("date")
+  let dateformatchange = traveldate.split(' ');
   console.log(dateformatchange);
   let DEdateformatchange = dateformatchange[0].split('/');
   let ARdateformatchange = dateformatchange[2].split('/');
@@ -112,8 +115,14 @@ function makingQueryDATA() {
   var select2 = document.getElementById("select2");
   var wayvalue = select2.value;
   ways = wayvalue;
-  localStorage.setItem('value',ways);
+  localStorage.setItem('WAYvalue',ways);
   console.log(ways);
+
+  var people = document.getElementById("people");
+  var passenagervalue = people.value;
+  passenager = passenagervalue;
+  localStorage.setItem('PASSENAGERvalue',passenager);
+  console.log(passenager);
 
   if (ways === "ONEWAY") {
     onewayDATA();
@@ -128,12 +137,12 @@ function makingQueryDATA() {
 
 
 
-
+//going flight
 function onewayDATA() {
   DEiatacode = localStorage.getItem('departurecitycode');
   ARiatacode = localStorage.getItem('arrivalcitycode');
   let FetchHEADER = token_type + " " + accessToken;
-  let requestUrlgoing = "https://api.amadeus.com/v2/shopping/flight-offers?originLocationCode=" + DEiatacode + "&destinationLocationCode=" + ARiatacode + "&departureDate=" + DEdateforquery + "&adults=1&travelClass=" + selectedClass + "&nonStop=false&max=250";
+  let requestUrlgoing = "https://api.amadeus.com/v2/shopping/flight-offers?originLocationCode=" + DEiatacode + "&destinationLocationCode=" + ARiatacode + "&departureDate=" + DEdateforquery + "&adults=" + passenager + "&travelClass=" + selectedClass + "&nonStop=false&max=250";
 
   fetch(requestUrlgoing, {
     headers: { Authorization: FetchHEADER }
@@ -149,13 +158,13 @@ function onewayDATA() {
     });
 }
 
-
+// return flight
 function returnDATA() {
   DEiatacode = localStorage.getItem('departurecitycode');
   ARiatacode = localStorage.getItem('arrivalcitycode');
   let FetchHEADER = token_type + " " + accessToken;
 
-  let requestUrlreturn = "https://api.amadeus.com/v2/shopping/flight-offers?originLocationCode=" + ARiatacode + "&destinationLocationCode=" + DEiatacode + "&departureDate=" + ARdateforquery +  "&adults=1&travelClass=" + selectedClass + "&nonStop=false&max=250";
+  let requestUrlreturn = "https://api.amadeus.com/v2/shopping/flight-offers?originLocationCode=" + ARiatacode + "&destinationLocationCode=" + DEiatacode + "&departureDate=" + ARdateforquery +  "&adults=" + passenager + "&travelClass=" + selectedClass + "&nonStop=false&max=250";
 
   fetch(requestUrlreturn, {
     headers: { Authorization: FetchHEADER }
@@ -171,6 +180,7 @@ function returnDATA() {
 
 }
 
+// fetching currency API
 const api = "https://api.exchangerate-api.com/v4/latest/eur";
 
 
@@ -182,10 +192,11 @@ fetch(`${api}`)
         localStorage.setItem('currencydata', JSON.stringify(data));
     });
 
-
+//going next page function
 function goingNextpage() {
   window.location.href = "./flight-results.html";
 }
+
 
 timeInterval = setInterval(() => {
   getToken();
