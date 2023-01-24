@@ -41,16 +41,16 @@
         </div>
     </div>
     
+    <!--Date Picker-->
     <div class="columns"> 
-      <!--Departure Date Picker-->
       <div class="column is-10 is-offset-1">
-        <input type="date">
+        <input type="date" labelFrom="Departure" labelTo="Return" dateFormat="DD/MM/YYYY">
       </div>
     </div>
     
     <div class="columns">
       <!--Class Input-->
-      <div class="column is-6 has-text-right">
+      <div class="column is-3 is-offset-1 has-text-centered">
         <div class="select is-rounded">
           <select>
             <option id="economy" value="ECONOMY">Economy Class</option>
@@ -60,7 +60,8 @@
         </div>
       </div>
       
-      <div class="column has-text-left">
+      <!--Return/One-Way Input-->
+      <div class="column is-4 has-text-centered">
         <div class="select is-rounded">
           <select>
             <option>Return</option>
@@ -68,9 +69,14 @@
           </select>
         </div>
       </div>
-      <!--Return/One-Way Input (toggle requires Bulma extentons but need more info or can do radio again)-->
+
+      <!--No. of people -->
+      <div class="column is-3 has-text-centered">
+        <input class="input is-rounded" type="text" placeholder="No. People" id="arrival">
+      </div>
     </div>
     
+    <!--Search Button-->
     <div class="columns is-centered">
       <div class="column is-full has-text-centered">
         <button id="search" class="button is-rounded">Search</button>
