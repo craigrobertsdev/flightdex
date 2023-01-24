@@ -22,19 +22,14 @@ const keywordInput = $('#keyword-input');
 const searchButton = $('#event-search-button');
 const startDateInput = $('#start-date');
 const endDateInput = $('#end-date');
-let location = JSON.parse(localStorage.getItem('arrivalcitynamedata')).data[0].address.cityName;
-
-// remove ? from start of searchString
-const queryString = searchString.substring(1, searchString.length).split('&'); //location.search
+const location = JSON.parse(localStorage.getItem('arrivalcitynamedata')).data[0].address.cityName;
+const { latitude, longitude } = JSON.parse(localStorage.getItem('arrivalcitynamedata')).data[0].geoCode;
 
 // stores different options for building a query string
 const options = {};
 
-const latitude = queryString.find((option) => option.startsWith('lat')).split('=')[1];
-const longitude = queryString.find((option) => option.startsWith('long')).split('=')[1];
-
-options.startDateTime = queryString.find((option) => option.startsWith('arrival')).split('=')[1];
-options.endDateTime = queryString.find((option) => option.startsWith('departure')).split('=')[1];
+options.startDateTime = localStorage.getItem('arrivalDate');
+options.endDateTime = localStorage.getItem('departureDate');
 options.geoPoint = Geohash.encode(latitude, longitude, 6);
 
 // Default radius to search for from accommodation location. Can be modified by user in radiusInput
@@ -43,7 +38,8 @@ options.radius = 30;
 let url = buildUrl(options);
 // data from API query
 let resultData;
-$(titleText).text(`Showing events for ${toTitleCase(location)}`);
+
+$(titleText).text(`Showing events within ${options.radius} miles of ${toTitleCase(location)}`);
 
 // takes an options object, iterates over it and produces a query string that the TicketMaster API accepts.
 function buildUrl(options) {
@@ -88,6 +84,7 @@ function getEvents(url) {
       console.log('There was an error in processing the request: ' + reason);
     });
 }
+
 // clears the current resultData section and displays the currently filtered options
 function displayResults(resultData) {
   $(resultsSection).html('');
