@@ -3,7 +3,7 @@ header {
   padding-bottom: 0px;
 }
 
-#input {
+#input, #result {
   margin:auto;
   background-color: white;
   width: 80%;
@@ -19,3 +19,8 @@ header {
 h2 {
   padding: 20px;
   }
+
+#result p {
+  padding: 5px;
+  margin-left: 10px;
+}
