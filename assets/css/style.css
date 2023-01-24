@@ -33,3 +33,15 @@ h2 {
   width: 80%;
   padding-bottom: 5px;
 }
+
+hr.rounded {
+  border-top: 3px solid #bbb;
+  border-radius: 5px;
+  margin: 0;
+}
+#destination-results {
+  margin-bottom: 0;
+}
+#arrival-results {
+  margin-bottom: 0;
+}
