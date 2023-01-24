@@ -168,6 +168,18 @@ function returnDATA() {
 
 }
 
+const api = "https://api.exchangerate-api.com/v4/latest/eur";
+
+
+fetch(`${api}`)
+    .then(currency => {
+        return currency.json();
+    }).then(function (data) {
+        console.log(data);
+        localStorage.setItem('currencydata', JSON.stringify(data));
+    });
+
+
 function goingNextpage() {
   window.location.href = "./flight-results.html";
 }
