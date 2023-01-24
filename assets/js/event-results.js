@@ -76,18 +76,11 @@ function getEvents(url) {
         resultData = null;
         throw new Error();
       }
+      console.log(data);
       resultData = data._embedded.events;
-      return fetch(`http://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&appid=7d23a37898f652dad9213e544cd70c75`)
-        .then((response) => {
-          console.log(response);
-          return response.json();
-        })
-        .then((data) => {
-          console.log(data);
-          location = data[0].name;
-          determineEventTypes();
-          displayResults(resultData);
-        });
+
+      determineEventTypes();
+      displayResults(resultData);
     })
     .catch((reason) => {
       if (!resultData) {
@@ -96,18 +89,32 @@ function getEvents(url) {
       }
       console.log('There was an error in processing the request: ' + reason);
     });
+
+  // get the location name for the destination for display at the top of the page.
+  fetch(`http://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&appid=7d23a37898f652dad9213e544cd70c75`)
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      location = data[0].name;
+    })
+    .catch((reason) => {
+      console.log(reason);
+    });
 }
 
 // clears the current resultData section and displays the currently filtered options
 function displayResults(resultData) {
   $(titleText).text(`Showing events for ${location}`);
   $(resultsSection).html('');
-  for (let i = 0; i < 10; i++) {
+  const iterations = resultData.length > 10 ? 10 : resultData.length;
+  
+  for (let i = 0; i < iterations; i++) {
     const eventName = resultData[i].name;
     const startDate = resultData[i].dates.start.localDate;
     const startTime = resultData[i].dates.start.localTime;
-    const priceRangeMin = resultData[i].priceRanges[0].min;
-    const genre = resultData[i].classifications[0].genre.name;
+    const priceRangeMin = resultData[i].priceRanges ? '$' + resultData[i].priceRanges[0].min.toFixed(2) : 'See venue site for ticket prices';
+    const genre = resultData[i].classifications[0].genre?.name ? resultData[i].classifications[0].genre.name : 'Miscellaneous';
     const eventUrl = resultData[i].url;
 
     const eventHeaderEl = $('<p></p>').text(eventName).addClass('header');
@@ -117,7 +124,7 @@ function displayResults(resultData) {
     $(dateTimeEl).append(startDateEl, startTimeEl);
 
     const priceRangeEl = $('<p></p>')
-      .text('Tickets from $' + priceRangeMin)
+      .text('Tickets from: ' + priceRangeMin)
       .addClass('price-range');
 
     const genreEl = $('<p></p>')
@@ -133,8 +140,10 @@ function displayResults(resultData) {
 $(filterOptions).on('change', function (event) {
   event.preventDefault();
   const eventType = $(filterOptions).val();
-  console.log(eventType);
   const filteredOptions = resultData.filter((event) => {
+    if (eventType === 'all') {
+      return true;
+    }
     return event.classifications[0].segment.name === eventType;
   });
 
@@ -143,14 +152,17 @@ $(filterOptions).on('change', function (event) {
 
 // iterates over result set and determines unique event types before adding them to the filter options dropdown list.
 function determineEventTypes() {
+  // clear previous event types
+  $(filterOptions).html('');
   const eventTypes = [];
   for (let i = 0; i < resultData.length; i++) {
     let eventType = resultData[i].classifications[0].segment.name;
-    if (!eventTypes.includes(eventType)) {
+    if (eventType !== 'Undefined' && !eventTypes.includes(eventType)) {
       eventTypes.push(eventType);
     }
   }
-
+  const allOption = $('<option></option>').val('all').text('All');
+  $(filterOptions).append(allOption);
   for (let type of eventTypes) {
     const option = $('<option></option>').val(type).text(type);
     $(filterOptions).append(option);
