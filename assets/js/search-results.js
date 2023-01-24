@@ -19,7 +19,7 @@ let ways = " ";
 
 
 
-search.addEventListener("click", getToken) // it runs when the toggle switch btn clicked
+search.addEventListener("click", getToken); // it runs when the toggle switch btn clicked
 
 // generate new access-token whenever app starts
 function getToken() {
@@ -92,6 +92,7 @@ function makingQueryDATA() {
   let ARdateformatchange = dateformatchange[2].split('/');
   console.log(DEdateformatchange);
   console.log(ARdateformatchange);
+  
 
   let DEchanged = DEdateformatchange[2] + "-" + DEdateformatchange[0] + "-" + DEdateformatchange[1];
   let ARchanged = ARdateformatchange[2] + "-" + ARdateformatchange[0] + "-" + ARdateformatchange[1];
@@ -99,6 +100,8 @@ function makingQueryDATA() {
   ARdateforquery = ARchanged;
   console.log(DEdateforquery);
   console.log(ARdateforquery);
+  localStorage.setItem('departureDate', DEdateforquery);
+  localStorage.setItem('arrivalDate', ARdateforquery);
 
   var select1 = document.getElementById("select1");
   var classvalue = select1.value;
