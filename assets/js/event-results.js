@@ -22,7 +22,8 @@ const keywordInput = $('#keyword-input');
 const searchButton = $('#event-search-button');
 const startDateInput = $('#start-date');
 const endDateInput = $('#end-date');
-
+let location = JSON.parse(localStorage.getItem('arrivalcitynamedata')).data[0].address.cityName;
+location = toTitleCase(location);
 // test query string
 const searchString = '?lat=41.881832&long=-87.623177&arrival=2023-02-25&departure=2023-03-15';
 // remove ? from start of searchString
@@ -42,9 +43,9 @@ options.geoPoint = Geohash.encode(latitude, longitude, 6);
 options.radius = 30;
 // search string to be passed to the API. Built each time a search is to be completed based on user entered data.
 let url = buildUrl(options);
-let location = '';
 // data from API query
 let resultData;
+$(titleText).text(`Showing events for ${toTitleCase(location)}`);
 
 // takes an options object, iterates over it and produces a query string that the TicketMaster API accepts.
 function buildUrl(options) {
@@ -89,26 +90,12 @@ function getEvents(url) {
       }
       console.log('There was an error in processing the request: ' + reason);
     });
-
-  // get the location name for the destination for display at the top of the page.
-  fetch(`http://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&appid=7d23a37898f652dad9213e544cd70c75`)
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      location = data[0].name;
-    })
-    .catch((reason) => {
-      console.log(reason);
-    });
 }
-
 // clears the current resultData section and displays the currently filtered options
 function displayResults(resultData) {
-  $(titleText).text(`Showing events for ${location}`);
   $(resultsSection).html('');
   const iterations = resultData.length > 10 ? 10 : resultData.length;
-  
+
   for (let i = 0; i < iterations; i++) {
     const eventName = resultData[i].name;
     const startDate = resultData[i].dates.start.localDate;
@@ -196,6 +183,17 @@ $(searchButton).on('click', function (event) {
 
 function convertToMiles(km) {
   return Math.floor(km * 0.621371);
+}
+
+// converts data stored in local storage to title case rather than all uppercase
+function toTitleCase(inputString) {
+  inputString = inputString.toLowerCase();
+  const stringArr = inputString.split(' ');
+  return stringArr
+    .map((word) => {
+      return word.replace(word[0], word[0].toUpperCase());
+    })
+    .join(' ');
 }
 
 getEvents(url);
