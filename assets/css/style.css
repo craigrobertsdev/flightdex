@@ -1,8 +1,9 @@
 header {
-  padding: 40px;
+  padding: 20px;
+  padding-bottom: 0px;
 }
 
-#input {
+#input, #result {
   margin:auto;
   background-color: white;
   width: 80%;
@@ -15,6 +16,19 @@ header {
   margin: auto;
 }
 
+button:active {
+  background: #00d1b2;
+}
+
+button:focus {
+  background: #00d1b2;
+}
+
 h2 {
   padding: 20px;
   }
+
+#result p {
+  padding: 5px;
+  margin-left: 10px;
+}
