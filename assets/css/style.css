@@ -1,5 +1,6 @@
 header {
-  padding: 40px;
+  padding: 20px;
+  padding-bottom: 0px;
 }
 
 #input, #result {
@@ -13,6 +14,14 @@ header {
 
 #serachBtn {
   margin: auto;
+}
+
+button:active {
+  background: #00d1b2;
+}
+
+button:focus {
+  background: #00d1b2;
 }
 
 h2 {
