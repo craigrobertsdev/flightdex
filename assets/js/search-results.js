@@ -21,6 +21,18 @@ let ways = " ";
 
 search.addEventListener("click", getToken); // it runs when the toggle switch btn clicked
 
+// fetching currency API
+const api = "https://api.exchangerate-api.com/v4/latest/eur";
+
+
+fetch(`${api}`)
+    .then(currency => {
+        return currency.json();
+    }).then(function (data) {
+        console.log(data);
+        localStorage.setItem('currencydata', JSON.stringify(data));
+    });
+
 // generate new access-token whenever app starts 
 // if user stays in search page(index page) for more than 20 mins, it will generated new access-token
 function getToken() {
@@ -180,17 +192,7 @@ function returnDATA() {
 
 }
 
-// fetching currency API
-const api = "https://api.exchangerate-api.com/v4/latest/eur";
 
-
-fetch(`${api}`)
-    .then(currency => {
-        return currency.json();
-    }).then(function (data) {
-        console.log(data);
-        localStorage.setItem('currencydata', JSON.stringify(data));
-    });
 
 //going next page function
 function goingNextpage() {
