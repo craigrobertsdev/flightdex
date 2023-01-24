@@ -12,6 +12,8 @@ let token_type = " ";
 let accessToken = " ";
 let DEiatacode = " ";
 let ARiatacode = " ";
+let DEdateforquery = " ";
+let ARdateforquery = " ";
 let selectedClass = " ";
 let ways = " ";
 
@@ -77,16 +79,13 @@ function ARgetIATAcodeDATA(data) {
       ARiatacode = data.data[0].iataCode;
       localStorage.setItem('arrivalcitycode', ARiatacode);
       localStorage.setItem('arrivalcitynamedata', JSON.stringify(data));
-      getDATA();
+      makingQueryDATA();
     });
 }
 
 
 // fetching data with the new generated access-token
-function getDATA() {
-  DEiatacode = localStorage.getItem('departurecitycode');
-  ARiatacode =  localStorage.getItem('arrivalcitycode');
-  let FetchHEADER = token_type + " " + accessToken;
+function makingQueryDATA() {
   let dateformatchange = departureDate.value.split(' ');
   console.log(dateformatchange);
   let DEdateformatchange = dateformatchange[0].split('/');
@@ -94,21 +93,46 @@ function getDATA() {
   console.log(DEdateformatchange);
   console.log(ARdateformatchange);
 
-  let DEdateforquery = DEdateformatchange[2] + "-" + DEdateformatchange[0] + "-" + DEdateformatchange[1];
-  let ARdateforquery = ARdateformatchange[2] + "-" + ARdateformatchange[0] + "-" + ARdateformatchange[1];
+  let DEchanged = DEdateformatchange[2] + "-" + DEdateformatchange[0] + "-" + DEdateformatchange[1];
+  let ARchanged = ARdateformatchange[2] + "-" + ARdateformatchange[0] + "-" + ARdateformatchange[1];
+  DEdateforquery = DEchanged;
+  ARdateforquery = ARchanged;
   console.log(DEdateforquery);
   console.log(ARdateforquery);
 
+  var select1 = document.getElementById("select1");
+  var classvalue = select1.value;
+  selectedClass = classvalue;
 
-  var select = document.getElementById("select");
-  var value = select.value;
-  selectedClass = value;
- 
-  console.log(value);
+  console.log(selectedClass);
 
-  let requestUrl = "https://api.amadeus.com/v2/shopping/flight-offers?originLocationCode=" + DEiatacode + "&destinationLocationCode=" + ARiatacode + "&departureDate=" + DEdateforquery + "&returnDate=" + ARdateforquery + "&adults=1&travelClass=" + selectedClass + "&nonStop=false&max=250";
+  var select2 = document.getElementById("select2");
+  var wayvalue = select2.value;
+  ways = wayvalue;
+  localStorage.setItem('value',ways);
+  console.log(ways);
 
-  fetch(requestUrl, {
+  if (ways === "ONEWAY") {
+    onewayDATA();
+
+  }
+
+  if (ways === "RETURN") {
+    onewayDATA();
+    returnDATA();
+  }
+}
+
+
+
+
+function onewayDATA() {
+  DEiatacode = localStorage.getItem('departurecitycode');
+  ARiatacode = localStorage.getItem('arrivalcitycode');
+  let FetchHEADER = token_type + " " + accessToken;
+  let requestUrlgoing = "https://api.amadeus.com/v2/shopping/flight-offers?originLocationCode=" + DEiatacode + "&destinationLocationCode=" + ARiatacode + "&departureDate=" + DEdateforquery + "&adults=1&travelClass=" + selectedClass + "&nonStop=false&max=250";
+
+  fetch(requestUrlgoing, {
     headers: { Authorization: FetchHEADER }
   })
     .then(function (response) {
@@ -117,11 +141,32 @@ function getDATA() {
     .then(function (data) {
       console.log("final data --------");
       console.log(data);
-      localStorage.setItem('finaldata', JSON.stringify(data));
+      localStorage.setItem('finalGoingdata', JSON.stringify(data));
       setInterval(goingNextpage, 5000);
     });
 }
 
+
+function returnDATA() {
+  DEiatacode = localStorage.getItem('departurecitycode');
+  ARiatacode = localStorage.getItem('arrivalcitycode');
+  let FetchHEADER = token_type + " " + accessToken;
+
+  let requestUrlreturn = "https://api.amadeus.com/v2/shopping/flight-offers?originLocationCode=" + ARiatacode + "&destinationLocationCode=" + DEiatacode + "&departureDate=" + ARdateforquery +  "&adults=1&travelClass=" + selectedClass + "&nonStop=false&max=250";
+
+  fetch(requestUrlreturn, {
+    headers: { Authorization: FetchHEADER }
+  })
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      console.log("final data --------");
+      console.log(data);
+      localStorage.setItem('finalreturndata', JSON.stringify(data));
+    });
+
+}
 
 function goingNextpage() {
   window.location.href = "./flight-results.html";
