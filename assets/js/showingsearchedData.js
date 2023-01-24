@@ -2,13 +2,15 @@ const header = document.querySelector('header');
 const going = document.querySelector('p');
 const div = document.querySelector('#result');
 
+// calling all the datas which are saved in localstorage
 const departurecityname = JSON.parse(localStorage.getItem('departurecitynamedata'));
 const arrivalcityname = JSON.parse(localStorage.getItem('arrivalcitynamedata'));
 const finalGoingdata = JSON.parse(localStorage.getItem('finalGoingdata'));
 const finalreturndata = JSON.parse(localStorage.getItem('finalreturndata'));
 const currencydata = JSON.parse(localStorage.getItem('currencydata'));
 
-let value = localStorage.getItem('value')
+const value = localStorage.getItem('value');
+const PASSENAGERvalue = localStorage.getItem('PASSENAGERvalue');
 
 if (value === "ONEWAY") {
     onewayFlightData();
@@ -16,6 +18,7 @@ if (value === "ONEWAY") {
     returnFlightData();
 }
 
+//showing one way tickets
 function onewayFlightData() {
     console.log(departurecityname);
     console.log(arrivalcityname);
@@ -33,6 +36,7 @@ function onewayFlightData() {
         const ARtime = document.createElement("p");
         const flightclass = document.createElement("p");
         const price = document.createElement("p");
+        const passenager = document.createElement("p");
 
         ticket.setAttribute("style", "border:5px solid black; margin-bottom:10px;");
         departure.setAttribute("style", "display:inline-block;");
@@ -45,7 +49,8 @@ function onewayFlightData() {
         DEtime.innerHTML = finalGoingdata.data[i].itineraries[0].segments[0].departure.at;
         ARtime.innerHTML = finalGoingdata.data[i].itineraries[0].segments[0].arrival.at;
         flightclass.innerHTML = finalGoingdata.data[i].travelerPricings[0].fareDetailsBySegment[0].cabin;
-        price.innerHTML = currencydata.rates.AUD *finalGoingdata.data[i].travelerPricings[0].price.total + "AUD";
+        price.innerHTML = currencydata.rates.AUD * finalGoingdata.data[i].travelerPricings[0].price.total + " AUD";
+        passenager.innerHTML = PASSENAGERvalue;
 
         div.appendChild(ticket);
         ticket.appendChild(place);
@@ -57,9 +62,12 @@ function onewayFlightData() {
         time.appendChild(ARtime);
         description.appendChild(flightclass);
         description.appendChild(price);
+        description.appendChild(passenager);
     }
 }
 
+
+//showing return tickets
 function returnFlightData() {
     console.log(departurecityname);
     console.log(arrivalcityname);
@@ -72,7 +80,7 @@ function returnFlightData() {
     hearder2.innerHTML = arrivalcityname.data[0].address.cityName + " (" + finalreturndata.data[0].itineraries[0].segments[0].departure.iataCode + ")" + " ----> " + departurecityname.data[0].address.cityName + " (" + finalreturndata.data[0].itineraries[0].segments[0].arrival.iataCode + ")";
     header.appendChild(hearder2);
 
-    
+
 
     for (i = 0, j = 0, z = 0; i < 11; i++, j = i / 2, z = i / 2 - 0.5) {
         if (i === 0 || i % 2 == 0) {
@@ -86,6 +94,7 @@ function returnFlightData() {
             const ARtime = document.createElement("p");
             const flightclass = document.createElement("p");
             const price = document.createElement("p");
+            const passenager = document.createElement("p");
 
             ticket.setAttribute("style", "border:5px solid black; margin-bottom:10px;");
             departure.setAttribute("style", "display:inline-block;");
@@ -98,7 +107,8 @@ function returnFlightData() {
             DEtime.innerHTML = finalGoingdata.data[j].itineraries[0].segments[0].departure.at;
             ARtime.innerHTML = finalGoingdata.data[j].itineraries[0].segments[0].arrival.at;
             flightclass.innerHTML = finalGoingdata.data[j].travelerPricings[0].fareDetailsBySegment[0].cabin;
-            price.innerHTML = currencydata.rates.AUD * finalGoingdata.data[j].travelerPricings[0].price.total + "AUD";
+            price.innerHTML = currencydata.rates.AUD * finalGoingdata.data[j].travelerPricings[0].price.total + " AUD";
+            passenager.innerHTML = PASSENAGERvalue;
 
             div.appendChild(ticket);
             ticket.appendChild(place);
@@ -110,6 +120,7 @@ function returnFlightData() {
             time.appendChild(ARtime);
             description.appendChild(flightclass);
             description.appendChild(price);
+            description.appendChild(passenager);
         }
 
         else if (i % 2 == 1) {
@@ -123,6 +134,7 @@ function returnFlightData() {
             const ARtime = document.createElement("p");
             const flightclass = document.createElement("p");
             const price = document.createElement("p");
+            const passenager = document.createElement("p");
 
             ticket.setAttribute("style", "border:5px solid black; margin-bottom:10px;");
             departure.setAttribute("style", "display:inline-block;");
@@ -135,7 +147,8 @@ function returnFlightData() {
             DEtime.innerHTML = finalreturndata.data[z].itineraries[0].segments[0].departure.at;
             ARtime.innerHTML = finalreturndata.data[z].itineraries[0].segments[0].arrival.at;
             flightclass.innerHTML = finalreturndata.data[z].travelerPricings[0].fareDetailsBySegment[0].cabin;
-            price.innerHTML = currencydata.rates.AUD * finalreturndata.data[z].travelerPricings[0].price.total + "AUD";
+            price.innerHTML = currencydata.rates.AUD * finalreturndata.data[z].travelerPricings[0].price.total + " AUD";
+            passenager.innerHTML = PASSENAGERvalue;
 
             div.appendChild(ticket);
             ticket.appendChild(place);
@@ -147,6 +160,7 @@ function returnFlightData() {
             time.appendChild(ARtime);
             description.appendChild(flightclass);
             description.appendChild(price);
+            description.appendChild(passenager);
         } else return;
     }
 }
