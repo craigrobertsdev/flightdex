@@ -7,8 +7,8 @@ const economy = document.querySelector('#economy');
 const search = document.querySelector("#search");
 
 
-let departurecitynamedata  = [];
-let arrivalcitynamedata  = [];
+let departurecityname  = ' ';
+let arrivalcityname  = ' ';
 let finalGoingdata  = [];
 let finalreturndata  = [];
 
@@ -81,7 +81,8 @@ function DEgetIATAcodeDATA() {
       console.log(data);
       DEiatacode = data.data[0].iataCode;
       localStorage.setItem('departurecitycode', DEiatacode);
-      departurecitynamedata = data;
+      departurecityname = userdeparture.value.toUpperCase();
+      localStorage.setItem('departurecityname', departurecityname);
 
     });
 }
@@ -106,8 +107,9 @@ function ARgetIATAcodeDATA() {
       console.log('data Response \n-------------');
       console.log(data);
       ARiatacode = data.data[0].iataCode;
-      arrivalcitynamedata = data;
       localStorage.setItem('arrivalcitycode', ARiatacode);
+      arrivalcityname = arrival.value.toUpperCase();
+      localStorage.setItem('arrivalcityname', arrivalcityname);
     });
 }
 
@@ -174,6 +176,7 @@ function makingQueryDATA() {
 function onewayDATA() {
   let FetchHEADER = token_type + " " + accessToken;
   let deIatacode = localStorage.getItem("departurecitycode")
+  console.log(deIatacode)
   let requestUrlgoing = "https://api.amadeus.com/v2/shopping/flight-offers?originLocationCode=" + deIatacode + "&destinationLocationCode=" + ARiatacode + "&departureDate=" + DEdateforquery + "&adults=" + passenager + "&travelClass=" + selectedClass + "&nonStop=false&max=250";
 
   fetch(requestUrlgoing, {
@@ -186,7 +189,8 @@ function onewayDATA() {
       console.log("final data --------");
       console.log(data);
       finalGoingdata = data;
-      savingALLdatas();
+      localStorage.setItem('finalGoingdata', JSON.stringify(finalGoingdata));
+      setInterval(goingNextpage, 5000);
     });
 }
 
@@ -207,7 +211,7 @@ function returnDATA() {
       console.log("final data --------");
       console.log(data);
       finalreturndata = data;
-      savingALLdatas();
+      localStorage.setItem('finalreturndata', JSON.stringify(finalreturndata));
     });
 
 }
@@ -226,14 +230,6 @@ timeInterval = setInterval(() => {
 }, 900000) // the token will be generated every 20mins - if you want to test it, change the number to 10000 then will be generated every 10 second
 
 
-
-function savingALLdatas() {
-localStorage.setItem('departurecitynamedata', JSON.stringify(departurecitynamedata));
-localStorage.setItem('arrivalcitynamedata', JSON.stringify(arrivalcitynamedata));
-localStorage.setItem('finalGoingdata', JSON.stringify(finalGoingdata));
-localStorage.setItem('finalreturndata', JSON.stringify(finalreturndata));
-setInterval(goingNextpage, 5000);
-}
 
 
 

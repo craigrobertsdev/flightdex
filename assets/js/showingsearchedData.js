@@ -3,14 +3,15 @@ const going = document.querySelector('p');
 const div = document.querySelector('#result');
 
 // calling all the datas which are saved in localstorage
-const departurecityname = JSON.parse(localStorage.getItem('departurecitynamedata'));
-const arrivalcityname = JSON.parse(localStorage.getItem('arrivalcitynamedata'));
+
 const finalGoingdata = JSON.parse(localStorage.getItem('finalGoingdata'));
 const finalreturndata = JSON.parse(localStorage.getItem('finalreturndata'));
 const currencydata = JSON.parse(localStorage.getItem('currencydata'));
 
 const value = localStorage.getItem('value');
 const PASSENAGERvalue = localStorage.getItem('PASSENAGERvalue');
+const departurecityname = localStorage.getItem('departurecityname');
+const arrivalcityname = localStorage.getItem('arrivalcityname');
 
 if (value === "ONEWAY") {
     onewayFlightData();
@@ -23,7 +24,7 @@ function onewayFlightData() {
     console.log(departurecityname);
     console.log(arrivalcityname);
     console.log(finalGoingdata);
-    going.textContent = departurecityname.data[0].address.cityName + " (" + finalGoingdata.data[0].itineraries[0].segments[0].departure.iataCode + ")" + " ----> " + arrivalcityname.data[0].address.cityName + " (" + finalGoingdata.data[0].itineraries[0].segments[0].arrival.iataCode + ")";
+    going.textContent = departurecityname + " (" + finalGoingdata.data[0].itineraries[0].segments[0].departure.iataCode + ")" + " ----> " + arrivalcityname + " (" + finalGoingdata.data[0].itineraries[0].segments[0].arrival.iataCode + ")";
 
     for (i = 0; i < 11; i++) {
         const ticket = document.createElement("div");
@@ -76,8 +77,8 @@ function returnFlightData() {
     console.log(currencydata);
 
     const hearder2 = document.createElement("p");
-    going.innerHTML = departurecityname.data[0].address.cityName + " (" + finalGoingdata.data[0].itineraries[0].segments[0].departure.iataCode + ")" + " ----> " + arrivalcityname.data[0].address.cityName + " (" + finalGoingdata.data[0].itineraries[0].segments[0].arrival.iataCode + ")";
-    hearder2.innerHTML = arrivalcityname.data[0].address.cityName + " (" + finalreturndata.data[0].itineraries[0].segments[0].departure.iataCode + ")" + " ----> " + departurecityname.data[0].address.cityName + " (" + finalreturndata.data[0].itineraries[0].segments[0].arrival.iataCode + ")";
+    going.innerHTML = departurecityname + " (" + finalGoingdata.data[0].itineraries[0].segments[0].departure.iataCode + ")" + " ----> " + arrivalcityname + " (" + finalGoingdata.data[0].itineraries[0].segments[0].arrival.iataCode + ")";
+    hearder2.innerHTML = arrivalcityname + " (" + finalreturndata.data[0].itineraries[0].segments[0].departure.iataCode + ")" + " ----> " + departurecityname + " (" + finalreturndata.data[0].itineraries[0].segments[0].arrival.iataCode + ")";
     header.appendChild(hearder2);
 
 
@@ -102,8 +103,8 @@ function returnFlightData() {
             DEtime.setAttribute("style", "display:inline-block;");
             ARtime.setAttribute("style", "display:inline-block;");
 
-            departure.innerHTML = departurecityname.data[0].address.cityName + " (" + finalGoingdata.data[j].itineraries[0].segments[0].departure.iataCode + ")";
-            arrival.innerHTML = arrivalcityname.data[0].address.cityName + " (" + finalGoingdata.data[j].itineraries[0].segments[0].arrival.iataCode + ")";
+            departure.innerHTML = departurecityname + " (" + finalGoingdata.data[j].itineraries[0].segments[0].departure.iataCode + ")";
+            arrival.innerHTML = arrivalcityname+ " (" + finalGoingdata.data[j].itineraries[0].segments[0].arrival.iataCode + ")";
             DEtime.innerHTML = finalGoingdata.data[j].itineraries[0].segments[0].departure.at;
             ARtime.innerHTML = finalGoingdata.data[j].itineraries[0].segments[0].arrival.at;
             flightclass.innerHTML = finalGoingdata.data[j].travelerPricings[0].fareDetailsBySegment[0].cabin;
@@ -142,8 +143,8 @@ function returnFlightData() {
             DEtime.setAttribute("style", "display:inline-block;");
             ARtime.setAttribute("style", "display:inline-block;");
 
-            departure.innerHTML = departurecityname.data[0].address.cityName + " (" + finalGoingdata.data[z].itineraries[0].segments[0].departure.iataCode + ")";
-            arrival.innerHTML = arrivalcityname.data[0].address.cityName + " (" + finalGoingdata.data[z].itineraries[0].segments[0].arrival.iataCode + ")";
+            departure.innerHTML = departurecityname + " (" + finalGoingdata.data[z].itineraries[0].segments[0].departure.iataCode + ")";
+            arrival.innerHTML = arrivalcityname+ " (" + finalGoingdata.data[z].itineraries[0].segments[0].arrival.iataCode + ")";
             DEtime.innerHTML = finalreturndata.data[z].itineraries[0].segments[0].departure.at;
             ARtime.innerHTML = finalreturndata.data[z].itineraries[0].segments[0].arrival.at;
             flightclass.innerHTML = finalreturndata.data[z].travelerPricings[0].fareDetailsBySegment[0].cabin;
