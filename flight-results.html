@@ -10,16 +10,23 @@
   </head>
   <body>
     <header>
-      <p class="subtitle">The best flight results for:</p>
+      <h1 class="title has-text-centered">Welcome to FlightDex! </h1>
+      <h2 class="subtitle has-text-centered">Your #1 Flight, Event & Hotel searcher! </h2>
+      <p class="subtitle" id="results-subtitle">The best flight results for:</p>
       <h1><!--Insert Seach Input here!--></h1>
       <!--Need to add a sort by feature, can find in react but not for JS or jQuery??-->
     </header>
 
+    <!--Results for flights will display here-->
     <div id="result">
-      <!--Actual results will display here-->
-      <!--Accordian #1 with flights to the destination-->
-
-      <!--Accordian #2 with flights from the destination (if applicable)-->
+      <div id="slider">
+        <p>Add a price range with the slider below!</p>
+        <input id="sliderWithValue" class="slider has-output-tooltip is-fullwidth" min="0" max="100" value="50" step="1" type="range">
+      </div>
+      <!--Flights to the destination-->
+      <h3 class="box title is-5">Flights to</h3> <!--Location-->
+      <!--Flights from the destination-->
+      <h3 class="box title is-5">Flights from</h3> <!--Location-->
     </div>
     <script src="./assets/js/showingsearchedData.js"></script>
   </body>

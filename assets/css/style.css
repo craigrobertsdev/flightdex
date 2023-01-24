@@ -28,7 +28,8 @@ h2 {
   padding: 20px;
   }
 
-#result p {
-  padding: 5px;
-  margin-left: 10px;
+#results-subtitle {
+  margin: auto;
+  width: 80%;
+  padding-bottom: 5px;
 }
