@@ -1,10 +1,7 @@
 import Geohash from 'https://cdn.jsdelivr.net/npm/latlon-geohash@2.0.0';
 
 // Example API call   'https://app.ticketmaster.com/discovery/v2/events.json?countryCode=US&apikey=Rokm7oUpGBonFqFDXXiA7tcSkqAaiQh4';
-// &apikey=Rokm7oUpGBonFqFDXXiA7tcSkqAaiQh4
-
-// open weather reverse geocoding
-// http://api.openweathermap.org/geo/1.0/reverse?lat={lat}&lon={lon}&limit={limit}&appid=7d23a37898f652dad9213e544cd70c75
+// apikey=Rokm7oUpGBonFqFDXXiA7tcSkqAaiQh4
 // expected query string format: ?lat={laitude}&long={longitude}&arrival={arrivalDate}&departure={departureDate}
 
 /* 
@@ -13,6 +10,9 @@ import Geohash from 'https://cdn.jsdelivr.net/npm/latlon-geohash@2.0.0';
   Each day is subdivied into event category and is able to be sorted by cost and distance from location (using Maps API)
   User has option to enter their location. If they do so, the events will display the distance from them using Leaflet
 */
+
+// test query string
+const searchString = '?lat=41.881832&long=-87.623177&arrival=2023-02-25&departure=2023-03-15';
 
 const titleText = $('#title');
 const resultsSection = $('#results');
@@ -23,9 +23,7 @@ const searchButton = $('#event-search-button');
 const startDateInput = $('#start-date');
 const endDateInput = $('#end-date');
 let location = JSON.parse(localStorage.getItem('arrivalcitynamedata')).data[0].address.cityName;
-location = toTitleCase(location);
-// test query string
-const searchString = '?lat=41.881832&long=-87.623177&arrival=2023-02-25&departure=2023-03-15';
+
 // remove ? from start of searchString
 const queryString = searchString.substring(1, searchString.length).split('&'); //location.search
 
@@ -77,7 +75,6 @@ function getEvents(url) {
         resultData = null;
         throw new Error();
       }
-      console.log(data);
       resultData = data._embedded.events;
 
       determineEventTypes();
@@ -100,7 +97,7 @@ function displayResults(resultData) {
     const eventName = resultData[i].name;
     const startDate = resultData[i].dates.start.localDate;
     const startTime = resultData[i].dates.start.localTime;
-    const priceRangeMin = resultData[i].priceRanges ? '$' + resultData[i].priceRanges[0].min.toFixed(2) : 'See venue site for ticket prices';
+    const priceRangeMin = resultData[i].priceRanges ? '$' + resultData[i].priceRanges[0].min.toFixed(2) : 'See venue page for ticket prices';
     const genre = resultData[i].classifications[0].genre?.name ? resultData[i].classifications[0].genre.name : 'Miscellaneous';
     const eventUrl = resultData[i].url;
 
