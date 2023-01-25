@@ -9,8 +9,8 @@ const search = document.querySelector("#search");
 
 let departurecityname  = ' ';
 let arrivalcityname  = ' ';
-let finalGoingdata  = [];
-let finalreturndata  = [];
+let finalGoingdata  = { };
+let finalreturndata  = { };
 
 
 
@@ -226,7 +226,7 @@ function goingNextpage() {
 
 
 timeInterval = setInterval(() => {
-  getToken();
+  window.location.reload();
 }, 900000) // the token will be generated every 20mins - if you want to test it, change the number to 10000 then will be generated every 10 second
 
 
