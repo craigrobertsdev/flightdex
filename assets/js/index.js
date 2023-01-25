@@ -8,7 +8,7 @@ for(var i = 0; i < calendars.length; i++) {
 	// Add listener to select event
 	calendars[i].on('select', date => {
 		console.log(date.data.value());
-		localStorage.setItem("date",date.data.value())
+		localStorage.setItem("date",date.data.value());
     console.log(date.data.startDate)
 	});
 }
