@@ -77,7 +77,7 @@ function onewayFlightData() {
             const price = document.createElement("p");
             const p7 = document.createElement("p");
             const passenager = document.createElement("p");
-            
+
             const hr = document.createElement("hr");
 
             box.setAttribute("class", "box");
@@ -178,8 +178,8 @@ function returnFlightData() {
     console.log(RETURNcorrectdatas.length);
 
     if (ONEWAYcorrectdatas.length > RETURNcorrectdatas.length) {
-        lengthofRightdata = ONEWAYcorrectdatas.length;
-    } else if (ONEWAYcorrectdatas.length > RETURNcorrectdatas.length) {
+        lengthofRightdata = RETURNcorrectdatas.length;
+    } else if (ONEWAYcorrectdatas.length < RETURNcorrectdatas.length) {
         lengthofRightdata = ONEWAYcorrectdatas.length;
     } else {
         lengthofRightdata = RETURNcorrectdatas.length;
@@ -187,7 +187,7 @@ function returnFlightData() {
 
     console.log(lengthofRightdata);
 
-    if (lengthofRightdata / 2 !== 0) {
+    if (lengthofRightdata / 2 !== 0 && lengthofRightdata / 2 !== 1) {
         lengthofRightdata = lengthofRightdata - 1;
     } else {
         lengthofRightdata = lengthofRightdata;
@@ -195,8 +195,9 @@ function returnFlightData() {
 
 
 
-    for (i = 0, j = 0, z = 0; i < lengthofRightdata; i++, j = i / 2, z = i / 2 - 0.5) {
+    for (i = 0, j = 0, z = 0; i < lengthofRightdata*2; i++, j = i / 2, z = i / 2 - 0.5) {
         if (i === 0 || i % 2 == 0) {
+
             const box = document.createElement("div");
             const header = document.createElement("h3");
             const ticket = document.createElement("div");
@@ -221,7 +222,7 @@ function returnFlightData() {
             const price = document.createElement("p");
             const p7 = document.createElement("p");
             const passenager = document.createElement("p");
-            
+
             const hr = document.createElement("hr");
 
             box.setAttribute("class", "box");
@@ -247,12 +248,12 @@ function returnFlightData() {
 
 
             header.innerHTML = "Flights to:";
-            departurecity.textContent = departurecityname + " (" + finalGoingdata.data[i].itineraries[0].segments[0].departure.iataCode + ")";
-            arrivalcity.textContent = arrivalcityname + " (" + finalGoingdata.data[i].itineraries[0].segments[0].arrival.iataCode + ")";
-            DEtime.textContent = finalGoingdata.data[i].itineraries[0].segments[0].departure.at;
-            ARtime.textContent = finalGoingdata.data[i].itineraries[0].segments[0].arrival.at;
-            flightclass.textContent = finalGoingdata.data[i].travelerPricings[0].fareDetailsBySegment[0].cabin;
-            let AUDprice = currencydata.rates.AUD * finalGoingdata.data[i].travelerPricings[0].price.total;
+            departurecity.textContent = departurecityname + " (" + finalGoingdata.data[ONEWAYcorrectdatas[j]].itineraries[0].segments[0].departure.iataCode + ")";
+            arrivalcity.textContent = arrivalcityname + " (" + finalGoingdata.data[ONEWAYcorrectdatas[j]].itineraries[0].segments[0].arrival.iataCode + ")";
+            DEtime.textContent = finalGoingdata.data[ONEWAYcorrectdatas[j]].itineraries[0].segments[0].departure.at;
+            ARtime.textContent = finalGoingdata.data[ONEWAYcorrectdatas[j]].itineraries[0].segments[0].arrival.at;
+            flightclass.textContent = finalGoingdata.data[ONEWAYcorrectdatas[j]].travelerPricings[0].fareDetailsBySegment[0].cabin;
+            let AUDprice = currencydata.rates.AUD * finalGoingdata.data[ONEWAYcorrectdatas[j]].travelerPricings[0].price.total;
             price.textContent = AUDprice.toFixed(2) + " AUD";
             passenager.textContent = PASSENAGERvalue;
 
@@ -281,9 +282,11 @@ function returnFlightData() {
             Passenagerdiv.appendChild(p7);
             p7.appendChild(passenager);
             box.appendChild(hr);
+
         }
 
         else if (i % 2 == 1) {
+
             const box = document.createElement("div");
             const header = document.createElement("h3");
             const ticket = document.createElement("div");
@@ -308,7 +311,7 @@ function returnFlightData() {
             const price = document.createElement("p");
             const p7 = document.createElement("p");
             const passenager = document.createElement("p");
-            
+
             const hr = document.createElement("hr");
 
             box.setAttribute("class", "box");
@@ -333,17 +336,17 @@ function returnFlightData() {
             p7.innerHTML = "Passengers";
 
             header.innerHTML = "Flights from:";
-            departurecity.innerHTML = departurecityname + " (" + finalGoingdata.data[z].itineraries[0].segments[0].departure.iataCode + ")";
-            arrivalcity.innerHTML = arrivalcityname + " (" + finalGoingdata.data[z].itineraries[0].segments[0].arrival.iataCode + ")";
-            DEtime.innerHTML = finalreturndata.data[z].itineraries[0].segments[0].departure.at;
-            ARtime.innerHTML = finalreturndata.data[z].itineraries[0].segments[0].arrival.at;
-            flightclass.innerHTML = finalreturndata.data[z].travelerPricings[0].fareDetailsBySegment[0].cabin;
-            let AUDprice = currencydata.rates.AUD * finalreturndata.data[z].travelerPricings[0].price.total
+            departurecity.innerHTML = arrivalcityname + " (" + finalreturndata.data[RETURNcorrectdatas[z]].itineraries[0].segments[0].departure.iataCode + ")";
+            arrivalcity.innerHTML = departurecityname + " (" + finalreturndata.data[RETURNcorrectdatas[z]].itineraries[0].segments[0].arrival.iataCode + ")";
+            DEtime.innerHTML = finalreturndata.data[RETURNcorrectdatas[z]].itineraries[0].segments[0].departure.at;
+            ARtime.innerHTML = finalreturndata.data[RETURNcorrectdatas[z]].itineraries[0].segments[0].arrival.at;
+            flightclass.innerHTML = finalreturndata.data[RETURNcorrectdatas[z]].travelerPricings[0].fareDetailsBySegment[0].cabin;
+            let AUDprice = currencydata.rates.AUD * finalreturndata.data[RETURNcorrectdatas[z]].travelerPricings[0].price.total
             price.innerHTML = AUDprice.toFixed(2) + " AUD";
             passenager.innerHTML = PASSENAGERvalue;
 
 
-        
+
 
 
             div.appendChild(box);
@@ -371,6 +374,7 @@ function returnFlightData() {
             Passenagerdiv.appendChild(p7);
             p7.appendChild(passenager);
             box.appendChild(hr)
+
         } else return;
     }
 }
@@ -387,7 +391,7 @@ function returnFlightData() {
 //        //notice.setAttribute("style","display:none;");
 //        //const ticket = document.querySelector("#ticket")
 //        //ticket.setAttribute("style","display:none;");
-//      
+//
 //        ONEWAYcorrectdatas = [];
 //        onewayFlightData();
 //    } else {
