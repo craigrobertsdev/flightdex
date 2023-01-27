@@ -46,42 +46,77 @@ async function cityCoordinates(city){
     response = await response.json()
     console.log(response)
     console.log(response.data.length)
-    if(response.data.length < 50){
-    var iLength = response.data.length
-    }else{
-        iLength = 5
+    //if(response.data.length < 50){
+    var iLength = response.data.length   
+//
+    //}else{
+    //    iLength = 50
+    //}
+
+
+    
+    var hotelIdTag = new Array()
+    for(i=0; i < iLength; i++){
+        hotelIdTag.push(response.data[i].hotelId)
+        //console.log(hotelIdTag)
+    }
+    
+    //console.log(hotelIdTag)
+    var hotelInfo = new Array()
+    hotelInfo = 'https://test.api.amadeus.com/v3/shopping/hotel-offers?hotelIds=' + hotelIdTag //+ '&adults=' + peopleNo + '&checkInDate=' + arrive + '&checkOutDate=' + depart 
+    //console.log(hotelInfo)
+
+
+    var responseTwo = await fetch(hotelInfo,{
+        headers: {Authorization: tokenType} 
+    })
+        
+    console.log(responseTwo.ok)
+    if(!responseTwo.ok){
+        console.log(responseTwo)
+        return
     }
 
+    
+    responseTwo = await responseTwo.json()
+    console.log(responseTwo)
+
+    responseLength = responseTwo.data.length
+    console.log(responseLength)
 
 
-    for(i=0; i < iLength; i++){
-        var hotelName = response.data[i].name
-        //console.log(hotelName)
+    for(i=0; i < responseLength; i++){
 
-        var hotelIdTag = response.data[i].hotelId
-        //console.log(hotelIdTag)
+        responseName = responseTwo.data[i].hotel.name
+        //console.log(responseName)
 
-        var hotelInfo = 'https://test.api.amadeus.com/v3/shopping/hotel-offers?hotelIds=' + hotelIdTag + '&adults=' + peopleNo //+ '&checkInDate=' + arrive + '&checkOutDate=' + depart + '&currency=AUD&bestRateOnly=true'
-        //console.log(hotelInfo)
+        responseCheckin = responseTwo.data[i].offers[0].checkInDate
+        //console.log(responseCheckin)
 
-        let responseTwo = await fetch(hotelInfo,{
-            headers: {Authorization: tokenType} 
-        })
-        
-        console.log(responseTwo.ok)
-        //if(!responseTwo.ok){
-        //    console.log(responseTwo)
-        //    return
-        //}
-        responseTwo = await responseTwo.json()
-        console.log(responseTwo)
+        responseCheckout = responseTwo.data[i].offers[0].checkOutDate
+        //console.log(responseCheckout)
 
-        
+        responseGuests = responseTwo.data[i].offers[0].guests.adults
+        //console.log(responseGuests)
 
+        responsePriceB = responseTwo.data[i].offers[0].price.variations.average.base
+        //console.log(responsePriceB)
 
+        responsePriceT = responseTwo.data[i].offers[0].price.total
+        //console.log(responsePriceT)
+
+        responsePriceC = responseTwo.data[i].offers[0].price.currency
+        //console.log(responsePriceC)
+     
         var listD = document.createElement('div')
-        var listP = document.createElement('p') 
-        listP.innerHTML = hotelName
+        var listP = document.createElement('p')
+        var listHeading = document.createElement('h2')
+        
+        listHeading.innerHTML = responseName
+
+        listP.innerHTML = ('Check In - ' + responseCheckin + '   Check Out - ' + responseCheckout + '<br>' + 'guests - ' + responseGuests + '<br>' + 'Cost per Night - $' + responsePriceB + ' ' + responsePriceC + '<br>' + 'Total Cost - $' + responsePriceT + ' ' + responsePriceC)
+
+        listD.appendChild(listHeading)
         listD.appendChild(listP)
         results.appendChild(listD)
     }
