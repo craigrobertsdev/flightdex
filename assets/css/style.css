@@ -1,5 +1,6 @@
 header {
-  padding: 40px;
+  padding: 20px;
+  padding-bottom: 0px;
 }
 
 #input, #result {
@@ -15,11 +16,39 @@ header {
   margin: auto;
 }
 
+button:active {
+  background: #00d1b2;
+}
+
+button:focus {
+  background: #00d1b2;
+}
+
 h2 {
   padding: 20px;
   }
 
-#result p {
-  padding: 5px;
-  margin-left: 10px;
+#results-subtitle {
+  margin: auto;
+  width: 80%;
+  padding-bottom: 5px;
+}
+
+hr.rounded {
+  border-top: 3px solid #bbb;
+  border-radius: 5px;
+  margin: 0;
+}
+#destination-results {
+  margin-bottom: 0;
+  margin-top:0;
+}
+#return-results {
+  margin-bottom: 0;
+}
+
+#destination-results p {
+  margin-top: 20px;
+  margin-right: 30px;
+  margin-left: 20px;
 }

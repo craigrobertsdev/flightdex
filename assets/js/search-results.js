@@ -1,10 +1,16 @@
 const userdeparture = document.querySelector("#departure");
-const departureDate = document.querySelector("#datepicker");
 const arrival = document.querySelector("#arrival");
+const people = document.querySelector("#people");
 const first = document.querySelector('#first');
 const business = document.querySelector('#business');
 const economy = document.querySelector('#economy');
 const search = document.querySelector("#search");
+
+
+let departurecityname  = ' ';
+let arrivalcityname  = ' ';
+let finalGoingdata  = { };
+let finalreturndata  = { };
 
 
 
@@ -15,14 +21,28 @@ let ARiatacode = " ";
 let DEdateforquery = " ";
 let ARdateforquery = " ";
 let selectedClass = " ";
+let passenager = " ";
 let ways = " ";
 
 
 
-search.addEventListener("click", getToken); // it runs when the toggle switch btn clicked
 
-// generate new access-token whenever app starts
-function getToken() {
+
+// fetching currency API
+const api = "https://api.exchangerate-api.com/v4/latest/eur";
+
+
+fetch(`${api}`)
+  .then(currency => {
+    return currency.json();
+  }).then(function (data) {
+    console.log(data);
+    localStorage.setItem('currencydata', JSON.stringify(data));
+  });
+
+// generate new access-token whenever app starts 
+// if user stays in search page(index page) for more than 20 mins, it will generated new access-token
+
   const TOKENUrl = "https://api.amadeus.com/v1/security/oauth2/token"
 
   fetch(TOKENUrl, {
@@ -37,15 +57,17 @@ function getToken() {
     .then(function (data) {
       token_type = data.token_type;
       accessToken = data.access_token;
-      DEgetIATAcodeDATA(data);
-      ARgetIATAcodeDATA(data);
+      //ARgetIATAcodeDATA(data);
+      console.log(token_type);
+      console.log(accessToken);
     });
-}
 
-// fetching iATA code data with city keyword with the new generated access-token
-function DEgetIATAcodeDATA(data) {
-  let FetchHEADER = data.token_type + " " + data.access_token;
+  arrival.addEventListener("click", DEgetIATAcodeDATA);
 
+// getting departure IATA code from finding cityname API 
+function DEgetIATAcodeDATA() {
+  let FetchHEADER = token_type + " " + accessToken;
+  console.log(FetchHEADER);
   let DErequestUrl = "https://api.amadeus.com/v1/reference-data/locations?subType=CITY&keyword=" + userdeparture.value.toUpperCase() + "&page%5Blimit%5D=10&page%5Boffset%5D=0&sort=analytics.travelers.score&view=FULL";
 
   fetch(DErequestUrl, {
@@ -59,12 +81,19 @@ function DEgetIATAcodeDATA(data) {
       console.log(data);
       DEiatacode = data.data[0].iataCode;
       localStorage.setItem('departurecitycode', DEiatacode);
-      localStorage.setItem('departurecitynamedata', JSON.stringify(data));
+      departurecityname = userdeparture.value.toUpperCase();
+      localStorage.setItem('departurecityname', departurecityname);
+
     });
 }
 
-function ARgetIATAcodeDATA(data) {
-  let FetchHEADER = data.token_type + " " + data.access_token;
+
+people.addEventListener("click", ARgetIATAcodeDATA);
+
+
+// getting arrival IATA code from finding cityname API 
+function ARgetIATAcodeDATA() {
+  let FetchHEADER = token_type + " " + accessToken;
 
   let DErequestUrl = "https://api.amadeus.com/v1/reference-data/locations?subType=CITY&keyword=" + arrival.value.toUpperCase() + "&page%5Blimit%5D=10&page%5Boffset%5D=0&sort=analytics.travelers.score&view=FULL";
 
@@ -76,23 +105,27 @@ function ARgetIATAcodeDATA(data) {
     })
     .then(function (data) {
       console.log('data Response \n-------------');
+      console.log(data);
       ARiatacode = data.data[0].iataCode;
       localStorage.setItem('arrivalcitycode', ARiatacode);
-      localStorage.setItem('arrivalcitynamedata', JSON.stringify(data));
-      makingQueryDATA();
+      arrivalcityname = arrival.value.toUpperCase();
+      localStorage.setItem('arrivalcityname', arrivalcityname);
     });
 }
 
 
-// fetching data with the new generated access-token
+search.addEventListener("click", makingQueryDATA); // it runs when the toggle switch btn clicked
+
+// making querydata function (date,seatclass,oneway or return)
 function makingQueryDATA() {
-  let dateformatchange = departureDate.value.split(' ');
+  const traveldate = localStorage.getItem("date")
+  let dateformatchange = traveldate.split(' ');
   console.log(dateformatchange);
   let DEdateformatchange = dateformatchange[0].split('/');
   let ARdateformatchange = dateformatchange[2].split('/');
   console.log(DEdateformatchange);
   console.log(ARdateformatchange);
-  
+
 
   let DEchanged = DEdateformatchange[2] + "-" + DEdateformatchange[0] + "-" + DEdateformatchange[1];
   let ARchanged = ARdateformatchange[2] + "-" + ARdateformatchange[0] + "-" + ARdateformatchange[1];
@@ -112,9 +145,20 @@ function makingQueryDATA() {
   var select2 = document.getElementById("select2");
   var wayvalue = select2.value;
   ways = wayvalue;
-  localStorage.setItem('value',ways);
+  localStorage.setItem('WAYvalue', ways);
   console.log(ways);
 
+  var people = document.getElementById("people");
+  var passenagervalue = people.value;
+  passenager = passenagervalue;
+  localStorage.setItem('PASSENAGERvalue', passenager);
+  console.log(passenager);
+
+ 
+  choosingWAY();
+}
+
+  function choosingWAY() {
   if (ways === "ONEWAY") {
     onewayDATA();
 
@@ -129,11 +173,12 @@ function makingQueryDATA() {
 
 
 
-async function onewayDATA() {
-  DEiatacode = localStorage.getItem('departurecitycode');
-  ARiatacode = localStorage.getItem('arrivalcitycode');
+//going flight
+function onewayDATA() {
   let FetchHEADER = token_type + " " + accessToken;
-  let requestUrlgoing = "https://api.amadeus.com/v2/shopping/flight-offers?originLocationCode=" + DEiatacode + "&destinationLocationCode=" + ARiatacode + "&departureDate=" + DEdateforquery + "&adults=1&travelClass=" + selectedClass + "&nonStop=false&max=250";
+  let deIatacode = localStorage.getItem("departurecitycode")
+  console.log(deIatacode)
+  let requestUrlgoing = "https://api.amadeus.com/v2/shopping/flight-offers?originLocationCode=" + deIatacode + "&destinationLocationCode=" + ARiatacode + "&departureDate=" + DEdateforquery + "&adults=" + passenager + "&travelClass=" + selectedClass + "&nonStop=false&max=250";
 
   fetch(requestUrlgoing, {
     headers: { Authorization: FetchHEADER }
@@ -144,18 +189,20 @@ async function onewayDATA() {
     .then(function (data) {
       console.log("final data --------");
       console.log(data);
-      localStorage.setItem('finalGoingdata', JSON.stringify(data));
+
+      finalGoingdata = data;
+      localStorage.setItem('finalGoingdata', JSON.stringify(finalGoingdata));
+      setInterval(goingNextpage, 5000);
     });
     await setInterval(goingNextpage)
 }
 
-
+// return flight
 function returnDATA() {
-  DEiatacode = localStorage.getItem('departurecitycode');
-  ARiatacode = localStorage.getItem('arrivalcitycode');
   let FetchHEADER = token_type + " " + accessToken;
-
-  let requestUrlreturn = "https://api.amadeus.com/v2/shopping/flight-offers?originLocationCode=" + ARiatacode + "&destinationLocationCode=" + DEiatacode + "&departureDate=" + ARdateforquery +  "&adults=1&travelClass=" + selectedClass + "&nonStop=false&max=250";
+  let deIatacode = localStorage.getItem("departurecitycode");
+  console.log(deIatacode);
+  let requestUrlreturn = "https://api.amadeus.com/v2/shopping/flight-offers?originLocationCode=" + ARiatacode + "&destinationLocationCode=" + deIatacode + "&departureDate=" + ARdateforquery + "&adults=" + passenager + "&travelClass=" + selectedClass + "&nonStop=false&max=250";
 
   fetch(requestUrlreturn, {
     headers: { Authorization: FetchHEADER }
@@ -166,27 +213,29 @@ function returnDATA() {
     .then(function (data) {
       console.log("final data --------");
       console.log(data);
-      localStorage.setItem('finalreturndata', JSON.stringify(data));
+      finalreturndata = data;
+      localStorage.setItem('finalreturndata', JSON.stringify(finalreturndata));
     });
 
 }
 
-const api = "https://api.exchangerate-api.com/v4/latest/eur";
 
 
-fetch(`${api}`)
-    .then(currency => {
-        return currency.json();
-    }).then(function (data) {
-        console.log(data);
-        localStorage.setItem('currencydata', JSON.stringify(data));
-    });
 
-
+//going next page function
 function goingNextpage() {
   window.location.href = "./flight-results.html";
 }
 
+
 timeInterval = setInterval(() => {
-  getToken();
+  window.location.reload();
 }, 900000) // the token will be generated every 20mins - if you want to test it, change the number to 10000 then will be generated every 10 second
+
+
+
+
+
+
+bulmaSlider.attach();
+

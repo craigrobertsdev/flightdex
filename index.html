@@ -20,7 +20,7 @@
 <body>
   <header>
       <h1 class="title has-text-centered">Welcome to FlightDex! </h1>
-      <h2 class="subtitle has-text-centered">Your #1 Flight & Event searcher! </h2>
+      <h2 class="subtitle has-text-centered">Your #1 Flight, Event & Hotel searcher! </h2>
   </header>
   
   <!--This will be the form to input dates & destinations etc!-->
@@ -41,16 +41,16 @@
         </div>
     </div>
     
-    <div class="columns"> 
-      <!--Departure Date Picker-->
+    <!--Date Picker-->
+    <div class="columns" > 
       <div class="column is-10 is-offset-1">
-        <input id="datepicker" type="date">
+        <input  type="date">
       </div>
     </div>
     
     <div class="columns">
       <!--Class Input-->
-      <div class="column is-6 has-text-right">
+      <div class="column is-3 is-offset-1 has-text-centered">
         <div class="select is-rounded">
           <select id="select1">
             <option id="economy" value="ECONOMY">Economy Class</option>
@@ -60,7 +60,8 @@
         </div>
       </div>
       
-      <div class="column has-text-left">
+      <!--Return/One-Way Input-->
+      <div class="column is-4 has-text-centered">
         <div class="select is-rounded">
           <select id="select2">
             <option value="RETURN">Return</option>
@@ -68,9 +69,14 @@
           </select>
         </div>
       </div>
-      <!--Return/One-Way Input (toggle requires Bulma extentons but need more info or can do radio again)-->
+
+      <!--No. of people -->
+      <div class="column is-3 has-text-centered">
+        <input id="people" class="input is-rounded"  placeholder="No. People" id="arrival">
+      </div>
     </div>
     
+    <!--Search Button-->
     <div class="columns is-centered">
       <div class="column is-full has-text-centered">
         <button id="search" class="button is-rounded">Search</button>
@@ -88,7 +94,7 @@
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script src="./assets/js/bulma-calendar.js"></script>
-  <script src="./assets/js/search-results.js"></script>-->
+  <script src="./assets/js/search-results.js"></script>
   <script src="./assets/js/index.js"></script>
   
   
