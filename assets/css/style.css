@@ -41,8 +41,9 @@ hr.rounded {
 }
 #destination-results {
   margin-bottom: 0;
+  margin-top:0;
 }
-#arrival-results {
+#return-results {
   margin-bottom: 0;
 }
 

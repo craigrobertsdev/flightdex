@@ -1,5 +1,5 @@
 const header = document.querySelector('header');
-const going = document.querySelector('p');
+const going = document.getElementById('location-to');
 const div = document.querySelector('#result');
 const slider = document.querySelector('#sliderWithValue');
 const notice = document.createElement("div");
@@ -54,7 +54,7 @@ function onewayFlightData() {
             div.appendChild(notice);
         } else {
             const box = document.createElement("div");
-            const header = document.createElement("h3");
+            // const header = document.createElement("h3");
             const ticket = document.createElement("div");
             const DEcitydiv = document.createElement("div");
             const DEtimediv = document.createElement("div");
@@ -78,12 +78,11 @@ function onewayFlightData() {
             const p7 = document.createElement("p");
             const passenager = document.createElement("p");
 
-            const hr = document.createElement("hr");
-
-            box.setAttribute("class", "box");
-            header.setAttribute("class", "title is-5");
+            // box.setAttribute("class", "box ");
+            // header.setAttribute("class", "title is-5");
             ticket.setAttribute("id", "destination-results");
             ticket.setAttribute("class", "columns");
+
             DEcitydiv.setAttribute("class", "columns is-2");
             DEtimediv.setAttribute("class", "columns is-2");
             ARcitydiv.setAttribute("class", "columns is-2");
@@ -91,18 +90,17 @@ function onewayFlightData() {
             Classdiv.setAttribute("class", "columns is-1");
             Costdiv.setAttribute("class", "columns is-1");
             Passenagerdiv.setAttribute("class", "columns is-1");
-            hr.setAttribute("class", "rounded");
 
-            p1.innerHTML = "Departure City";
-            p2.innerHTML = "Depart Time";
-            p3.innerHTML = "Arrival City";
-            p4.innerHTML = "Arrival Time";
-            p5.innerHTML = "Class";
-            p6.innerHTML = "Cost";
-            p7.innerHTML = "Passengers";
+            // p1.innerHTML = "Departure City";
+            // p2.innerHTML = "Depart Time";
+            // p3.innerHTML = "Arrival City";
+            // p4.innerHTML = "Arrival Time";
+            // p5.innerHTML = "Class";
+            // p6.innerHTML = "Cost";
+            // p7.innerHTML = "Passengers";
 
 
-            header.innerHTML = "Flights to:";
+            // header.innerHTML = "Flights to:";
             departurecity.textContent = departurecityname + " (" + finalGoingdata.data[i].itineraries[0].segments[0].departure.iataCode + ")";
             arrivalcity.textContent = arrivalcityname + " (" + finalGoingdata.data[i].itineraries[0].segments[0].arrival.iataCode + ")";
             DEtime.textContent = finalGoingdata.data[i].itineraries[0].segments[0].departure.at;
@@ -113,7 +111,7 @@ function onewayFlightData() {
             passenager.textContent = PASSENAGERvalue;
 
             div.appendChild(box);
-            box.appendChild(header);
+            // box.appendChild(header);
             box.appendChild(ticket);
             ticket.appendChild(DEcitydiv);
             ticket.appendChild(DEtimediv);
@@ -136,7 +134,6 @@ function onewayFlightData() {
             p6.appendChild(price);
             Passenagerdiv.appendChild(p7);
             p7.appendChild(passenager);
-            box.appendChild(hr);
         }
     }
 }
@@ -199,7 +196,7 @@ function returnFlightData() {
         if (i === 0 || i % 2 == 0) {
 
             const box = document.createElement("div");
-            const header = document.createElement("h3");
+            // const header = document.createElement("h3");
             const ticket = document.createElement("div");
             const DEcitydiv = document.createElement("div");
             const DEtimediv = document.createElement("div");
@@ -223,10 +220,9 @@ function returnFlightData() {
             const p7 = document.createElement("p");
             const passenager = document.createElement("p");
 
-            const hr = document.createElement("hr");
 
-            box.setAttribute("class", "box");
-            header.setAttribute("class", "title is-5");
+            // box.setAttribute("class", "box");
+            // header.setAttribute("class", "title is-5");
             ticket.setAttribute("id", "destination-results");
             ticket.setAttribute("class", "columns");
             DEcitydiv.setAttribute("class", "columns is-2");
@@ -236,18 +232,17 @@ function returnFlightData() {
             Classdiv.setAttribute("class", "columns is-1");
             Costdiv.setAttribute("class", "columns is-1");
             Passenagerdiv.setAttribute("class", "columns is-1");
-            hr.setAttribute("class", "rounded");
 
-            p1.innerHTML = "Departure City";
-            p2.innerHTML = "Depart Time";
-            p3.innerHTML = "Arrival City";
-            p4.innerHTML = "Arrival Time";
-            p5.innerHTML = "Class";
-            p6.innerHTML = "Cost";
-            p7.innerHTML = "Passengers";
+            // p1.innerHTML = "Departure City";
+            // p2.innerHTML = "Depart Time";
+            // p3.innerHTML = "Arrival City";
+            // p4.innerHTML = "Arrival Time";
+            // p5.innerHTML = "Class";
+            // p6.innerHTML = "Cost";
+            // p7.innerHTML = "Passengers";
 
 
-            header.innerHTML = "Flights to:";
+            // header.innerHTML = "Flights to:";
             departurecity.textContent = departurecityname + " (" + finalGoingdata.data[ONEWAYcorrectdatas[j]].itineraries[0].segments[0].departure.iataCode + ")";
             arrivalcity.textContent = arrivalcityname + " (" + finalGoingdata.data[ONEWAYcorrectdatas[j]].itineraries[0].segments[0].arrival.iataCode + ")";
             DEtime.textContent = finalGoingdata.data[ONEWAYcorrectdatas[j]].itineraries[0].segments[0].departure.at;
@@ -258,7 +253,7 @@ function returnFlightData() {
             passenager.textContent = PASSENAGERvalue;
 
             div.appendChild(box);
-            box.appendChild(header);
+            // box.appendChild(header);
             box.appendChild(ticket);
             ticket.appendChild(DEcitydiv);
             ticket.appendChild(DEtimediv);
@@ -281,14 +276,16 @@ function returnFlightData() {
             p6.appendChild(price);
             Passenagerdiv.appendChild(p7);
             p7.appendChild(passenager);
-            box.appendChild(hr);
+
+            const destination = document.getElementById('destination-results');
+            destination.insertAdjacentElement('afterend', ticket);
 
         }
 
         else if (i % 2 == 1) {
 
             const box = document.createElement("div");
-            const header = document.createElement("h3");
+            // const header = document.createElement("h3");
             const ticket = document.createElement("div");
             const DEcitydiv = document.createElement("div");
             const DEtimediv = document.createElement("div");
@@ -312,10 +309,8 @@ function returnFlightData() {
             const p7 = document.createElement("p");
             const passenager = document.createElement("p");
 
-            const hr = document.createElement("hr");
-
-            box.setAttribute("class", "box");
-            header.setAttribute("class", "title is-5");
+            // box.setAttribute("style", "border:2px solid silver;");
+            // header.setAttribute("class", "title is-5");
             ticket.setAttribute("id", "destination-results");
             ticket.setAttribute("class", "columns");
             DEcitydiv.setAttribute("class", "columns is-2");
@@ -325,17 +320,16 @@ function returnFlightData() {
             Classdiv.setAttribute("class", "columns is-1");
             Costdiv.setAttribute("class", "columns is-1");
             Passenagerdiv.setAttribute("class", "columns is-1");
-            hr.setAttribute("class", "rounded");
 
-            p1.innerHTML = "Departure City";
-            p2.innerHTML = "Depart Time";
-            p3.innerHTML = "Arrival City";
-            p4.innerHTML = "Arrival Time";
-            p5.innerHTML = "Class";
-            p6.innerHTML = "Cost";
-            p7.innerHTML = "Passengers";
+            // p1.innerHTML = "Departure City";
+            // p2.innerHTML = "Depart Time";
+            // p3.innerHTML = "Arrival City";
+            // p4.innerHTML = "Arrival Time";
+            // p5.innerHTML = "Class";
+            // p6.innerHTML = "Cost";
+            // p7.innerHTML = "Passengers";
 
-            header.innerHTML = "Flights from:";
+            // header.innerHTML = "Flights from:";
             departurecity.innerHTML = arrivalcityname + " (" + finalreturndata.data[RETURNcorrectdatas[z]].itineraries[0].segments[0].departure.iataCode + ")";
             arrivalcity.innerHTML = departurecityname + " (" + finalreturndata.data[RETURNcorrectdatas[z]].itineraries[0].segments[0].arrival.iataCode + ")";
             DEtime.innerHTML = finalreturndata.data[RETURNcorrectdatas[z]].itineraries[0].segments[0].departure.at;
@@ -350,7 +344,7 @@ function returnFlightData() {
 
 
             div.appendChild(box);
-            box.appendChild(header);
+            // box.appendChild(header);
             box.appendChild(ticket);
             ticket.appendChild(DEcitydiv);
             ticket.appendChild(DEtimediv);
@@ -373,8 +367,9 @@ function returnFlightData() {
             p6.appendChild(price);
             Passenagerdiv.appendChild(p7);
             p7.appendChild(passenager);
-            box.appendChild(hr)
 
+            const returnF = document.getElementById('arrival-results');
+            returnF.insertAdjacentElement('afterend', ticket);
         } else return;
     }
 }
