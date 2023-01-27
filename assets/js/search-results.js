@@ -194,7 +194,7 @@ function onewayDATA() {
       localStorage.setItem('finalGoingdata', JSON.stringify(finalGoingdata));
       setInterval(goingNextpage, 5000);
     });
-    await setInterval(goingNextpage)
+    setInterval(goingNextpage)
 }
 
 // return flight
