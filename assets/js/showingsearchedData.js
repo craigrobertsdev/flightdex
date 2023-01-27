@@ -35,7 +35,7 @@ function onewayFlightData() {
     console.log(departurecityname);
     console.log(arrivalcityname);
     console.log(finalGoingdata);
-    going.textContent = departurecityname + " (" + finalGoingdata.data[0].itineraries[0].segments[0].departure.iataCode + ")" + " ----> " + arrivalcityname + " (" + finalGoingdata.data[0].itineraries[0].segments[0].arrival.iataCode + ")";
+    going.textContent = departurecityname + " (" + departurecitycode + ")" + " ----> " + arrivalcityname + " (" + arrivalcitycode + ")";
 
     for (i = 0; i < 20; i++) {
         if (finalGoingdata.data[i].itineraries[0].segments[0].departure.iataCode === departurecitycode && finalGoingdata.data[i].itineraries[0].segments[0].arrival.iataCode === arrivalcitycode) {
@@ -44,6 +44,11 @@ function onewayFlightData() {
         } else if (finalGoingdata.data[i].itineraries[0].segments[0].departure.iataCode === departurecitycode || finalGoingdata.data[i].itineraries[0].segments[0].arrival.iataCode === arrivalcitycode) {
             i++;
         }
+    }
+
+    /// 여기서 data가 한쪽이라도 없는지 확인 후 없는 것은 없다고 띄우기 
+    if (ONEWAYcorrectdatas.length === 0) {
+        NOdata();
     }
 
     for (i = 0; i < ONEWAYcorrectdatas.length; i++) {
@@ -94,21 +99,22 @@ function onewayFlightData() {
             hr.setAttribute("class", "rounded");
 
             p1.innerHTML = "Departure City";
-            p2.innerHTML = "Depart Time";
-            p3.innerHTML = "Arrival City";
+            p2.innerHTML = "Arrival City";
+            p3.innerHTML = "Depart Time";
             p4.innerHTML = "Arrival Time";
             p5.innerHTML = "Class";
             p6.innerHTML = "Cost";
             p7.innerHTML = "Passengers";
 
 
+
             header.innerHTML = "Flights to:";
-            departurecity.textContent = departurecityname + " (" + finalGoingdata.data[i].itineraries[0].segments[0].departure.iataCode + ")";
-            arrivalcity.textContent = arrivalcityname + " (" + finalGoingdata.data[i].itineraries[0].segments[0].arrival.iataCode + ")";
-            DEtime.textContent = finalGoingdata.data[i].itineraries[0].segments[0].departure.at;
-            ARtime.textContent = finalGoingdata.data[i].itineraries[0].segments[0].arrival.at;
-            flightclass.textContent = finalGoingdata.data[i].travelerPricings[0].fareDetailsBySegment[0].cabin;
-            let AUDprice = currencydata.rates.AUD * finalGoingdata.data[i].travelerPricings[0].price.total;
+            departurecity.textContent = departurecityname + " (" + finalGoingdata.data[ONEWAYcorrectdatas[i]].itineraries[0].segments[0].departure.iataCode + ")";
+            arrivalcity.textContent = arrivalcityname + " (" + finalGoingdata.data[ONEWAYcorrectdatas[i]].itineraries[0].segments[0].arrival.iataCode + ")";
+            DEtime.textContent = finalGoingdata.data[ONEWAYcorrectdatas[i]].itineraries[0].segments[0].departure.at;
+            ARtime.textContent = finalGoingdata.data[ONEWAYcorrectdatas[i]].itineraries[0].segments[0].arrival.at;
+            flightclass.textContent = finalGoingdata.data[ONEWAYcorrectdatas[i]].travelerPricings[0].fareDetailsBySegment[0].cabin;
+            let AUDprice = currencydata.rates.AUD * finalGoingdata.data[ONEWAYcorrectdatas[i]].travelerPricings[0].price.total;
             price.textContent = AUDprice.toFixed(2) + " AUD";
             passenager.textContent = PASSENAGERvalue;
 
@@ -151,8 +157,8 @@ function returnFlightData() {
     console.log(currencydata);
 
     const hearder2 = document.createElement("p");
-    going.innerHTML = departurecityname + " (" + finalGoingdata.data[0].itineraries[0].segments[0].departure.iataCode + ")" + " ----> " + arrivalcityname + " (" + finalGoingdata.data[0].itineraries[0].segments[0].arrival.iataCode + ")";
-    hearder2.innerHTML = arrivalcityname + " (" + finalreturndata.data[0].itineraries[0].segments[0].departure.iataCode + ")" + " ----> " + departurecityname + " (" + finalreturndata.data[0].itineraries[0].segments[0].arrival.iataCode + ")";
+    going.textContent = departurecityname + " (" + departurecitycode + ")" + " ----> " + arrivalcityname + " (" + arrivalcitycode + ")";
+    hearder2.innerHTML = arrivalcityname + " (" + arrivalcitycode + ")" + " ----> " + departurecityname + " (" + departurecitycode + ")";
     going.appendChild(hearder2)
 
     for (i = 0; i < 20; i++) {
@@ -173,13 +179,17 @@ function returnFlightData() {
             i++;
         }
     }
-
+    /// 여기서 data가 한쪽이라도 없는지 확인 후 없는 것은 없다고 띄우기 
     console.log(ONEWAYcorrectdatas.length);
     console.log(RETURNcorrectdatas.length);
 
-    if (ONEWAYcorrectdatas.length > RETURNcorrectdatas.length) {
+    if (ONEWAYcorrectdatas.length > RETURNcorrectdatas.length && RETURNcorrectdatas.length !== 0) {
         lengthofRightdata = RETURNcorrectdatas.length;
-    } else if (ONEWAYcorrectdatas.length < RETURNcorrectdatas.length) {
+    } else if (ONEWAYcorrectdatas.length < RETURNcorrectdatas.length && ONEWAYcorrectdatas.length !== 0) {
+        lengthofRightdata = ONEWAYcorrectdatas.length;
+    } else if (ONEWAYcorrectdatas.length === 0) {
+        lengthofRightdata = RETURNcorrectdatas.length;
+    } else if (RETURNcorrectdatas.length === 0) {
         lengthofRightdata = ONEWAYcorrectdatas.length;
     } else {
         lengthofRightdata = RETURNcorrectdatas.length;
@@ -187,16 +197,31 @@ function returnFlightData() {
 
     console.log(lengthofRightdata);
 
-    if (lengthofRightdata / 2 !== 0 && lengthofRightdata / 2 !== 1) {
+    if (lengthofRightdata % 2 !== 0 && lengthofRightdata !== 1 ) {
         lengthofRightdata = lengthofRightdata - 1;
     } else {
         lengthofRightdata = lengthofRightdata;
     }
 
+    console.log(lengthofRightdata);
 
+    if (lengthofRightdata === 1 ) {
+        NewLengthofRightdata = lengthofRightdata+1;
+    } else if (lengthofRightdata === 0) {
+        // data 없음 페이지
+        NOdata();
+        return;
+    }
 
-    for (i = 0, j = 0, z = 0; i < lengthofRightdata*2; i++, j = i / 2, z = i / 2 - 0.5) {
-        if (i === 0 || i % 2 == 0) {
+    else {
+        NewLengthofRightdata = lengthofRightdata * 2;
+    }
+
+    console.log(NewLengthofRightdata);
+
+    for (i = 0, j = 0, z = 0; i < NewLengthofRightdata; i++, j = Math.floor(i / 2), z = Math.floor(i / 2 - 0.5)) {
+        
+        if (i === 0 || i % 2 == 0 && ONEWAYcorrectdatas.length !== 0) {
 
             const box = document.createElement("div");
             const header = document.createElement("h3");
@@ -239,8 +264,8 @@ function returnFlightData() {
             hr.setAttribute("class", "rounded");
 
             p1.innerHTML = "Departure City";
-            p2.innerHTML = "Depart Time";
-            p3.innerHTML = "Arrival City";
+            p2.innerHTML = "Arrival City";
+            p3.innerHTML = "Depart Time";
             p4.innerHTML = "Arrival Time";
             p5.innerHTML = "Class";
             p6.innerHTML = "Cost";
@@ -285,7 +310,7 @@ function returnFlightData() {
 
         }
 
-        else if (i % 2 == 1) {
+        else if (i % 2 == 1 || ONEWAYcorrectdatas.length !== 0) {
 
             const box = document.createElement("div");
             const header = document.createElement("h3");
@@ -328,12 +353,13 @@ function returnFlightData() {
             hr.setAttribute("class", "rounded");
 
             p1.innerHTML = "Departure City";
-            p2.innerHTML = "Depart Time";
-            p3.innerHTML = "Arrival City";
+            p2.innerHTML = "Arrival City";
+            p3.innerHTML = "Depart Time";
             p4.innerHTML = "Arrival Time";
             p5.innerHTML = "Class";
             p6.innerHTML = "Cost";
             p7.innerHTML = "Passengers";
+
 
             header.innerHTML = "Flights from:";
             departurecity.innerHTML = arrivalcityname + " (" + finalreturndata.data[RETURNcorrectdatas[z]].itineraries[0].segments[0].departure.iataCode + ")";
@@ -375,10 +401,33 @@ function returnFlightData() {
             p7.appendChild(passenager);
             box.appendChild(hr)
 
-        } else return;
+        }   else return;
     }
 }
 
+
+function NOdata() {
+    const box = document.createElement("div");
+    const header = document.createElement("h3");
+    const ticket = document.createElement("div");
+    const p1 = document.createElement("p");
+    box.setAttribute("class", "box");
+    header.setAttribute("class", "title is-5");
+    ticket.setAttribute("id", "destination-results");
+    p1.setAttribute("style", "font-size:40px; font-weight:bold;");
+    if(ONEWAYcorrectdatas.length === 0){
+        header.innerHTML = "Flights to:";
+    } 
+    if (RETURNcorrectdatas.length === 0){
+        header.innerHTML = "Flights from:";
+    }
+   
+    p1.innerHTML = "sorry.. There are no tickets available";
+    div.appendChild(box);
+    box.appendChild(header);
+    box.appendChild(ticket);
+    ticket.appendChild(p1);
+}
 
 //slider.addEventListener("click", MaxPrice)
 //
