@@ -172,6 +172,7 @@ function makingQueryDATA() {
 
 
 
+
 //going flight
 function onewayDATA() {
   let FetchHEADER = token_type + " " + accessToken;
@@ -188,10 +189,12 @@ function onewayDATA() {
     .then(function (data) {
       console.log("final data --------");
       console.log(data);
+
       finalGoingdata = data;
       localStorage.setItem('finalGoingdata', JSON.stringify(finalGoingdata));
       setInterval(goingNextpage, 5000);
     });
+    await setInterval(goingNextpage)
 }
 
 // return flight
@@ -235,3 +238,4 @@ timeInterval = setInterval(() => {
 
 
 bulmaSlider.attach();
+
