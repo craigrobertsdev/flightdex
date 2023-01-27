@@ -46,6 +46,8 @@ hr.rounded {
   margin-bottom: 0;
 }
 
-#display {
-  padding-left: 10px;
+#destination-results p {
+  margin-top: 20px;
+  margin-right: 30px;
+  margin-left: 20px;
 }
