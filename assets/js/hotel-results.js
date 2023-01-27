@@ -1,6 +1,13 @@
 var results = document.getElementById('results')
 var tokenType = ''
 
+var cityCode = localStorage.getItem('arrivalcitycode')
+var arrive = localStorage.getItem('departureDate')
+var depart = localStorage.getItem('arrivalDate')
+//var peopleNo = localStorage.getItem('ADD')
+
+//remove before final!!!!!!!!!!!!!!!!!!!!!!!!
+var peopleNo = 1
 
 async function tokenFunction() {
     let response = await fetch('https://test.api.amadeus.com/v1/security/oauth2/token',{
@@ -17,7 +24,7 @@ async function tokenFunction() {
         console.log(token)
         tokenType = ('Bearer ' + token)
         console.log(tokenType)
-        cityCoordinates('ADL')
+        cityCoordinates(cityCode)
     
 }
 
@@ -42,15 +49,41 @@ async function cityCoordinates(city){
     if(response.data.length < 50){
     var iLength = response.data.length
     }else{
-        iLength = 50
+        iLength = 5
     }
+
+
 
     for(i=0; i < iLength; i++){
         var hotelName = response.data[i].name
-        console.log(hotelName)
-        var listI = document.createElement('li')
-        listI.innerHTML = hotelName
-        results.appendChild(listI)
+        //console.log(hotelName)
+
+        var hotelIdTag = response.data[i].hotelId
+        //console.log(hotelIdTag)
+
+        var hotelInfo = 'https://test.api.amadeus.com/v3/shopping/hotel-offers?hotelIds=' + hotelIdTag + '&adults=' + peopleNo //+ '&checkInDate=' + arrive + '&checkOutDate=' + depart + '&currency=AUD&bestRateOnly=true'
+        //console.log(hotelInfo)
+
+        let responseTwo = await fetch(hotelInfo,{
+            headers: {Authorization: tokenType} 
+        })
+        
+        console.log(responseTwo.ok)
+        //if(!responseTwo.ok){
+        //    console.log(responseTwo)
+        //    return
+        //}
+        responseTwo = await responseTwo.json()
+        console.log(responseTwo)
+
+        
+
+
+        var listD = document.createElement('div')
+        var listP = document.createElement('p') 
+        listP.innerHTML = hotelName
+        listD.appendChild(listP)
+        results.appendChild(listD)
     }
 
     

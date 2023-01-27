@@ -19,7 +19,7 @@ let ways = " ";
 
 
 
-search.addEventListener("click", getToken) // it runs when the toggle switch btn clicked
+search.addEventListener("click", getToken); // it runs when the toggle switch btn clicked
 
 // generate new access-token whenever app starts
 function getToken() {
@@ -92,6 +92,7 @@ function makingQueryDATA() {
   let ARdateformatchange = dateformatchange[2].split('/');
   console.log(DEdateformatchange);
   console.log(ARdateformatchange);
+  
 
   let DEchanged = DEdateformatchange[2] + "-" + DEdateformatchange[0] + "-" + DEdateformatchange[1];
   let ARchanged = ARdateformatchange[2] + "-" + ARdateformatchange[0] + "-" + ARdateformatchange[1];
@@ -99,6 +100,8 @@ function makingQueryDATA() {
   ARdateforquery = ARchanged;
   console.log(DEdateforquery);
   console.log(ARdateforquery);
+  localStorage.setItem('departureDate', DEdateforquery);
+  localStorage.setItem('arrivalDate', ARdateforquery);
 
   var select1 = document.getElementById("select1");
   var classvalue = select1.value;
@@ -126,7 +129,7 @@ function makingQueryDATA() {
 
 
 
-function onewayDATA() {
+async function onewayDATA() {
   DEiatacode = localStorage.getItem('departurecitycode');
   ARiatacode = localStorage.getItem('arrivalcitycode');
   let FetchHEADER = token_type + " " + accessToken;
@@ -142,8 +145,8 @@ function onewayDATA() {
       console.log("final data --------");
       console.log(data);
       localStorage.setItem('finalGoingdata', JSON.stringify(data));
-      setInterval(goingNextpage, 5000);
     });
+    await setInterval(goingNextpage)
 }
 
 
@@ -167,6 +170,18 @@ function returnDATA() {
     });
 
 }
+
+const api = "https://api.exchangerate-api.com/v4/latest/eur";
+
+
+fetch(`${api}`)
+    .then(currency => {
+        return currency.json();
+    }).then(function (data) {
+        console.log(data);
+        localStorage.setItem('currencydata', JSON.stringify(data));
+    });
+
 
 function goingNextpage() {
   window.location.href = "./flight-results.html";
