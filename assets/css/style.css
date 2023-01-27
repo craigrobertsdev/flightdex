@@ -42,6 +42,10 @@ hr.rounded {
 #destination-results {
   margin-bottom: 0;
 }
-#arrival-results {
+#return-results {
   margin-bottom: 0;
+}
+
+#display {
+  padding-left: 10px;
 }

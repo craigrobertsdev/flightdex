@@ -1,5 +1,5 @@
 const header = document.querySelector('header');
-const going = document.querySelector('p');
+const going = document.getElementById('location-to');
 const div = document.querySelector('#result');
 
 // calling all the datas which are saved in localstorage
@@ -54,7 +54,7 @@ function onewayFlightData() {
         const price = document.createElement("p");
         const passenager = document.createElement("p");
 
-        ticket.setAttribute("style", "border:5px solid black; margin-bottom:10px;");
+        ticket.setAttribute("style", "border:2px solid silver; margin-bottom:10px;");
         departure.setAttribute("style", "display:inline-block;");
         arrival.setAttribute("style", "display:inline-block;");
         DEtime.setAttribute("style", "display:inline-block;");
@@ -80,6 +80,9 @@ function onewayFlightData() {
         description.appendChild(flightclass);
         description.appendChild(price);
         description.appendChild(passenager);
+
+        const destination = document.getElementById('destination-results');
+        destination.insertAdjacentElement('afterend', ticket);
     }
 }
 
@@ -144,18 +147,19 @@ function returnFlightData() {
             const time = document.createElement("div");
             const description = document.createElement("div");
             const departure = document.createElement("p");
-            const arrival = document.createElement("p");
             const DEtime = document.createElement("p");
+            const arrival = document.createElement("p");
             const ARtime = document.createElement("p");
             const flightclass = document.createElement("p");
             const price = document.createElement("p");
             const passenager = document.createElement("p");
 
-            ticket.setAttribute("style", "border:5px solid black; margin-bottom:10px;");
+            ticket.setAttribute("style", "border:2px solid silver; margin-bottom:10px; border-radius:5px;");
             departure.setAttribute("style", "display:inline-block;");
             arrival.setAttribute("style", "display:inline-block;");
             DEtime.setAttribute("style", "display:inline-block;");
             ARtime.setAttribute("style", "display:inline-block;");
+          
 
             departure.innerHTML = departurecityname + " (" + finalGoingdata.data[j].itineraries[0].segments[0].departure.iataCode + ")";
             arrival.innerHTML = arrivalcityname + " (" + finalGoingdata.data[j].itineraries[0].segments[0].arrival.iataCode + ")";
@@ -177,6 +181,9 @@ function returnFlightData() {
             description.appendChild(flightclass);
             description.appendChild(price);
             description.appendChild(passenager);
+
+            const destination = document.getElementById('destination-results');
+            destination.insertAdjacentElement('afterend', ticket);
         }
 
         else if (i % 2 == 1) {
@@ -192,7 +199,7 @@ function returnFlightData() {
             const price = document.createElement("p");
             const passenager = document.createElement("p");
 
-            ticket.setAttribute("style", "border:5px solid black; margin-bottom:10px;");
+            ticket.setAttribute("style", "border:2px solid silver; margin-bottom:10px; border-radius:5px;");
             departure.setAttribute("style", "display:inline-block;");
             arrival.setAttribute("style", "display:inline-block;");
             DEtime.setAttribute("style", "display:inline-block;");
@@ -218,8 +225,10 @@ function returnFlightData() {
             description.appendChild(flightclass);
             description.appendChild(price);
             description.appendChild(passenager);
+
+            const destination = document.getElementById('return-results');
+            destination.insertAdjacentElement('afterend', ticket);
         } else return;
     }
 }
-
 
