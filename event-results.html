@@ -4,40 +4,88 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
-    <title>Search for Nearby Events</title>
+
+    <!-- Bulma  -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <!--Linked CSS-->
+    <link rel="stylesheet" href="./assets/css/style.css">
+    
+    <title>FlightDex Event Search</title>
   </head>
+  
   <body>
+    <header>
+      <h1 class="title has-text-centered">Welcome to FlightDex! </h1>
+      <h2 class="subtitle has-text-centered">Your #1 Flight, Event & Hotel searcher! </h2>
+    </header>
+
     <h1 id="title"></h1>
-    <section id="search-section">
-      <label for="filter-options">Filter events by category</label><br />
-      <select id="filter-options">
-        <option selected value="all">All</option>
-      </select>
-      <label for="keyword-input">Enter keyword to search for</label><br />
-      <input id="keyword-input" />
-      <p>
-        <label for="radius-input">How far away do you want the search radius to be?</label><br />
-        <input id="radius-input" /><span>km</span>
-      </p>
-      <p>
-        <label for="start-date">Enter start search date</label>
-        <input type="date" id="start-date" />
-        <label for="end-date">Enter end search date</label>
-        <input type="date" id="end-date" />
-      </p>
-      <button id="event-search-button">Search</button>
-    </section>
-    <section id="results"><a href="" target=""></a></section>
-    <script src="./assets/js/event-results.js" type="module"></script>
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <!--Seach input-->
+        <section id="search-section" class="box">
+          <div class="columns">
+            <!--Filter-->
+            <div class="column is-5 is-offset-1">
+              <label for="filter-options">Filter by Category</label><br/>
+              <select id="filter-options">
+                <option selected value="all">All</option>
+              </select>
+            </div>
+            <!--Radius-->
+            <div class="column is-5">
+              <p>
+                <label for="radius-input">Search Radius (KM)</label><br>
+                <input class="input is-rounded is-1" type="text" id="radius-input">
+                <!-- <span>km</span> -->
+              </p>
+            </div>
+          </div>
 
-    <!-- Leaflet library link to give distance between person's accommodation location and the event location -->
-    <script
-      src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
-      integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
-      crossorigin=""></script>
+          <!--Keyword-->
+          <div class="columns">
+            <div class="column is-10 is-offset-1">
+              <label for="keyword-input">Enter keywords to search</label><br>
+              <input class="input is-rounded" type="text" placeholder="Keyword" id="keyword-input">
+            </div>
+          </div>
 
-    <!-- 1/4 of page for weather on day of event-->
+          <!--Dates-->
+          <div class="columns">
+            <div class="column is-10 is-offset-1">
+              <p>
+                <label for="start-date">Enter start search date</label>
+                <input type="date" id="start-date" />
+                <label for="end-date">Enter end search date</label>
+                <input type="date" id="end-date" />
+              </p>
+            </div>
+          </div>
+
+          <div class="columns is-centered">
+            <div class="column is-full has-text-centered">
+              <button id="event-search-button" class="button is-rounded">Search</button>
+            </div>
+          </div>
+        </section>
+        
+      <div class="columns box" id="weather-event">
+        <div class="column is-7" id="event-result">
+          <section id="results"><a href="" target=""></a></section>
+          <script src="./assets/js/event-results.js" type="module"></script>
+          <script src="https://code.jquery.com/jquery-1.12.4.js"></script>  
+          <!-- Leaflet library link to give distance between person's accommodation location and the event location -->
+          <script
+            src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+            integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+            crossorigin=""></script>
+          
+          <p class=has-text-weight-bold>Event Results</p>
+        </div>
+
+        <div class="column is-4 is-offset-1" id="weather">
+          <div>
+            <p class="has-text-weight-bold">Weather Results</p>
+          </div>
+        </div>
+      </div>
   </body>
 </html>
