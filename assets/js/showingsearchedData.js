@@ -608,7 +608,6 @@ function SortingbyPRICEreturntickets() {
     if (lengthofRightdata === 1) {
         NewLengthofRightdata = lengthofRightdata + 1;
     } else if (lengthofRightdata === 0) {
-        // data 없음 페이지
 
         NOdata();
 
