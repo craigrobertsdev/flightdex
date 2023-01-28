@@ -81,13 +81,13 @@ function onewayFlightData() {
         ticket.setAttribute("id", "destination-results");
         ticket.setAttribute("class", "columns");
 
-        DEcitydiv.setAttribute("class", "columns is-2");
-        DEtimediv.setAttribute("class", "columns is-2");
-        ARcitydiv.setAttribute("class", "columns is-2");
-        ARtimediv.setAttribute("class", "columns is-2");
-        Classdiv.setAttribute("class", "columns is-1");
-        Costdiv.setAttribute("class", "columns is-1");
-        Passenagerdiv.setAttribute("class", "columns is-1");
+        DEcitydiv.setAttribute("class", "column is-2");
+        DEtimediv.setAttribute("class", "column is-2");
+        ARcitydiv.setAttribute("class", "column is-2");
+        ARtimediv.setAttribute("class", "column is-2");
+        Classdiv.setAttribute("class", "column is-1");
+        Costdiv.setAttribute("class", "column is-1");
+        Passenagerdiv.setAttribute("class", "column is-1");
 
 
         departurecity.textContent = departurecityname + " (" + finalGoingdata.data[i].itineraries[0].segments[0].departure.iataCode + ")";
@@ -234,13 +234,13 @@ function returnFlightData() {
 
             ticket.setAttribute("id", "destination-results");
             ticket.classList = "columns TOticket";
-            DEcitydiv.setAttribute("class", "columns is-2");
-            DEtimediv.setAttribute("class", "columns is-2");
-            ARcitydiv.setAttribute("class", "columns is-2");
-            ARtimediv.setAttribute("class", "columns is-2");
-            Classdiv.setAttribute("class", "columns is-1");
-            Costdiv.setAttribute("class", "columns is-1");
-            Passenagerdiv.setAttribute("class", "columns is-1");
+            DEcitydiv.setAttribute("class", "column is-2");
+            DEtimediv.setAttribute("class", "column is-2");
+            ARcitydiv.setAttribute("class", "column is-2");
+            ARtimediv.setAttribute("class", "column is-2");
+            Classdiv.setAttribute("class", "column is-1");
+            Costdiv.setAttribute("class", "column is-1");
+            Passenagerdiv.setAttribute("class", "column is-1");
 
 
             departurecity.textContent = departurecityname + " (" + finalGoingdata.data[ONEWAYcorrectdatas[j]].itineraries[0].segments[0].departure.iataCode + ")";
@@ -308,13 +308,13 @@ function returnFlightData() {
 
             ticket.setAttribute("id", "destination-results");
             ticket.classList = "columns REticket";
-            DEcitydiv.setAttribute("class", "columns is-2");
-            DEtimediv.setAttribute("class", "columns is-2");
-            ARcitydiv.setAttribute("class", "columns is-2");
-            ARtimediv.setAttribute("class", "columns is-2");
-            Classdiv.setAttribute("class", "columns is-1");
-            Costdiv.setAttribute("class", "columns is-1");
-            Passenagerdiv.setAttribute("class", "columns is-1");
+            DEcitydiv.setAttribute("class", "column is-2");
+            DEtimediv.setAttribute("class", "column is-2");
+            ARcitydiv.setAttribute("class", "column is-2");
+            ARtimediv.setAttribute("class", "column is-2");
+            Classdiv.setAttribute("class", "column is-1");
+            Costdiv.setAttribute("class", "column is-1");
+            Passenagerdiv.setAttribute("class", "column is-1");
 
 
             departurecity.innerHTML = arrivalcityname + " (" + finalreturndata.data[RETURNcorrectdatas[z]].itineraries[0].segments[0].departure.iataCode + ")";
