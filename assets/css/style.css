@@ -1,19 +1,7 @@
+/* General */
 header {
   padding: 20px;
   padding-bottom: 0px;
-}
-
-#input, #result {
-  margin:auto;
-  background-color: white;
-  width: 80%;
-  border: 2px lightgray solid;
-  border-radius: 25px;
-  padding: 20px;
-}
-
-#serachBtn {
-  margin: auto;
 }
 
 button:active {
@@ -26,10 +14,56 @@ button:focus {
 
 h2 {
   padding: 20px;
-  }
+}
+/* Search Page */
+#serachBtn {
+  margin: auto;
+}
 
-  #results-subtitle {
+/* Flights Page */
+#results-subtitle {
   margin: auto;
   width: 80%;
   padding-bottom: 5px;
+}
+
+#input, #result {
+  margin:auto;
+  background-color: white;
+  width: 80%;
+  border: 2px lightgray solid;
+  border-radius: 25px;
+  padding: 20px;
+}
+
+/* Events Page */
+#search-section {
+  margin: auto;
+  background-color: white;
+  width: 40%;
+  border-radius: 25px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+#event-search-button {
+  margin: auto;
+}
+
+#weather-event {
+  width: 90%;
+  margin:auto;
+  background-color: white;
+  border-radius: 25px;
+  padding: 20px;
+}
+
+#event-result {
+  border: 2px lightgray solid;
+  border-radius: 25px;
+}
+
+#weather {
+  border: 2px lightgray solid;
+  border-radius: 25px;
 }

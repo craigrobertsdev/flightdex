@@ -231,11 +231,3 @@ function goingNextpage() {
 timeInterval = setInterval(() => {
   window.location.reload();
 }, 900000) // the token will be generated every 20mins - if you want to test it, change the number to 10000 then will be generated every 10 second
-
-
-
-
-
-
-bulmaSlider.attach();
-

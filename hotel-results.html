@@ -4,14 +4,45 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hotel Results</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
+
+  <!-- Bulma  -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <!--Linked CSS-->
+  <link rel="stylesheet" href="./assets/css/style.css">
+
+  <title>FlightDex Hotel Results</title>
 </head>
 <body>
-    <h1>Results for Hotels in Your Final Destination</h1>
-    <div id="results"></div>
-    
+    <header>
+        <h1 class="title has-text-centered">Welcome to FlightDex! </h1>
+        <h2 class="subtitle has-text-centered">Your #1 Flight, Event & Hotel searcher! </h2>
+        <p class="subtitle" id="results-subtitle">Results for Hotels in Your Final Destination</p>
+    </header>
 
+    <div id="result">
+        <div class="box">
+            <div id="results" class="columns is-multiline">
+                <div class="column is-2 has-text-weight-bold">
+                    <p>Hotel Name</p>
+                </div>
+                <div class="column is-2 has-text-weight-bold">
+                    <p>Check-in Date</p>
+                </div>
+                <div class="column is-2 has-text-weight-bold">
+                    <p>Check-out Date</p>
+                </div>
+                <div class="column is-2 has-text-weight-bold">
+                    <p>No. of Guests</p>
+                </div>
+                <div class="column is-2 has-text-weight-bold">
+                    <p>Cost per Night</p>
+                </div>
+                <div class="column is-2 has-text-weight-bold">
+                    <p>Total Stay Cost</p>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="./assets/js/hotel-results.js"></script>
 </body>
 </html>
