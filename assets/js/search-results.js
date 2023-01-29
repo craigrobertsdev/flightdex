@@ -7,10 +7,10 @@ const economy = document.querySelector('#economy');
 const search = document.querySelector("#search");
 
 
-let departurecityname  = ' ';
-let arrivalcityname  = ' ';
-let finalGoingdata  = { };
-let finalreturndata  = { };
+let departurecityname = ' ';
+let arrivalcityname = ' ';
+let finalGoingdata = {};
+let finalreturndata = {};
 
 
 
@@ -24,8 +24,15 @@ let selectedClass = " ";
 let passenager = " ";
 let ways = " ";
 
+// reload page to initial all inputs
+if (self.name != 'reload') {
+  self.name = 'reload';
+  self.location.reload(true);
+}
+else self.name = '';
 
-
+//clearing old data in localstorage
+localStorage.clear();
 
 
 // fetching currency API
@@ -38,31 +45,32 @@ fetch(`${api}`)
   }).then(function (data) {
     console.log(data);
     localStorage.setItem('currencydata', JSON.stringify(data));
+    //location.reload();
   });
 
 // generate new access-token whenever app starts 
 // if user stays in search page(index page) for more than 20 mins, it will generated new access-token
 
-  const TOKENUrl = "https://api.amadeus.com/v1/security/oauth2/token"
+const TOKENUrl = "https://api.amadeus.com/v1/security/oauth2/token"
 
-  fetch(TOKENUrl, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    },
-    body: 'grant_type=client_credentials&client_id=FgVXIVlEeBmSHOG5GhRdPceveA3CExUw&client_secret=IGDvlEYHGKe0dUiI'
-  }).then(function (response) {
-    return response.json();
-  })
-    .then(function (data) {
-      token_type = data.token_type;
-      accessToken = data.access_token;
-      //ARgetIATAcodeDATA(data);
-      console.log(token_type);
-      console.log(accessToken);
-    });
+fetch(TOKENUrl, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded'
+  },
+  body: 'grant_type=client_credentials&client_id=FgVXIVlEeBmSHOG5GhRdPceveA3CExUw&client_secret=IGDvlEYHGKe0dUiI'
+}).then(function (response) {
+  return response.json();
+})
+  .then(function (data) {
+    token_type = data.token_type;
+    accessToken = data.access_token;
+    //ARgetIATAcodeDATA(data);
+    console.log(token_type);
+    console.log(accessToken);
+  });
 
-  arrival.addEventListener("click", DEgetIATAcodeDATA);
+arrival.addEventListener("click", DEgetIATAcodeDATA);
 
 // getting departure IATA code from finding cityname API 
 function DEgetIATAcodeDATA() {
@@ -114,7 +122,7 @@ function ARgetIATAcodeDATA() {
 }
 
 
-search.addEventListener("click", makingQueryDATA); // it runs when the toggle switch btn clicked
+search.addEventListener("click", makingQueryDATA);
 
 // making querydata function (date,seatclass,oneway or return)
 function makingQueryDATA() {
@@ -154,11 +162,11 @@ function makingQueryDATA() {
   localStorage.setItem('PASSENAGERvalue', passenager);
   console.log(passenager);
 
- 
+
   choosingWAY();
 }
 
-  function choosingWAY() {
+function choosingWAY() {
   if (ways === "ONEWAY") {
     onewayDATA();
 
@@ -192,9 +200,11 @@ function onewayDATA() {
 
       finalGoingdata = data;
       localStorage.setItem('finalGoingdata', JSON.stringify(finalGoingdata));
+
       setInterval(goingNextpage, 5000);
+
     });
-    setInterval(goingNextpage)
+
 }
 
 // return flight
