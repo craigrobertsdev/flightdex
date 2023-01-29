@@ -1,102 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  
-  <!--Linked jQuery UI-->
-  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
-  <!-- Bulma  -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-  <!--Linked CSS-->
-  <link rel="stylesheet" href="./assets/css/style.css">
-  <link rel="stylesheet" href="./assets/css/bulma-calendar.css">
-  
-  <title>FlightDex!</title>
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<body>
-  <header>
-      <h1 class="title has-text-centered">Welcome to FlightDex! </h1>
-      <h2 class="subtitle has-text-centered">Your #1 Flight, Event & Hotel searcher! </h2>
-  </header>
-  
-  <!--This will be the form to input dates & destinations etc!-->
-  <div id="input">
-    <!--Location Input - add Autocomplete-->
-    <div class="columns">
+    <!--Linked jQuery UI-->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+    <!-- Bulma  -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
+    <!--Linked CSS-->
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <link rel="stylesheet" href="./assets/css/bulma-calendar.css" />
+
+    <title>FlightDex!</title>
+  </head>
+
+  <body>
+    <header>
+      <h1 class="title has-text-centered">Welcome to FlightDex!</h1>
+      <h2 class="subtitle has-text-centered">Your #1 Flight, Event & Hotel searcher!</h2>
+    </header>
+
+    <!--This will be the form to input dates & destinations etc!-->
+    <div id="input">
+      <!--Location Input - add Autocomplete-->
+      <div class="columns">
         <div class="column is-5 is-offset-1">
           <div class="control is-loading">
-            <input  id="departure" class="input is-rounded" placeholder="Leaving From?">
+            <input id="departure" class="input is-rounded" placeholder="Leaving From?" />
           </div>
         </div>
-      
+
         <!--Location Input - add Autocomplete-->
         <div class="column is-5">
           <div class="control is-loading">
-            <input id="arrival" class="input is-rounded"  placeholder="Going To?">
+            <input id="arrival" class="input is-rounded" placeholder="Going To?" />
           </div>
         </div>
-    </div>
-    
-    <!--Date Picker-->
-    <div class="columns" > 
-      <div class="column is-10 is-offset-1">
-        <input  type="date">
       </div>
-    </div>
-    
-    <div class="columns">
-      <!--Class Input-->
-      <div class="column is-3 is-offset-1 has-text-centered">
-        <div class="select is-rounded">
-          <select id="select1">
-            <option id="economy" value="ECONOMY">Economy Class</option>
-            <option id="business" value="BUSINESS" >Business Class</option>
-            <option id="first" value="FIRST">First Class</option>
-          </select>
-        </div>
-      </div>
-      
-      <!--Return/One-Way Input-->
-      <div class="column is-4 has-text-centered">
-        <div class="select is-rounded">
-          <select id="select2">
-            <option value="RETURN">Return</option>
-            <option value="ONEWAY" >One Way</option>
-          </select>
+
+      <!--Date Picker-->
+      <div class="columns">
+        <div class="column is-10 is-offset-1">
+          <input type="date" />
         </div>
       </div>
 
-      <!--No. of people -->
-      <div class="column is-3 has-text-centered">
-        <input id="people" class="input is-rounded"  placeholder="No. People" id="arrival">
+      <div class="columns">
+        <!--Class Input-->
+        <div class="column is-3 is-offset-1 has-text-centered">
+          <div class="select is-rounded">
+            <select id="select1">
+              <option id="economy" value="ECONOMY">Economy Class</option>
+              <option id="business" value="BUSINESS">Business Class</option>
+              <option id="first" value="FIRST">First Class</option>
+            </select>
+          </div>
+        </div>
+
+        <!--Return/One-Way Input-->
+        <div class="column is-4 has-text-centered">
+          <div class="select is-rounded">
+            <select id="select2">
+              <option value="RETURN">Return</option>
+              <option value="ONEWAY">One Way</option>
+            </select>
+          </div>
+        </div>
+
+        <!--No. of people -->
+        <div class="column is-3 has-text-centered">
+          <input id="people" class="input is-rounded" placeholder="No. People" />
+        </div>
+      </div>
+
+      <!--Search Button-->
+      <div class="columns is-centered">
+        <div class="column is-full has-text-centered">
+          <button id="search" class="button is-rounded">Search</button>
+        </div>
       </div>
     </div>
-    
-    <!--Search Button-->
-    <div class="columns is-centered">
-      <div class="column is-full has-text-centered">
-        <button id="search" class="button is-rounded">Search</button>
-      </div>
-    </div>
-  </div>
 
-  <footer>
-    <h2 id="tagline" class="subtitle has-text-centered">Your next dream vacation is just one search away!</h2>
-  </footer>
+    <footer>
+      <h2 id="tagline" class="subtitle has-text-centered">Your next dream vacation is just one search away!</h2>
+    </footer>
 
- 
-
-  <!--Linked JS & jQuery-->
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <script src="./assets/js/bulma-calendar.js"></script>
-  <script src="./assets/js/search-results.js"></script>
-  <script src="./assets/js/index.js"></script>
-  
-  
-</body>
+    <!--Linked JS & jQuery-->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="./assets/js/bulma-calendar.js"></script>
+    <script src="./assets/js/search-results.js"></script>
+    <script src="./assets/js/index.js"></script>
+  </body>
 </html>
