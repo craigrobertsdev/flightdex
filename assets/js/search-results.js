@@ -34,44 +34,38 @@ localStorage.clear();
 async function getCurrencyData() {
   const api = 'https://api.exchangerate-api.com/v4/latest/eur';
 
-  return fetch(`${api}`)
-    .then((response) => {
-      return response.json();
-    })
-    .then(function (data) {
-      console.log('returning from getCurrencyData()');
-      localStorage.setItem('currencydata', JSON.stringify(data));
-    });
+  return fetch(`${api}`);
+}
+
+function saveCurrencyData(data) {
+  console.log('returning from getCurrencyData()');
+  localStorage.setItem('currencydata', JSON.stringify(data));
 }
 // generate new access-token whenever app starts
 // if user stays in search page(index page) for more than 20 mins, it will generated new access-token
 
 async function getApiToken() {
   const TOKENUrl = 'https://api.amadeus.com/v1/security/oauth2/token';
-
-  fetch(TOKENUrl, {
+  console.log('entering getApiToken()');
+  return fetch(TOKENUrl, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
     body: 'grant_type=client_credentials&client_id=FgVXIVlEeBmSHOG5GhRdPceveA3CExUw&client_secret=IGDvlEYHGKe0dUiI',
-  })
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (data) {
-      token_type = data.token_type;
-      accessToken = data.access_token;
-      console.log('returning from getApiToken()');
-    });
+  });
 }
 
-//arrival.addEventListener("click", DEgetIATAcodeDATA);
+function saveToken(data) {
+  token_type = data.token_type;
+  accessToken = data.access_token;
+  console.log('returning from getApiToken()');
+}
 
 // getting departure IATA code from finding cityname API
 async function DEgetIATAcodeDATA() {
   let FetchHEADER = token_type + ' ' + accessToken;
-  console.log(FetchHEADER);
+  console.log('entering DEgetIATAcodeDATA()');
   let DErequestUrl =
     'https://api.amadeus.com/v1/reference-data/locations?subType=CITY&keyword=' +
     userdeparture.value.toUpperCase() +
@@ -79,25 +73,21 @@ async function DEgetIATAcodeDATA() {
 
   return fetch(DErequestUrl, {
     headers: { Authorization: FetchHEADER },
-  })
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (data) {
-      DEiatacode = data.data[0].iataCode;
-      localStorage.setItem('departurecitycode', DEiatacode);
-      departurecityname = userdeparture.value.toUpperCase();
-      localStorage.setItem('departurecityname', departurecityname);
-      console.log('returning from DEgetIATAcodeDATA()');
-    });
+  });
 }
 
-//people.addEventListener("click", ARgetIATAcodeDATA);
+function saveDepartureIataData(data) {
+  DEiatacode = data.data[0].iataCode;
+  localStorage.setItem('departurecitycode', DEiatacode);
+  departurecityname = userdeparture.value.toUpperCase();
+  localStorage.setItem('departurecityname', departurecityname);
+  console.log('returning from DEgetIATAcodeDATA()');
+}
 
 // getting arrival IATA code from finding cityname API
 async function ARgetIATAcodeDATA() {
   let FetchHEADER = token_type + ' ' + accessToken;
-
+  console.log('entering ARgetIATAcodeDATA()');
   let DErequestUrl =
     'https://api.amadeus.com/v1/reference-data/locations?subType=CITY&keyword=' +
     arrival.value.toUpperCase() +
@@ -105,17 +95,15 @@ async function ARgetIATAcodeDATA() {
 
   return fetch(DErequestUrl, {
     headers: { Authorization: FetchHEADER },
-  })
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (data) {
-      ARiatacode = data.data[0].iataCode;
-      localStorage.setItem('arrivalcitycode', ARiatacode);
-      arrivalcityname = arrival.value.toUpperCase();
-      localStorage.setItem('arrivalcityname', arrivalcityname);
-      console.log('returning from ARgetIATAcodeDATA()');
-    });
+  });
+}
+
+function saveArrivalIataData(data) {
+  ARiatacode = data.data[0].iataCode;
+  localStorage.setItem('arrivalcitycode', ARiatacode);
+  arrivalcityname = arrival.value.toUpperCase();
+  localStorage.setItem('arrivalcityname', arrivalcityname);
+  console.log('returning from ARgetIATAcodeDATA()');
 }
 
 search.addEventListener('click', makingQueryDATA);
@@ -141,9 +129,21 @@ async function makingQueryDATA() {
   // deal with asynchronous code here
 
   // wait for API token to be obtained before moving on
-  await getApiToken();
-  // call methods that get data for flight queries
-  Promise.all([getCurrencyData(), DEgetIATAcodeDATA(), ARgetIATAcodeDATA()]);
+  const tokenResponse = await getApiToken();
+  const tokenData = await tokenResponse.json();
+  saveToken(tokenData);
+
+  // get data from APIs for flight queries
+  const [currencyData, departureData, arrivalData] = await callApis();
+
+  console.log(currencyData);
+  console.log(departureData);
+  console.log(arrivalData);
+
+  // save the necessary information
+  saveCurrencyData(currencyData);
+  saveArrivalIataData(arrivalData);
+  saveDepartureIataData(departureData);
 
   // call once all data has been obtained and saved to local storage
   if (wayvalue === 'ONEWAY') {
@@ -232,7 +232,7 @@ async function returnDATA() {
 
 //going next page function
 function goingNextpage() {
-  console.log("goingnextpage()")
+  console.log('goingnextpage()');
   //window.location.href = './flight-results.html';
 }
 
@@ -240,6 +240,7 @@ timeInterval = setInterval(() => {
   window.location.reload();
 }, 900000); // the token will be generated every 20mins - if you want to test it, change the number to 10000 then will be generated every 10 second
 
+// changes date format from DD/MM/YYYY to YYYY-MM-DD
 function manipulateDates() {
   const traveldate = localStorage.getItem('date');
   let dateformatchange = traveldate.split(' ');
@@ -257,4 +258,23 @@ function manipulateDates() {
   console.log(ARdateforquery);
   localStorage.setItem('departureDate', DEdateforquery);
   localStorage.setItem('arrivalDate', ARdateforquery);
+}
+
+async function callApis() {
+  const currencyResponse = getCurrencyData().then((response) => {
+    return response.json();
+  });
+
+  const departureResponse = DEgetIATAcodeDATA().then((response) => {
+    return response.json();
+  });
+
+  const arrivalResponse = ARgetIATAcodeDATA().then((response) => {
+    return response.json();
+  });
+
+  // awaitng the processing of the JSON response
+  const responses = await Promise.all([currencyResponse, departureResponse, arrivalResponse]);
+
+  return [responses[0], responses[1], responses[2]];
 }
