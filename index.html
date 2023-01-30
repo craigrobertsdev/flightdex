@@ -28,15 +28,15 @@
     <!--Location Input - add Autocomplete-->
     <div class="columns">
         <div class="column is-5 is-offset-1">
-          <div class="control is-loading">
-            <input  id="departure" class="input is-rounded" placeholder="Leaving From?">
+          <div class="control">
+            <input  id="departure" class="input is-rounded is-primary" placeholder="Leaving From?">
           </div>
         </div>
       
         <!--Location Input - add Autocomplete-->
         <div class="column is-5">
-          <div class="control is-loading">
-            <input id="arrival" class="input is-rounded"  placeholder="Going To?">
+          <div class="control">
+            <input id="arrival" class="input is-rounded is-primary"  placeholder="Going To?">
           </div>
         </div>
     </div>
@@ -44,14 +44,14 @@
     <!--Date Picker-->
     <div class="columns" > 
       <div class="column is-10 is-offset-1">
-        <input  type="date">
+        <input type="date">
       </div>
     </div>
     
     <div class="columns">
       <!--Class Input-->
-      <div class="column is-3 is-offset-1 has-text-centered">
-        <div class="select is-rounded">
+      <div class="column is-3 is-offset-1">
+        <div class="select is-rounded is-primary is-outlined">
           <select id="select1">
             <option id="economy" value="ECONOMY">Economy Class</option>
             <option id="business" value="BUSINESS" >Business Class</option>
@@ -62,7 +62,7 @@
       
       <!--Return/One-Way Input-->
       <div class="column is-4 has-text-centered">
-        <div class="select is-rounded">
+        <div class="select is-rounded is-primary is-outlined">
           <select id="select2">
             <option value="RETURN">Return</option>
             <option value="ONEWAY" >One Way</option>
@@ -71,15 +71,22 @@
       </div>
 
       <!--No. of people -->
-      <div class="column is-3 has-text-centered">
-        <input id="people" class="input is-rounded"  placeholder="No. People" id="arrival">
+      <div class="column is-3 has-text-right">
+        <div class="select is-rounded is-primary is-outlined">
+          <select id="select2">
+            <option value="Pass1">1</option>
+            <option value="Pass2">2</option>
+            <option value="Pass3">3</option>
+            <option value="Pass4">4</option>
+          </select>
+        </div>
       </div>
     </div>
     
     <!--Search Button-->
     <div class="columns is-centered">
       <div class="column is-full has-text-centered">
-        <button id="search" class="button is-rounded">Search</button>
+        <button type="button" class="button is-rounded" id="search">Search</button>
       </div>
     </div>
   </div>
