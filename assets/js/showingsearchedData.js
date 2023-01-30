@@ -5,7 +5,7 @@ const returnh3 = document.querySelector("#location-from");
 const returndiv = document.querySelector("#returndiv");
 
 const togodiv = document.querySelector("#togodiv");
-
+const sliderWithValue = document.querySelector("#sliderWithValue");
 
 
 
@@ -21,6 +21,8 @@ const departurecityname = localStorage.getItem('departurecityname');
 const arrivalcityname = localStorage.getItem('arrivalcityname');
 const departurecitycode = localStorage.getItem('departurecitycode');
 const arrivalcitycode = localStorage.getItem('arrivalcitycode');
+const departureDate = localStorage.getItem('departureDate');
+const arrivalDate = localStorage.getItem('arrivalDate');
 
 let ONEWAYcorrectdatas = [];
 let RETURNcorrectdatas = [];
@@ -28,6 +30,7 @@ let lengthofRightdata = 0;
 let lengthtogoforDELETE = 0;
 let lengthreturnforDELETE = 0;
 let Slidervalue = 0;
+
 
 
 
@@ -64,79 +67,89 @@ function onewayFlightData() {
 
     } else {
 
-    for (i = 0; i < ONEWAYcorrectdatas.length; i++) {
-        const ticket = document.createElement("div");
-        const DEcitydiv = document.createElement("div");
-        const DEtimediv = document.createElement("div");
-        const ARcitydiv = document.createElement("div");
-        const ARtimediv = document.createElement("div");
-        const Classdiv = document.createElement("div");
-        const Costdiv = document.createElement("div");
-        const Passenagerdiv = document.createElement("div");
-        const p1 = document.createElement("p");
-        const departurecity = document.createElement("p");
-        const p2 = document.createElement("p");
-        const DEtime = document.createElement("p");
-        const p3 = document.createElement("p");
-        const arrivalcity = document.createElement("p");
-        const p4 = document.createElement("p");
-        const ARtime = document.createElement("p");
-        const p5 = document.createElement("p");
-        const flightclass = document.createElement("p");
-        const p6 = document.createElement("p");
-        const price = document.createElement("p");
-        const p7 = document.createElement("p");
-        const passenager = document.createElement("p");
+        for (i = 0; i < ONEWAYcorrectdatas.length; i++) {
+            const ticket = document.createElement("div");
+            const DEcitydiv = document.createElement("div");
+            const DEtimediv = document.createElement("div");
+            const ARcitydiv = document.createElement("div");
+            const ARtimediv = document.createElement("div");
+            const Classdiv = document.createElement("div");
+            const Costdiv = document.createElement("div");
+            const Passenagerdiv = document.createElement("div");
+            const p1 = document.createElement("p");
+            const departurecity = document.createElement("p");
+            const p2 = document.createElement("p");
+            const DEtime = document.createElement("p");
+            const p3 = document.createElement("p");
+            const arrivalcity = document.createElement("p");
+            const p4 = document.createElement("p");
+            const ARtime = document.createElement("p");
+            const p5 = document.createElement("p");
+            const flightclass = document.createElement("p");
+            const p6 = document.createElement("p");
+            const price = document.createElement("p");
+            const p7 = document.createElement("p");
+            const passenager = document.createElement("p");
 
 
-        ticket.setAttribute("id", "destination-results");
-        ticket.classList = "columns TOticket";
+            ticket.setAttribute("id", "destination-results");
+            ticket.classList = "columns TOticket";
 
-        DEcitydiv.setAttribute("class", "column is-2");
-        DEtimediv.setAttribute("class", "column is-2");
-        ARcitydiv.setAttribute("class", "column is-2");
-        ARtimediv.setAttribute("class", "column is-2");
-        Classdiv.setAttribute("class", "column is-1");
-        Costdiv.setAttribute("class", "column is-1");
-        Passenagerdiv.setAttribute("class", "column is-1");
-
-
-        departurecity.textContent = departurecityname + " (" + finalGoingdata.data[i].itineraries[0].segments[0].departure.iataCode + ")";
-        arrivalcity.textContent = arrivalcityname + " (" + finalGoingdata.data[i].itineraries[0].segments[0].arrival.iataCode + ")";
-        DEtime.textContent = finalGoingdata.data[i].itineraries[0].segments[0].departure.at;
-        ARtime.textContent = finalGoingdata.data[i].itineraries[0].segments[0].arrival.at;
-        flightclass.textContent = finalGoingdata.data[i].travelerPricings[0].fareDetailsBySegment[0].cabin;
-        let AUDprice = currencydata.rates.AUD * finalGoingdata.data[i].price.total;
-        price.textContent = AUDprice.toFixed(2) + " AUD";
-        passenager.textContent = PASSENAGERvalue;
+            DEcitydiv.setAttribute("class", "column is-2");
+            DEtimediv.setAttribute("class", "column is-2");
+            ARcitydiv.setAttribute("class", "column is-2");
+            ARtimediv.setAttribute("class", "column is-2");
+            Classdiv.setAttribute("class", "column is-1");
+            Costdiv.setAttribute("class", "column is-1");
+            Passenagerdiv.setAttribute("class", "column is-1");
 
 
-        ticket.appendChild(DEcitydiv);
-        ticket.appendChild(DEtimediv);
-        ticket.appendChild(ARcitydiv);
-        ticket.appendChild(ARtimediv);
-        ticket.appendChild(Classdiv);
-        ticket.appendChild(Costdiv);
-        ticket.appendChild(Passenagerdiv);
-        DEcitydiv.appendChild(p1);
-        p1.appendChild(departurecity);
-        DEtimediv.appendChild(p2);
-        p2.appendChild(arrivalcity);
-        ARcitydiv.appendChild(p3);
-        p3.appendChild(DEtime);
-        ARtimediv.appendChild(p4);
-        p4.appendChild(ARtime);
-        Classdiv.appendChild(p5);
-        p5.appendChild(flightclass);
-        Costdiv.appendChild(p6);
-        p6.appendChild(price);
-        Passenagerdiv.appendChild(p7);
-        p7.appendChild(passenager);
+            departurecity.textContent = departurecityname + " (" + finalGoingdata.data[ONEWAYcorrectdatas[i]].itineraries[0].segments[0].departure.iataCode + ")";
+            arrivalcity.textContent = arrivalcityname + " (" + finalGoingdata.data[ONEWAYcorrectdatas[i]].itineraries[0].segments[0].arrival.iataCode + ")";
+            
+            let DEdatefromDATA = finalGoingdata.data[ONEWAYcorrectdatas[i]].itineraries[0].segments[0].departure.at;
+            const DEdateformatchange = DEdatefromDATA.split('T');
+            const actualDEdate = DEdateformatchange[0];
+            const actualDEtime = DEdateformatchange[1];
+            let actualfromDATA = finalGoingdata.data[ONEWAYcorrectdatas[i]].itineraries[0].segments[0].arrival.at;
+            const ARdateformatchange = actualfromDATA.split('T');
+            const actualARdate = DEdateformatchange[0];
+            const actualARtime = ARdateformatchange[1];
+            DEtime.textContent = actualDEdate +' - '+ actualDEtime;
+            ARtime.textContent = actualARdate +' - '+ actualARtime;
+            
+            flightclass.textContent = finalGoingdata.data[ONEWAYcorrectdatas[i]].travelerPricings[0].fareDetailsBySegment[0].cabin;
+            let AUDprice = currencydata.rates.AUD * finalGoingdata.data[ONEWAYcorrectdatas[i]].price.total;
+            price.textContent = AUDprice.toFixed(2) + " AUD";
+            passenager.textContent = PASSENAGERvalue;
 
-        const destination = document.getElementById('destination-results');
-        destination.insertAdjacentElement('afterend', ticket);
+
+            ticket.appendChild(DEcitydiv);
+            ticket.appendChild(DEtimediv);
+            ticket.appendChild(ARcitydiv);
+            ticket.appendChild(ARtimediv);
+            ticket.appendChild(Classdiv);
+            ticket.appendChild(Costdiv);
+            ticket.appendChild(Passenagerdiv);
+            DEcitydiv.appendChild(p1);
+            p1.appendChild(departurecity);
+            DEtimediv.appendChild(p2);
+            p2.appendChild(arrivalcity);
+            ARcitydiv.appendChild(p3);
+            p3.appendChild(DEtime);
+            ARtimediv.appendChild(p4);
+            p4.appendChild(ARtime);
+            Classdiv.appendChild(p5);
+            p5.appendChild(flightclass);
+            Costdiv.appendChild(p6);
+            p6.appendChild(price);
+            Passenagerdiv.appendChild(p7);
+            p7.appendChild(passenager);
+
+            const destination = document.getElementById('destination-results');
+            destination.insertAdjacentElement('afterend', ticket);
+        }
     }
-}
 }
 
 
@@ -151,7 +164,7 @@ function returnFlightData() {
     const hearder2 = document.createElement("p");
     going.innerHTML = departurecityname + " (" + departurecitycode + ")" + " ----> " + arrivalcityname + " (" + arrivalcitycode + ")";
     hearder2.innerHTML = arrivalcityname + " (" + arrivalcitycode + ")" + " ----> " + departurecityname + " (" + departurecitycode + ")";
-    going.appendChild(hearder2);
+    returnh3.appendChild(hearder2);
 
 
     for (i = 0; i < 20; i++) {
@@ -258,8 +271,18 @@ function returnFlightData() {
 
             departurecity.textContent = departurecityname + " (" + finalGoingdata.data[ONEWAYcorrectdatas[j]].itineraries[0].segments[0].departure.iataCode + ")";
             arrivalcity.textContent = arrivalcityname + " (" + finalGoingdata.data[ONEWAYcorrectdatas[j]].itineraries[0].segments[0].arrival.iataCode + ")";
-            DEtime.textContent = finalGoingdata.data[ONEWAYcorrectdatas[j]].itineraries[0].segments[0].departure.at;
-            ARtime.textContent = finalGoingdata.data[ONEWAYcorrectdatas[j]].itineraries[0].segments[0].arrival.at;
+            
+            let DEdatefromDATA = finalGoingdata.data[ONEWAYcorrectdatas[j]].itineraries[0].segments[0].departure.at;
+            const DEdateformatchange = DEdatefromDATA.split('T');
+            const actualDEdate = DEdateformatchange[0];
+            const actualDEtime = DEdateformatchange[1];
+            let actualfromDATA = finalGoingdata.data[ONEWAYcorrectdatas[j]].itineraries[0].segments[0].arrival.at;
+            const ARdateformatchange = actualfromDATA.split('T');
+            const actualARdate = DEdateformatchange[0];
+            const actualARtime = ARdateformatchange[1];
+            DEtime.textContent = actualDEdate +' - '+ actualDEtime;
+            ARtime.textContent = actualARdate +' - '+ actualARtime;
+            
             flightclass.textContent = finalGoingdata.data[ONEWAYcorrectdatas[j]].travelerPricings[0].fareDetailsBySegment[0].cabin;
             let AUDprice = currencydata.rates.AUD * finalGoingdata.data[ONEWAYcorrectdatas[j]].price.total;
             price.textContent = AUDprice.toFixed(2) + " AUD";
@@ -332,8 +355,18 @@ function returnFlightData() {
 
             departurecity.innerHTML = arrivalcityname + " (" + finalreturndata.data[RETURNcorrectdatas[z]].itineraries[0].segments[0].departure.iataCode + ")";
             arrivalcity.innerHTML = departurecityname + " (" + finalreturndata.data[RETURNcorrectdatas[z]].itineraries[0].segments[0].arrival.iataCode + ")";
-            DEtime.innerHTML = finalreturndata.data[RETURNcorrectdatas[z]].itineraries[0].segments[0].departure.at;
-            ARtime.innerHTML = finalreturndata.data[RETURNcorrectdatas[z]].itineraries[0].segments[0].arrival.at;
+            
+            let DEdatefromDATA = finalreturndata.data[RETURNcorrectdatas[z]].itineraries[0].segments[0].departure.at;
+            const DEdateformatchange = DEdatefromDATA.split('T');
+            const actualDEdate = DEdateformatchange[0];
+            const actualDEtime = DEdateformatchange[1];
+            let actualfromDATA = finalreturndata.data[RETURNcorrectdatas[z]].itineraries[0].segments[0].arrival.at;
+            const ARdateformatchange = actualfromDATA.split('T');
+            const actualARdate = DEdateformatchange[0];
+            const actualARtime = ARdateformatchange[1];
+            DEtime.textContent = actualDEdate +' - '+ actualDEtime;
+            ARtime.textContent = actualARdate +' - '+ actualARtime;
+            
             flightclass.innerHTML = finalreturndata.data[RETURNcorrectdatas[z]].travelerPricings[0].fareDetailsBySegment[0].cabin;
             let AUDprice = currencydata.rates.AUD * finalreturndata.data[RETURNcorrectdatas[z]].price.total
             price.innerHTML = AUDprice.toFixed(2) + " AUD";
@@ -446,14 +479,20 @@ function Deletereturnresult() {
         returnh3.setAttribute("style", "display:block;");
         returndiv.setAttribute("style", "display:block;");
     }
-   
 
-        Slidervalue = Newslidervalue.value;
+
+    Slidervalue = Newslidervalue.value;
     SortingbyPRICEreturntickets();
 }
 
 function SortingbyPRICEonewaytickets() {
-    console.log("shit");
+    
+    for (i = 0; i < 20; i++) {
+        if(currencydata.rates.AUD * finalGoingdata.data[i].price.total > 1000){
+            sliderWithValue.setAttribute("max","10000");
+        }
+        }
+
     ONEWAYcorrectdatas = [];
     console.log(ONEWAYcorrectdatas);
     going.textContent = departurecityname + " (" + finalGoingdata.data[0].itineraries[0].segments[0].departure.iataCode + ")" + " ----> " + arrivalcityname + " (" + finalGoingdata.data[0].itineraries[0].segments[0].arrival.iataCode + ")";
@@ -473,7 +512,7 @@ function SortingbyPRICEonewaytickets() {
         NOdata();
 
     } else {
-    
+
         for (i = 0; i < ONEWAYcorrectdatas.length; i++) {
             const ticket = document.createElement("div");
             const DEcitydiv = document.createElement("div");
@@ -511,12 +550,22 @@ function SortingbyPRICEonewaytickets() {
             Passenagerdiv.setAttribute("class", "column is-1");
 
 
-            departurecity.textContent = departurecityname + " (" + finalGoingdata.data[i].itineraries[0].segments[0].departure.iataCode + ")";
-            arrivalcity.textContent = arrivalcityname + " (" + finalGoingdata.data[i].itineraries[0].segments[0].arrival.iataCode + ")";
-            DEtime.textContent = finalGoingdata.data[i].itineraries[0].segments[0].departure.at;
-            ARtime.textContent = finalGoingdata.data[i].itineraries[0].segments[0].arrival.at;
-            flightclass.textContent = finalGoingdata.data[i].travelerPricings[0].fareDetailsBySegment[0].cabin;
-            let AUDprice = currencydata.rates.AUD * finalGoingdata.data[i].price.total;
+            departurecity.textContent = departurecityname + " (" + finalGoingdata.data[ONEWAYcorrectdatas[i]].itineraries[0].segments[0].departure.iataCode + ")";
+            arrivalcity.textContent = arrivalcityname + " (" + finalGoingdata.data[ONEWAYcorrectdatas[i]].itineraries[0].segments[0].arrival.iataCode + ")";
+            
+            let DEdatefromDATA = finalGoingdata.data[ONEWAYcorrectdatas[i]].itineraries[0].segments[0].departure.at;
+            const DEdateformatchange = DEdatefromDATA.split('T');
+            const actualDEdate = DEdateformatchange[0];
+            const actualDEtime = DEdateformatchange[1];
+            let actualfromDATA = finalGoingdata.data[ONEWAYcorrectdatas[i]].itineraries[0].segments[0].arrival.at;
+            const ARdateformatchange = actualfromDATA.split('T');
+            const actualARdate = DEdateformatchange[0];
+            const actualARtime = ARdateformatchange[1];
+            DEtime.textContent = actualDEdate +' - '+ actualDEtime;
+            ARtime.textContent = actualARdate +' - '+ actualARtime;
+            
+            flightclass.textContent = finalGoingdata.data[ONEWAYcorrectdatas[i]].travelerPricings[0].fareDetailsBySegment[0].cabin;
+            let AUDprice = currencydata.rates.AUD * finalGoingdata.data[ONEWAYcorrectdatas[i]].price.total;
             price.textContent = AUDprice.toFixed(2) + " AUD";
             passenager.textContent = PASSENAGERvalue;
 
@@ -549,15 +598,18 @@ function SortingbyPRICEonewaytickets() {
     }
 }
 function SortingbyPRICEreturntickets() {
-    console.log("fuck");
+    
+        
+    for (i = 0; i < 20; i++) {
+        if(currencydata.rates.AUD * finalGoingdata.data[i].price.total > 1000 || currencydata.rates.AUD * finalreturndata.data[i].price.total > 1000){
+            sliderWithValue.setAttribute("max","10000");
+        }
+        }
+
     ONEWAYcorrectdatas = [];
     RETURNcorrectdatas = [];
 
-    const hearder2 = document.createElement("p");
-    going.innerHTML = departurecityname + " (" + departurecitycode + ")" + " ----> " + arrivalcityname + " (" + arrivalcitycode + ")";
-    hearder2.innerHTML = arrivalcityname + " (" + arrivalcitycode + ")" + " ----> " + departurecityname + " (" + departurecitycode + ")";
-    going.appendChild(hearder2);
-
+  
 
     for (i = 0; i < 20; i++) {
         if (finalGoingdata.data[i].itineraries[0].segments[0].departure.iataCode === departurecitycode && finalGoingdata.data[i].itineraries[0].segments[0].arrival.iataCode === arrivalcitycode && currencydata.rates.AUD * finalGoingdata.data[i].price.total < Slidervalue) {
@@ -599,7 +651,7 @@ function SortingbyPRICEreturntickets() {
         lengthofRightdata = lengthofRightdata - 1;
     } else {
         lengthofRightdata = lengthofRightdata;
-        lengthtogoforDELETE =lengthofRightdata;
+        lengthtogoforDELETE = lengthofRightdata;
     }
 
     console.log(lengthofRightdata);
@@ -663,8 +715,18 @@ function SortingbyPRICEreturntickets() {
 
             departurecity.textContent = departurecityname + " (" + finalGoingdata.data[ONEWAYcorrectdatas[j]].itineraries[0].segments[0].departure.iataCode + ")";
             arrivalcity.textContent = arrivalcityname + " (" + finalGoingdata.data[ONEWAYcorrectdatas[j]].itineraries[0].segments[0].arrival.iataCode + ")";
-            DEtime.textContent = finalGoingdata.data[ONEWAYcorrectdatas[j]].itineraries[0].segments[0].departure.at;
-            ARtime.textContent = finalGoingdata.data[ONEWAYcorrectdatas[j]].itineraries[0].segments[0].arrival.at;
+            
+            let DEdatefromDATA = finalGoingdata.data[ONEWAYcorrectdatas[j]].itineraries[0].segments[0].departure.at;
+            const DEdateformatchange = DEdatefromDATA.split('T');
+            const actualDEdate = DEdateformatchange[0];
+            const actualDEtime = DEdateformatchange[1];
+            let actualfromDATA = finalGoingdata.data[ONEWAYcorrectdatas[j]].itineraries[0].segments[0].arrival.at;
+            const ARdateformatchange = actualfromDATA.split('T');
+            const actualARdate = DEdateformatchange[0];
+            const actualARtime = ARdateformatchange[1];
+            DEtime.textContent = actualDEdate +' - '+ actualDEtime;
+            ARtime.textContent = actualARdate +' - '+ actualARtime;
+            
             flightclass.textContent = finalGoingdata.data[ONEWAYcorrectdatas[j]].travelerPricings[0].fareDetailsBySegment[0].cabin;
             let AUDprice = currencydata.rates.AUD * finalGoingdata.data[ONEWAYcorrectdatas[j]].price.total;
             price.textContent = AUDprice.toFixed(2) + " AUD";
@@ -737,8 +799,18 @@ function SortingbyPRICEreturntickets() {
 
             departurecity.innerHTML = arrivalcityname + " (" + finalreturndata.data[RETURNcorrectdatas[z]].itineraries[0].segments[0].departure.iataCode + ")";
             arrivalcity.innerHTML = departurecityname + " (" + finalreturndata.data[RETURNcorrectdatas[z]].itineraries[0].segments[0].arrival.iataCode + ")";
-            DEtime.innerHTML = finalreturndata.data[RETURNcorrectdatas[z]].itineraries[0].segments[0].departure.at;
-            ARtime.innerHTML = finalreturndata.data[RETURNcorrectdatas[z]].itineraries[0].segments[0].arrival.at;
+            
+            let DEdatefromDATA = finalreturndata.data[RETURNcorrectdatas[z]].itineraries[0].segments[0].departure.at;
+            const DEdateformatchange = DEdatefromDATA.split('T');
+            const actualDEdate = DEdateformatchange[0];
+            const actualDEtime = DEdateformatchange[1];
+            let actualfromDATA = finalreturndata.data[RETURNcorrectdatas[z]].itineraries[0].segments[0].arrival.at;
+            const ARdateformatchange = actualfromDATA.split('T');
+            const actualARdate = DEdateformatchange[0];
+            const actualARtime = ARdateformatchange[1];
+            DEtime.textContent = actualDEdate +' - '+ actualDEtime;
+            ARtime.textContent = actualARdate +' - '+ actualARtime;
+            
             flightclass.innerHTML = finalreturndata.data[RETURNcorrectdatas[z]].travelerPricings[0].fareDetailsBySegment[0].cabin;
             let AUDprice = currencydata.rates.AUD * finalreturndata.data[RETURNcorrectdatas[z]].price.total
             price.innerHTML = AUDprice.toFixed(2) + " AUD";
@@ -773,3 +845,6 @@ function SortingbyPRICEreturntickets() {
         } else return;
     }
 }
+
+
+
