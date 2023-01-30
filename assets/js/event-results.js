@@ -22,8 +22,8 @@ const keywordInput = $('#keyword-input');
 const searchButton = $('#event-search-button');
 const startDateInput = $('#start-date');
 const endDateInput = $('#end-date');
-const location = JSON.parse(localStorage.getItem('arrivalcitynamedata')).data[0].address.cityName;
-const { latitude, longitude } = JSON.parse(localStorage.getItem('arrivalcitynamedata')).data[0].geoCode;
+const location = localStorage.getItem('arrivalcityname');
+const [latitude, longitude] = await getLatLong(location);
 
 // stores different options for building a query string
 const options = {};
@@ -54,6 +54,12 @@ function buildUrl(options) {
   }
 
   return urlArr.join('');
+}
+
+async function getLatLong(location) {
+  const response = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=5&appid=7d23a37898f652dad9213e544cd70c75`);
+  const data = await response.json();
+  return [data[0].lat, data[0].lon];
 }
 
 function getEvents(url) {
