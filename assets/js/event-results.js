@@ -28,9 +28,9 @@ const [latitude, longitude] = await getLatLong(location);
 // stores different options for building a query string
 const options = {};
 
-options.startDateTime = localStorage.getItem('arrivalDate');
-options.endDateTime = localStorage.getItem('departureDate');
-options.geoPoint = Geohash.encode(latitude, longitude, 6);
+options.startDateTime = localStorage.getItem('departureDate');
+options.endDateTime = localStorage.getItem('arrivalDate');
+options.geoPoint = Geohash.encode(latitude, longitude, 8);
 
 // Default radius to search for from accommodation location. Can be modified by user in radiusInput
 options.radius = 30;
@@ -39,7 +39,7 @@ let url = buildUrl(options);
 // data from API query
 let resultData;
 
-$(titleText).text(`Showing events within ${options.radius} miles of ${toTitleCase(location)}`);
+$(titleText).text(`Showing events within ${options.radius}km of ${toTitleCase(location)}`);
 
 // takes an options object, iterates over it and produces a query string that the TicketMaster API accepts.
 function buildUrl(options) {
@@ -57,12 +57,13 @@ function buildUrl(options) {
 }
 
 async function getLatLong(location) {
-  const response = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=5&appid=7d23a37898f652dad9213e544cd70c75`);
+  const response = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=5&appid=7d23a37898f652dad9213e544cd70c75`);
   const data = await response.json();
   return [data[0].lat, data[0].lon];
 }
 
 function getEvents(url) {
+  console.log(url);
   fetch(url)
     .then((response) => {
       // if fetch request successful, return response in JSON format
@@ -93,7 +94,11 @@ function getEvents(url) {
 
 // clears the current resultData section and displays the currently filtered options
 function displayResults(resultData) {
+  $(titleText).text(`Showing events within ${options.radius}km of ${toTitleCase(location)}`);
   $(resultsSection).html('');
+  // replace the event results header after clearing all html
+  $(resultsSection).append($('<p class="has-text-weight-bold">Event Results</p>'));
+
   const iterations = resultData.length > 10 ? 10 : resultData.length;
 
   for (let i = 0; i < iterations; i++) {
@@ -161,7 +166,7 @@ $(searchButton).on('click', function (event) {
   event.preventDefault();
   if ($(radiusInput).val()) {
     // API uses miles but site is built for users who deal in km
-    options.radius = convertToMiles($(radiusInput).val());
+    options.radius = $(radiusInput).val();
   }
 
   if ($(keywordInput).val()) {
@@ -180,10 +185,6 @@ $(searchButton).on('click', function (event) {
   getEvents(queryString);
   determineEventTypes();
 });
-
-function convertToMiles(km) {
-  return Math.floor(km * 0.621371);
-}
 
 // converts data stored in local storage to title case rather than all uppercase
 function toTitleCase(inputString) {
