@@ -147,25 +147,26 @@ async function makingQueryDATA() {
 
   // call once all data has been obtained and saved to local storage
   if (wayvalue === 'ONEWAY') {
-    await onewayDATA();
+    const oneWayResponse = await onewayDATA();
+    const oneWayData = await oneWayResponse.json();
+    saveOneWayData(oneWayData);
   } else {
-    Promise.all([onewayDATA(), returnDATA()]);
+    const oneWayResponse = onewayDATA().then((response) => {
+      return response.json();
+    });
+
+    const returnResponse = returnDATA().then((response) => {
+      return response.json();
+    });
+
+    const [oneWayData, returnData] = await Promise.all([oneWayResponse, returnResponse]);
+    saveOneWayData(oneWayData);
+    saveReturnData(returnData);
   }
   // finally load next page
   goingNextpage();
 }
-
-async function choosingWAY(wayvalue) {
-  if (wayvalue === 'ONEWAY') {
-    onewayDATA();
-  }
-
-  if (wayvalue === 'RETURN') {
-    onewayDATA();
-    returnDATA();
-  }
-}
-
+('https://api.amadeus.com/v2/shopping/flight-offers?originLocationCode=SYD&destinationLocationCode=ADL&departureDate=2023-01-17&adults=1&travelClass=ECONOMY&nonStop=false&max=250');
 //going flight
 async function onewayDATA() {
   let FetchHEADER = token_type + ' ' + accessToken;
@@ -186,17 +187,13 @@ async function onewayDATA() {
 
   return fetch(requestUrlgoing, {
     headers: { Authorization: FetchHEADER },
-  })
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (data) {
-      finalGoingdata = data;
-      localStorage.setItem('finalGoingdata', JSON.stringify(finalGoingdata));
-      console.log('returning from onewayDATA()');
+  });
+}
 
-      //setInterval(goingNextpage, 5000);
-    });
+function saveOneWayData(data) {
+  finalGoingdata = data;
+  localStorage.setItem('finalGoingdata', JSON.stringify(finalGoingdata));
+  console.log('returning from onewayDATA()');
 }
 
 // return flight
@@ -219,43 +216,31 @@ async function returnDATA() {
 
   return fetch(requestUrlreturn, {
     headers: { Authorization: FetchHEADER },
-  })
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (data) {
-      finalreturndata = data;
-      localStorage.setItem('finalreturndata', JSON.stringify(finalreturndata));
-      console.log('returning from returnDATA()');
-    });
+  });
+}
+
+function saveReturnData(data) {
+  finalreturndata = data;
+  localStorage.setItem('finalreturndata', JSON.stringify(finalreturndata));
+  console.log('returning from returnDATA()');
 }
 
 //going next page function
 function goingNextpage() {
-  console.log('goingnextpage()');
-  //window.location.href = './flight-results.html';
+  window.location.href = './flight-results.html';
 }
-
-timeInterval = setInterval(() => {
-  window.location.reload();
-}, 900000); // the token will be generated every 20mins - if you want to test it, change the number to 10000 then will be generated every 10 second
 
 // changes date format from DD/MM/YYYY to YYYY-MM-DD
 function manipulateDates() {
   const traveldate = localStorage.getItem('date');
   let dateformatchange = traveldate.split(' ');
-  console.log(dateformatchange);
   let DEdateformatchange = dateformatchange[0].split('/');
   let ARdateformatchange = dateformatchange[2].split('/');
-  console.log(DEdateformatchange);
-  console.log(ARdateformatchange);
 
   let DEchanged = DEdateformatchange[2] + '-' + DEdateformatchange[0] + '-' + DEdateformatchange[1];
   let ARchanged = ARdateformatchange[2] + '-' + ARdateformatchange[0] + '-' + ARdateformatchange[1];
   DEdateforquery = DEchanged;
   ARdateforquery = ARchanged;
-  console.log(DEdateforquery);
-  console.log(ARdateforquery);
   localStorage.setItem('departureDate', DEdateforquery);
   localStorage.setItem('arrivalDate', ARdateforquery);
 }
@@ -272,9 +257,9 @@ async function callApis() {
   const arrivalResponse = ARgetIATAcodeDATA().then((response) => {
     return response.json();
   });
-
   // awaitng the processing of the JSON response
   const responses = await Promise.all([currencyResponse, departureResponse, arrivalResponse]);
+  console.log(responses);
 
   return [responses[0], responses[1], responses[2]];
 }
