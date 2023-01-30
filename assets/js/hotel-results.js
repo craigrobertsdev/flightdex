@@ -5,10 +5,7 @@ var tokenType = ''
 var cityCode = localStorage.getItem('arrivalcitycode')
 var arrive = localStorage.getItem('departureDate')
 var depart = localStorage.getItem('arrivalDate')
-//var peopleNo = localStorage.getItem('ADD')
-
-//remove before final!!!!!!!!!!!!!!!!!!!!!!!!
-var peopleNo = 1
+var peopleNo = localStorage.getItem('PASSENAGERvalue')
 
 //Function to create token for API and add it to Header value
 async function tokenFunction() {
@@ -117,7 +114,8 @@ async function cityCoordinates(city){
         //console.log(responsePriceC)
         
         //create a new div for each result and add p and h2 values
-        var listD = document.createElement('div')
+        listD = document.createElement('div')
+        listD.className = 'hotel'
         var listP = document.createElement('p')
         var listHeading = document.createElement('h2')
         
@@ -126,13 +124,66 @@ async function cityCoordinates(city){
         //Output for HTML
         listP.innerHTML = ('Check In - ' + responseCheckin + '   Check Out - ' + responseCheckout + '<br>' + 'guests - ' + responseGuests + '<br>' + 'Cost per Night - $' + responsePriceB + ' ' + responsePriceC + '<br>' + 'Total Cost - $' + responsePriceT + ' ' + responsePriceC)
 
+        //remove loading text
+        document.getElementById('loading').innerHTML = ''
+
+
         //Append h2 and p into div and append to HTML
         listD.appendChild(listHeading)
         listD.appendChild(listP)
-        results.appendChild(listD)
-    }
-
-    
+        results.appendChild(listD)   
+    }   
+    //function to wait for hotel selection
+    eventFunction(responseLength)
 }
+
+//event listener for all hotel options
+function eventFunction(length){
+    selectedInput = document.getElementsByClassName('hotel')
+    for (var i = 0; i < length; i++) {
+        console.log(i)
+        selectedInput[i].addEventListener('click', logResult);
+    }
+}
+
+//function to get data from selected hotel and input into local storage
+function logResult(event){
+    var requestedName = event.target
+    var divParent = requestedName.parentElement
+    divParent.setAttribute('id', 'selected')
+    //console.log(divParent)
+    var h2 = divParent.querySelector('h2')
+    h2 = h2.innerHTML
+    console.log(h2)
+
+    hotelSelected = divParent.querySelector('p')
+    //console.log(hotelSelected)
+    hotelSelected = hotelSelected.innerText
+    Array = hotelSelected.split('$')
+    //console.log(Array)
+    var hotelTotalCost = Array[2]
+    console.log(hotelTotalCost)
+   
+    localStorage.setItem('hotelName', h2)
+    localStorage.setItem('hotelCost', hotelTotalCost)
+
+    changeButton()
+}
+
+//function to change button text
+function changeButton(){
+    var button = document.getElementById('continue')
+    buttonData = button.innerHTML = 'Continue to Events'
+}
+
+//button function to remove any old event data and continue to next page
+function button(){
+    //ADD!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //localStorage.removeItem()
+    //localStorage.removeItem()
+    location.assign('./event-results.html')
+}
+
+document.getElementById('continue').addEventListener('click', button)
 //When page loads load token function to request a new token
 tokenFunction()

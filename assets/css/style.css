@@ -67,3 +67,7 @@ h2 {
   border: 2px lightgray solid;
   border-radius: 25px;
 }
+
+#selected {
+  border-style: solid;
+}
