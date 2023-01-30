@@ -846,5 +846,3 @@ function SortingbyPRICEreturntickets() {
     }
 }
 
-
-
