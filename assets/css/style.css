@@ -4,20 +4,13 @@ header {
   padding-bottom: 0px;
 }
 
-button:active {
-  background: #00d1b2;
-}
-
-button:focus {
-  background: #00d1b2;
-}
-
 h2 {
   padding: 20px;
 }
 /* Search Page */
-#serachBtn {
+#search {
   margin: auto;
+  border: solid #00d1b2 1px;
 }
 
 /* Flights Page */
