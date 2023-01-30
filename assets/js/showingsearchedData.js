@@ -94,8 +94,7 @@ function onewayFlightData() {
             const passenager = document.createElement("p");
 
             ticket.addEventListener("click", savingGOINGdata);
-            ticket.setAttribute("id", "ticket")
-            ticket.classList = "columns TOticket";
+            ticket.classList = "columns TOticket container";
 
             DEcitydiv.setAttribute("class", "column is-2");
             DEtimediv.setAttribute("class", "column is-2");
@@ -261,7 +260,7 @@ function returnFlightData() {
 
         
             ticket.addEventListener("click", savingGOINGdata);
-            ticket.classList = "columns TOticket";
+            ticket.classList = "columns TOticket container";
             DEcitydiv.setAttribute("class", "column is-2");
             DEtimediv.setAttribute("class", "column is-2");
             ARcitydiv.setAttribute("class", "column is-2");
@@ -345,7 +344,7 @@ function returnFlightData() {
 
 
             ticket.addEventListener("click", savingRETURNdata);
-            ticket.classList = "columns REticket";
+            ticket.classList = "columns REticket container";
             DEcitydiv.setAttribute("class", "column is-2");
             DEtimediv.setAttribute("class", "column is-2");
             ARcitydiv.setAttribute("class", "column is-2");
@@ -541,7 +540,7 @@ function SortingbyPRICEonewaytickets() {
 
 
             ticket.addEventListener("click", savingGOINGdata);
-            ticket.classList = "columns TOticket";
+            ticket.classList = "columns TOticket container";
 
             DEcitydiv.setAttribute("class", "column is-2");
             DEtimediv.setAttribute("class", "column is-2");
@@ -705,7 +704,7 @@ function SortingbyPRICEreturntickets() {
 
 
             ticket.addEventListener("click", savingGOINGdata);
-            ticket.classList = "columns TOticket";
+            ticket.classList = "columns TOticket container";
             DEcitydiv.setAttribute("class", "column is-2");
             DEtimediv.setAttribute("class", "column is-2");
             ARcitydiv.setAttribute("class", "column is-2");
@@ -789,7 +788,7 @@ function SortingbyPRICEreturntickets() {
 
 
             ticket.addEventListener("click", savingRETURNdata);
-            ticket.classList = "columns REticket";
+            ticket.classList = "columns REticket container";
             DEcitydiv.setAttribute("class", "column is-2");
             DEtimediv.setAttribute("class", "column is-2");
             ARcitydiv.setAttribute("class", "column is-2");
