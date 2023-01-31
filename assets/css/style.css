@@ -1,16 +1,9 @@
 /* General */
 header {
   padding: 20px;
-  padding-bottom: 0px;
+  padding-bottom: 20px;
 }
 
-#flightdex {
-  padding-bottom: 10px;
-}
-
-h2 {
-  padding: 20px;
-}
 /* Search Page */
 #search {
   margin: auto;
