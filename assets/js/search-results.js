@@ -38,7 +38,6 @@ async function getCurrencyData() {
 }
 
 function saveCurrencyData(data) {
-  console.log('returning from getCurrencyData()');
   localStorage.setItem('currencydata', JSON.stringify(data));
 }
 // generate new access-token whenever app starts
@@ -46,7 +45,6 @@ function saveCurrencyData(data) {
 
 async function getApiToken() {
   const TOKENUrl = 'https://api.amadeus.com/v1/security/oauth2/token';
-  console.log('entering getApiToken()');
   return fetch(TOKENUrl, {
     method: 'POST',
     headers: {
@@ -59,7 +57,6 @@ async function getApiToken() {
 function saveToken(data) {
   token_type = data.token_type;
   accessToken = data.access_token;
-  console.log('returning from getApiToken()');
 }
 
 // getting departure IATA code from finding cityname API

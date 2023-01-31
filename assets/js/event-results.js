@@ -1,4 +1,4 @@
-import Geohash from 'https://cdn.jsdelivr.net/npm/latlon-geohash@2.0.0';
+import Geohash from './geohash.js';
 
 // Example API call   'https://app.ticketmaster.com/discovery/v2/events.json?countryCode=US&apikey=Rokm7oUpGBonFqFDXXiA7tcSkqAaiQh4';
 // apikey=Rokm7oUpGBonFqFDXXiA7tcSkqAaiQh4
@@ -10,9 +10,6 @@ import Geohash from 'https://cdn.jsdelivr.net/npm/latlon-geohash@2.0.0';
   Each day is subdivied into event category and is able to be sorted by cost and distance from location (using Maps API)
   User has option to enter their location. If they do so, the events will display the distance from them using Leaflet
 */
-
-// test query string
-const searchString = '?lat=41.881832&long=-87.623177&arrival=2023-02-25&departure=2023-03-15';
 
 const titleText = $('#title');
 const resultsSection = $('#results');
