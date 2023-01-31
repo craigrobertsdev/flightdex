@@ -122,7 +122,7 @@ async function makingQueryDATA() {
   var wayvalue = select2.value;
   localStorage.setItem('WAYvalue', wayvalue);
 
-  var people = document.getElementById('people');
+  var people = document.getElementById('select3');
   passenager = people.value;
   localStorage.setItem('PASSENAGERvalue', passenager);
 
