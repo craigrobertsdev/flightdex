@@ -69,15 +69,17 @@ header {
   border-style: solid;
 }
 
-
 #tonextpage {
   font-size: 1em;
-  padding-left:10px;
-  padding-right:10px;
-  position:relative;
-  display:inline-block;
-  left:400px;
+  padding-left: 10px;
+  padding-right: 10px;
+  position: relative;
+  display: inline-block;
+  left: 400px;
   height: 2rem;
   bottom: 2rem;
 }
 
+.selected {
+  border: 2px solid black;
+}
