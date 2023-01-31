@@ -258,7 +258,7 @@ function returnFlightData() {
 
 
 
-        
+
             ticket.addEventListener("click", savingGOINGdata);
             ticket.classList = "columns TOticket container";
             DEcitydiv.setAttribute("class", "column is-2");
@@ -857,36 +857,101 @@ input.addEventListener("input", (event) => {
 
 
 
-
+let count = 0;
 
 function savingGOINGdata(event) {
     event.stopPropagation();
     console.log(event.currentTarget);
-    let datadiv = event.currentTarget;
-    
-       departtime = datadiv.children[2].children[0].innerText;
-       arrivaltime = datadiv.children[3].children[0].innerText;
-       cost = datadiv.children[5].children[0].innerText;
-       
-    localStorage.setItem("ONEWAYdeparttime",departtime);
-    localStorage.setItem("ONEWAYarrivaltime",arrivaltime);
-    localStorage.setItem("ONEWAYcost",cost);
+
+    console.log(count);
+    if (count === 0) {
+        let datadiv = event.currentTarget;
+
+        departtime = datadiv.children[2].children[0].innerText;
+        arrivaltime = datadiv.children[3].children[0].innerText;
+        cost = datadiv.children[5].children[0].innerText;
+
+        event.currentTarget.setAttribute("id", "picked");
+        event.currentTarget.setAttribute("style", "background-color:#00d1b2; border-radius: 10px;");
+        localStorage.setItem("ONEWAYdeparttime", departtime);
+        localStorage.setItem("ONEWAYarrivaltime", arrivaltime);
+        localStorage.setItem("ONEWAYcost", cost);
+        count++;
+
+    }
+    if (count > 0) {
+
+        let datadiv = event.currentTarget;
+
+        departtime = datadiv.children[2].children[0].innerText;
+        arrivaltime = datadiv.children[3].children[0].innerText;
+        cost = datadiv.children[5].children[0].innerText;
+
+        const picked = document.querySelector('#picked');
+        picked.setAttribute("style", " ");
+        picked.setAttribute("id", " ");
+        event.currentTarget.setAttribute("id", "picked");
+        event.currentTarget.setAttribute("style", "background-color:#00d1b2; border-radius: 10px;");
+        localStorage.setItem("ONEWAYdeparttime", departtime);
+        localStorage.setItem("ONEWAYarrivaltime", arrivaltime);
+        localStorage.setItem("ONEWAYcost", cost);
+        count++;
+    }
 }
 
+let REcount = 0;
 function savingRETURNdata(event) {
     event.stopPropagation();
     console.log(event.currentTarget);
-    let datadiv = event.currentTarget;
-    
-    departtime = datadiv.children[2].children[0].innerText;
-    arrivaltime = datadiv.children[3].children[0].innerText;
-    cost = datadiv.children[5].children[0].innerText;
-    
- localStorage.setItem("RETURNdeparttime",departtime);
- localStorage.setItem("RETURNarrivaltime",arrivaltime);
- localStorage.setItem("RETURNcost",cost);
+    if (REcount === 0) {
+        let datadiv = event.currentTarget;
+
+        departtime = datadiv.children[2].children[0].innerText;
+        arrivaltime = datadiv.children[3].children[0].innerText;
+        cost = datadiv.children[5].children[0].innerText;
+
+        event.currentTarget.setAttribute("id", "REpicked");
+        event.currentTarget.setAttribute("style", "background-color:#00d1b2; border-radius: 10px;");
+        localStorage.setItem("RETURNdeparttime", departtime);
+        localStorage.setItem("RETURNarrivaltime", arrivaltime);
+        localStorage.setItem("RETURNcost", cost);
+        REcount++;
+
+    }
+    if (REcount > 0) {
+
+        let datadiv = event.currentTarget;
+
+        departtime = datadiv.children[2].children[0].innerText;
+        arrivaltime = datadiv.children[3].children[0].innerText;
+        cost = datadiv.children[5].children[0].innerText;
+
+        const REpicked = document.querySelector('#REpicked');
+        REpicked.setAttribute("style", " ");
+        REpicked.setAttribute("id", " ");
+        event.currentTarget.setAttribute("id", "REpicked");
+        event.currentTarget.setAttribute("style", "background-color:#00d1b2;  border-radius: 10px;");
+        localStorage.setItem("RETURNdeparttime", departtime);
+        localStorage.setItem("RETURNarrivaltime", arrivaltime);
+        localStorage.setItem("RETURNcost", cost);
+        REcount++;
+    }
+
+
 }
 
 
+
+
+tonextpage.addEventListener('click', tonextpagebutton);
+
+
+function tonextpagebutton() {
+    if (count>0 && REcount>0){
+        window.location.href = './hotel-results.html'
+    } else {
+        tonextpage.innerHTML = 'choose flights';
+    }
+}
 
 
