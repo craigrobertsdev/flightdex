@@ -22,9 +22,10 @@ const keywordInput = $('#keyword-input');
 const searchButton = $('#event-search-button');
 const startDateInput = $('#start-date');
 const endDateInput = $('#end-date');
+const bookingBtn = $('#complete-booking');
 const location = localStorage.getItem('arrivalcityname');
 const [latitude, longitude] = await getLatLong(location);
-
+let selectedEvent;
 // stores different options for building a query string
 const options = {};
 
@@ -40,7 +41,8 @@ let url = buildUrl(options);
 let resultData;
 
 $(titleText).text(`Showing events within ${options.radius}km of ${toTitleCase(location)}`);
-
+$(resultsSection).on('click', '.event-card', handleSelectedEvent);
+$(bookingBtn).on('click', processBooking); 
 // takes an options object, iterates over it and produces a query string that the TicketMaster API accepts.
 function buildUrl(options) {
   const urlArr = ['https://app.ticketmaster.com/discovery/v2/events.json?apikey=Rokm7oUpGBonFqFDXXiA7tcSkqAaiQh4&size=200'];
@@ -102,6 +104,7 @@ function displayResults(resultData) {
   const iterations = resultData.length > 10 ? 10 : resultData.length;
 
   for (let i = 0; i < iterations; i++) {
+    const eventCard = $(`<div class="event-card" id=event${i+1}</div>`);
     const eventName = resultData[i].name;
     const startDate = resultData[i].dates.start.localDate;
     const startTime = resultData[i].dates.start.localTime;
@@ -124,7 +127,8 @@ function displayResults(resultData) {
       .addClass('genre');
     const eventUrlEl = $('<a></a>').attr('href', eventUrl).attr('target', '_blank').text('Link to event booking').addClass('link');
 
-    $(resultsSection).append(eventHeaderEl, dateTimeEl, priceRangeEl, genreEl, eventUrlEl);
+    $(eventCard).append(eventHeaderEl, dateTimeEl, priceRangeEl, genreEl, eventUrlEl);
+    $(resultsSection).append(eventCard);
   }
 }
 
@@ -195,6 +199,20 @@ function toTitleCase(inputString) {
       return word.replace(word[0], word[0].toUpperCase());
     })
     .join(' ');
+}
+
+function processBooking(event){
+  event.preventDefault();
+}
+
+function handleSelectedEvent(event) {
+  if ($(selectedEvent).attr('id') === event.target.parent('div').attr('id')) {
+    $(selectedEvent).removeClass('selected');
+    selectedEvent = null;
+  } else {
+    selectedEvent = $(event.target).parent('div');
+    $(selectedEvent).addClass('selected')
+  }
 }
 
 getEvents(url);
