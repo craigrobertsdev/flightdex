@@ -76,7 +76,20 @@ h2 {
   border-style: solid;
 }
 
+
+#tonextpage {
+  font-size: 1em;
+  padding-left:10px;
+  padding-right:10px;
+  position:relative;
+  display:inline-block;
+  float: right;
+  height: 2rem;
+  bottom:3.5rem;
+  right: 50px;
+
 .selected {
   border: 2px solid black;
+
 }
 

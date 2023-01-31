@@ -147,8 +147,18 @@ async function makingQueryDATA() {
 
   // call once all data has been obtained and saved to local storage
   if (wayvalue === 'ONEWAY') {
+    const departureDate = localStorage.getItem('departureDate');
+    console.log(departureDate);
+    let arrivaldateONEWAY = dayjs(departureDate).add(1,'day');
+    console.log(arrivaldateONEWAY);
+    let add1date = arrivaldateONEWAY.format('YYYY-MM-DD')
+    console.log(add1date);
+    localStorage.setItem("arrivalDate",add1date);
+    
+
     const oneWayResponse = await onewayDATA();
     const oneWayData = await oneWayResponse.json();
+    //localStorage.setItem("arrivalDate",)
     saveOneWayData(oneWayData);
   } else {
     const oneWayResponse = onewayDATA().then((response) => {
