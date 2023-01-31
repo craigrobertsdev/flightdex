@@ -3,7 +3,7 @@ const going = document.getElementById('location-to');
 const div = document.querySelector('#result');
 const returnh3 = document.querySelector("#location-from");
 const returndiv = document.querySelector("#returndiv");
-
+const tonextpage = document.querySelector("#tonextpage");
 
 
 const togodiv = document.querySelector("#togodiv");
@@ -886,5 +886,8 @@ function savingRETURNdata(event) {
  localStorage.setItem("RETURNarrivaltime",arrivaltime);
  localStorage.setItem("RETURNcost",cost);
 }
+
+
+tonextpage.addEventListener("click",)
 
 
