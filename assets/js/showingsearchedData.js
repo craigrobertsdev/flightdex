@@ -860,10 +860,9 @@ input.addEventListener("input", (event) => {
 
 
 function savingGOINGdata(event) {
-    console.log("hi");
-    let datadiv = event.target.parentElement.parentElement.parentElement;
-   
-    
+    event.stopPropagation();
+    console.log(event.currentTarget);
+    let datadiv = event.currentTarget;
     let departuredataobj = new Object ()
        departuredataobj.departurecity = datadiv.children[0].children[0].innerText;
        departuredataobj.arrivalcity = datadiv.children[1].children[0].innerText;
@@ -880,10 +879,9 @@ function savingGOINGdata(event) {
 }
 
 function savingRETURNdata(event) {
-    console.log("hi");
-    let datadiv = event.target.parentElement.parentElement.parentElement;
-   
-    
+    event.stopPropagation();
+    console.log(event.currentTarget);
+    let datadiv = event.currentTarget;
     let departuredataobj = new Object ()
        departuredataobj.departurecity = datadiv.children[0].children[0].innerText;
        departuredataobj.arrivalcity = datadiv.children[1].children[0].innerText;
@@ -892,9 +890,8 @@ function savingRETURNdata(event) {
        departuredataobj.class = datadiv.children[4].children[0].innerText;
        departuredataobj.cost = datadiv.children[5].children[0].innerText;
        departuredataobj.passenager = datadiv.children[6].children[0].innerText;
-        
-       console.log(datadiv)
-    console.log(departuredataobj)
+      
+    console.log("hi")
 
     localStorage.setItem("selectedRETURNdata",departuredataobj)
 }
