@@ -875,6 +875,7 @@ function savingRETURNdata(event) {
   arrivaltime = datadiv.children[3].children[0].innerText;
   cost = datadiv.children[5].children[0].innerText;
 
+
   localStorage.setItem('RETURNdeparttime', departtime);
   localStorage.setItem('RETURNarrivaltime', arrivaltime);
   localStorage.setItem('RETURNcost', cost);
