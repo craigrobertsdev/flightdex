@@ -42,7 +42,7 @@ let resultData;
 
 $(titleText).text(`Showing events within ${options.radius}km of ${toTitleCase(location)}`);
 $(resultsSection).on('click', '.event-card', handleSelectedEvent);
-$(bookingBtn).on('click', processBooking); 
+$(bookingBtn).on('click', processBooking);
 // takes an options object, iterates over it and produces a query string that the TicketMaster API accepts.
 function buildUrl(options) {
   const urlArr = ['https://app.ticketmaster.com/discovery/v2/events.json?apikey=Rokm7oUpGBonFqFDXXiA7tcSkqAaiQh4&size=200'];
@@ -104,7 +104,7 @@ function displayResults(resultData) {
   const iterations = resultData.length > 10 ? 10 : resultData.length;
 
   for (let i = 0; i < iterations; i++) {
-    const eventCard = $(`<div class="event-card" id=event${i+1}</div>`);
+    const eventCard = $(`<div class="event-card" id=event${i + 1}></div>`);
     const eventName = resultData[i].name;
     const startDate = resultData[i].dates.start.localDate;
     const startTime = resultData[i].dates.start.localTime;
@@ -114,8 +114,12 @@ function displayResults(resultData) {
 
     const eventHeaderEl = $('<p></p>').text(eventName).addClass('header');
     const dateTimeEl = $('<p></p>').addClass('date-time');
-    const startDateEl = $('<span></span>').text('Date: ' + startDate);
-    const startTimeEl = $('<span></span>').text('Time: ' + startTime);
+    const startDateEl = $('<span></span>')
+      .text('Date: ' + startDate)
+      .addClass('start-event');
+    const startTimeEl = $('<span></span>')
+      .text('Time: ' + startTime)
+      .addClass('end-event');
     $(dateTimeEl).append(startDateEl, startTimeEl);
 
     const priceRangeEl = $('<p></p>')
@@ -201,16 +205,40 @@ function toTitleCase(inputString) {
     .join(' ');
 }
 
-
-
-function changeButton(){
-  var button = document.getElementById('continue')
-  buttonData = button.innerHTML = 'Continue to Total Cost'
+function handleSelectedEvent(event) {
+  if ($(selectedEvent).attr('id') === $(event.target).parent('div').attr('id')) {
+    console.log($(event.target).parent('div'));
+    $(selectedEvent).removeClass('selected');
+    selectedEvent === null;
+    localStorage.removeItem('selectedEvent');
+  } else {
+    $(selectedEvent).removeClass('selected');
+    selectedEvent = $(event.target).parent('div');
+    $(selectedEvent).addClass('selected');
+    setSelectedEvent();
+  }
 }
 
-function button(){
-  location.assign('./final-results.html')
+function setSelectedEvent() {
+  const eventName = $(selectedEvent).find('.header').text();
+  let eventPrice = $(selectedEvent).find('.price-range').text();
+  eventPrice = eventPrice.split(' ')[2];
+  const eventStart = $(selectedEvent).find('.start-event').text();
+  const eventEnd = $(selectedEvent).find('.end-event').text();
+  localStorage.setItem('eventData', JSON.stringify({ eventName: eventName, eventPrice: eventPrice, eventStart: eventStart, eventEnd: eventEnd }));
 }
 
-document.getElementById('continue').addEventListener('click', button)
+function processBooking() {}
+
+function changeButton() {
+  var button = document.getElementById('continue');
+  buttonData = button.innerHTML = 'Continue to Total Cost';
+}
+
+function button() {
+  location.assign('./final-results.html');
+}
+
+document.getElementById('continue').addEventListener('click', button);
+
 getEvents(url);
