@@ -42,7 +42,8 @@ let resultData;
 
 $(titleText).text(`Showing events within ${options.radius}km of ${toTitleCase(location)}`);
 $(resultsSection).on('click', '.event-card', handleSelectedEvent);
-$(bookingBtn).on('click', processBooking);
+$('#continue').on('click', completeBooking);
+
 // takes an options object, iterates over it and produces a query string that the TicketMaster API accepts.
 function buildUrl(options) {
   const urlArr = ['https://app.ticketmaster.com/discovery/v2/events.json?apikey=Rokm7oUpGBonFqFDXXiA7tcSkqAaiQh4&size=200'];
@@ -210,11 +211,13 @@ function handleSelectedEvent(event) {
     console.log($(event.target).parent('div'));
     $(selectedEvent).removeClass('selected');
     selectedEvent === null;
+    changeConfirmButtonText(false);
     localStorage.removeItem('selectedEvent');
   } else {
     $(selectedEvent).removeClass('selected');
     selectedEvent = $(event.target).parent('div');
     $(selectedEvent).addClass('selected');
+    changeConfirmButtonText(true);
     setSelectedEvent();
   }
 }
@@ -228,17 +231,17 @@ function setSelectedEvent() {
   localStorage.setItem('eventData', JSON.stringify({ eventName: eventName, eventPrice: eventPrice, eventStart: eventStart, eventEnd: eventEnd }));
 }
 
-function processBooking() {}
-
-function changeButton() {
-  var button = document.getElementById('continue');
-  buttonData = button.innerHTML = 'Continue to Total Cost';
+function changeConfirmButtonText(flightSelected) {
+  const button = $('#continue');
+  if (flightSelected) {
+    $(button).text('Finalise booking');
+  } else {
+    $(button).text('Skip event selection');
+  }
 }
 
-function button() {
-  location.assign('./final-results.html');
+function completeBooking(event) {
+  window.location.href = './final-results.html';
 }
-
-document.getElementById('continue').addEventListener('click', button);
 
 getEvents(url);
