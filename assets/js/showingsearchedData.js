@@ -871,6 +871,7 @@ function savingRETURNdata(event) {
   console.log(event.currentTarget);
   let datadiv = event.currentTarget;
 
+
   departtime = datadiv.children[2].children[0].innerText;
   arrivaltime = datadiv.children[3].children[0].innerText;
   cost = datadiv.children[5].children[0].innerText;
