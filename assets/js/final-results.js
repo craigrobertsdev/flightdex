@@ -16,11 +16,16 @@ var hotelTotalCost = '';
 var flightTotalCost = '';
 let eventTotalCost = '';
 const eventData = JSON.parse(localStorage.getItem('eventData'));
-const eventName = eventData.eventName;
-const eventPrice = eventData.eventPrice;
-const eventDate = eventData.eventDate;
-const eventTime = eventData.eventTime;
-
+let eventName = eventData.eventName;
+let eventPrice = eventData.eventPrice;
+let eventDate = eventData.eventDate;
+let eventTime = eventData.eventTime;
+if (eventData) {
+  eventName = eventData.eventName;
+  eventPrice = eventData.eventPrice;
+  eventDate = eventData.eventDate;
+  eventTime = eventData.eventTime;
+}
 arrivalCityChange = arrivalCity.toLowerCase();
 arrivalCity = arrivalCityChange[0].toUpperCase() + arrivalCityChange.substring(1);
 
@@ -120,7 +125,9 @@ function hotelFunction() {
     hotelCost.innerHTML = 'Total cost of Hotel = $' + hotelTotalCost;
     document.getElementById('p6').appendChild(hotelCost);
   }
-  eventFunction();
+  if (eventData) {
+    eventFunction();
+  }
   finalTotal();
 }
 

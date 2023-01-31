@@ -209,7 +209,7 @@ function handleSelectedEvent(event) {
     $(selectedEvent).removeClass('selected');
     selectedEvent === null;
     changeConfirmButtonText(false);
-    localStorage.removeItem('selectedEvent');
+    localStorage.removeItem('eventData');
   } else {
     $(selectedEvent).removeClass('selected');
     selectedEvent = $(event.target).parent('div');
