@@ -280,16 +280,31 @@ function returnFlightData() {
         departurecityname + ' (' + finalGoingdata.data[ONEWAYcorrectdatas[j]].itineraries[0].segments[0].departure.iataCode + ')';
       arrivalcity.textContent = arrivalcityname + ' (' + finalGoingdata.data[ONEWAYcorrectdatas[j]].itineraries[0].segments[0].arrival.iataCode + ')';
 
-      let DEdatefromDATA = finalGoingdata.data[ONEWAYcorrectdatas[j]].itineraries[0].segments[0].departure.at;
-      const DEdateformatchange = DEdatefromDATA.split('T');
-      const actualDEdate = DEdateformatchange[0];
-      const actualDEtime = DEdateformatchange[1];
-      let actualfromDATA = finalGoingdata.data[ONEWAYcorrectdatas[j]].itineraries[0].segments[0].arrival.at;
-      const ARdateformatchange = actualfromDATA.split('T');
-      const actualARdate = DEdateformatchange[0];
-      const actualARtime = ARdateformatchange[1];
-      DEtime.textContent = actualDEdate + ' - ' + actualDEtime;
-      ARtime.textContent = actualARdate + ' - ' + actualARtime;
+        
+            ticket.addEventListener("click", savingGOINGdata);
+            ticket.classList = "columns TOticket container";
+            DEcitydiv.setAttribute("class", "column is-2");
+            DEtimediv.setAttribute("class", "column is-2");
+            ARcitydiv.setAttribute("class", "column is-2");
+            ARtimediv.setAttribute("class", "column is-2");
+            Classdiv.setAttribute("class", "column is-1");
+            Costdiv.setAttribute("class", "column is-1");
+            Passenagerdiv.setAttribute("class", "column is-1");
+
+
+            departurecity.textContent = departurecityname + " (" + finalGoingdata.data[ONEWAYcorrectdatas[j]].itineraries[0].segments[0].departure.iataCode + ")";
+            arrivalcity.textContent = arrivalcityname + " (" + finalGoingdata.data[ONEWAYcorrectdatas[j]].itineraries[0].segments[0].arrival.iataCode + ")";
+
+            let DEdatefromDATA = finalGoingdata.data[ONEWAYcorrectdatas[j]].itineraries[0].segments[0].departure.at;
+            const DEdateformatchange = DEdatefromDATA.split('T');
+            const actualDEdate = DEdateformatchange[0];
+            const actualDEtime = DEdateformatchange[1];
+            let actualfromDATA = finalGoingdata.data[ONEWAYcorrectdatas[j]].itineraries[0].segments[0].arrival.at;
+            const ARdateformatchange = actualfromDATA.split('T');
+            const actualARdate = DEdateformatchange[0];
+            const actualARtime = ARdateformatchange[1];
+            DEtime.textContent = actualDEdate + ' - ' + actualDEtime;
+            ARtime.textContent = actualARdate + ' - ' + actualARtime;
 
       flightclass.textContent = finalGoingdata.data[ONEWAYcorrectdatas[j]].travelerPricings[0].fareDetailsBySegment[0].cabin;
       let AUDprice = currencydata.rates.AUD * finalGoingdata.data[ONEWAYcorrectdatas[j]].price.total;
@@ -852,36 +867,106 @@ input.addEventListener('input', (event) => {
   slidercurrentvalue.textContent = Math.floor(event.target.value) + ' AUD';
 });
 
-function savingGOINGdata(event) {
-  event.stopPropagation();
-  console.log(event.currentTarget);
-  let datadiv = event.currentTarget;
 
-  departtime = datadiv.children[2].children[0].innerText;
-  arrivaltime = datadiv.children[3].children[0].innerText;
-  cost = datadiv.children[5].children[0].innerText;
 
-  localStorage.setItem('ONEWAYdeparttime', departtime);
-  localStorage.setItem('ONEWAYarrivaltime', arrivaltime);
-  localStorage.setItem('ONEWAYcost', cost);
-}
 
+
+
+  let count = 0;
+  
+  function savingGOINGdata(event) {
+      event.stopPropagation();
+      console.log(event.currentTarget);
+  
+      console.log(count);
+      if (count === 0) {
+          let datadiv = event.currentTarget;
+  
+          departtime = datadiv.children[2].children[0].innerText;
+          arrivaltime = datadiv.children[3].children[0].innerText;
+          cost = datadiv.children[5].children[0].innerText;
+  
+          event.currentTarget.setAttribute("id", "picked");
+          event.currentTarget.setAttribute("style", "background-color:#00d1b2; border-radius: 10px;");
+          localStorage.setItem("ONEWAYdeparttime", departtime);
+          localStorage.setItem("ONEWAYarrivaltime", arrivaltime);
+          localStorage.setItem("ONEWAYcost", cost);
+          count++;
+  
+      }
+      if (count > 0) {
+  
+          let datadiv = event.currentTarget;
+  
+          departtime = datadiv.children[2].children[0].innerText;
+          arrivaltime = datadiv.children[3].children[0].innerText;
+          cost = datadiv.children[5].children[0].innerText;
+  
+          const picked = document.querySelector('#picked');
+          picked.setAttribute("style", " ");
+          picked.setAttribute("id", " ");
+          event.currentTarget.setAttribute("id", "picked");
+          event.currentTarget.setAttribute("style", "background-color:#00d1b2; border-radius: 10px;");
+          localStorage.setItem("ONEWAYdeparttime", departtime);
+          localStorage.setItem("ONEWAYarrivaltime", arrivaltime);
+          localStorage.setItem("ONEWAYcost", cost);
+          count++;
+      }
+  
+  }
+
+let REcount = 0;
 function savingRETURNdata(event) {
-  event.stopPropagation();
-  console.log(event.currentTarget);
-  let datadiv = event.currentTarget;
+    event.stopPropagation();
+    console.log(event.currentTarget);
+    if (REcount === 0) {
+        let datadiv = event.currentTarget;
+
+        departtime = datadiv.children[2].children[0].innerText;
+        arrivaltime = datadiv.children[3].children[0].innerText;
+        cost = datadiv.children[5].children[0].innerText;
+
+        event.currentTarget.setAttribute("id", "REpicked");
+        event.currentTarget.setAttribute("style", "background-color:#00d1b2; border-radius: 10px;");
+        localStorage.setItem("RETURNdeparttime", departtime);
+        localStorage.setItem("RETURNarrivaltime", arrivaltime);
+        localStorage.setItem("RETURNcost", cost);
+        REcount++;
+
+    }
+    if (REcount > 0) {
+
+        let datadiv = event.currentTarget;
+
+        departtime = datadiv.children[2].children[0].innerText;
+        arrivaltime = datadiv.children[3].children[0].innerText;
+        cost = datadiv.children[5].children[0].innerText;
+
+        const REpicked = document.querySelector('#REpicked');
+        REpicked.setAttribute("style", " ");
+        REpicked.setAttribute("id", " ");
+        event.currentTarget.setAttribute("id", "REpicked");
+        event.currentTarget.setAttribute("style", "background-color:#00d1b2;  border-radius: 10px;");
+        localStorage.setItem("RETURNdeparttime", departtime);
+        localStorage.setItem("RETURNarrivaltime", arrivaltime);
+        localStorage.setItem("RETURNcost", cost);
+        REcount++;
+    }
 
 
-  departtime = datadiv.children[2].children[0].innerText;
-  arrivaltime = datadiv.children[3].children[0].innerText;
-  cost = datadiv.children[5].children[0].innerText;
-
-
-  localStorage.setItem('RETURNdeparttime', departtime);
-  localStorage.setItem('RETURNarrivaltime', arrivaltime);
-  localStorage.setItem('RETURNcost', cost);
 }
 
-tonextpage.addEventListener('click', () => {
-  window.location.href = './hotel-results.html';
-});
+
+tonextpage.addEventListener('click', tonextpagebutton);
+
+
+function tonextpagebutton() {
+    if (count>0 && REcount>0){
+        window.location.href = './hotel-results.html'
+    } else {
+        tonextpage.innerHTML = 'choose flights';
+    }
+}
+
+
+
