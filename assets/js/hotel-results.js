@@ -159,9 +159,9 @@ function logResult(event){
     hotelSelected = divParent.querySelector('p')
     //console.log(hotelSelected)
     hotelSelected = hotelSelected.innerText
-    Array = hotelSelected.split('$')
-    //console.log(Array)
-    var hotelTotalCost = Array[2]
+    hotelArray = hotelSelected.split('$')
+    console.log(hotelArray)
+    var hotelTotalCost = hotelArray[2]
     console.log(hotelTotalCost)
    
     localStorage.setItem('hotelName', h2)
