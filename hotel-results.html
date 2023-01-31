@@ -1,51 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Bulma  -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-  <!--Linked CSS-->
-  <link rel="stylesheet" href="./assets/css/style.css">
+    <!-- Bulma  -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
+    <!--Linked CSS-->
+    <link rel="stylesheet" href="./assets/css/style.css" />
 
-  <title>FlightDex Hotel Results</title>
-</head>
-<body>
+    <title>FlightDex Hotel Results</title>
+  </head>
+  <body>
     <header>
-        <h1 class="title has-text-centered"><span style="color:#00d1b2">FlightDex</span>! </h1>
-        <p class="subtitle" id="results-subtitle">Results for Hotels in Your Final Destination</p>
+      <h1 class="title has-text-centered"><span style="color: #00d1b2">FlightDex</span>!</h1>
+      <p class="subtitle" id="results-subtitle">Results for Hotels in Your Final Destination</p>
     </header>
 
     <div id="result">
-        <div class="box">
-            <div id="results" class="columns is-multiline">
-                <div class="column is-2 has-text-weight-bold">
-                    <p>Hotel Name</p>
-                </div>
-                <div class="column is-2 has-text-weight-bold">
-                    <p>Check-in Date</p>
-                </div>
-                <div class="column is-2 has-text-weight-bold">
-                    <p>Check-out Date</p>
-                </div>
-                <div class="column is-2 has-text-weight-bold">
-                    <p>No. of Guests</p>
-                </div>
-                <div class="column is-2 has-text-weight-bold">
-                    <p>Cost per Night</p>
-                </div>
-                <div class="column is-2 has-text-weight-bold">
-                    <p>Total Stay Cost</p>
-                </div>
-            </div>
+      <div class="box">
+        <div id="results" class="columns is-multiline">
+          <div class="column is-2 has-text-weight-bold">
+            <p>Hotel Name</p>
+          </div>
+          <div class="column is-2 has-text-weight-bold">
+            <p>Check-in Date</p>
+          </div>
+          <div class="column is-2 has-text-weight-bold">
+            <p>Check-out Date</p>
+          </div>
+          <div class="column is-2 has-text-weight-bold">
+            <p>No. of Guests</p>
+          </div>
+          <div class="column is-2 has-text-weight-bold">
+            <p>Cost per Night</p>
+          </div>
+          <div class="column is-2 has-text-weight-bold">
+            <p>Total Stay Cost</p>
+          </div>
         </div>
-        <h2 id="loading">Loading...</h2>
+      </div>
+      <h2 id="loading">Loading...</h2>
     </div>
 
-    <button style="padding:20px;"class="button is-rounded is-primary is-outline"id="continue">Skip Hotel Selection</button>
-    
+    <button style="padding: 20px" class="button is-rounded is-primary is-outline" id="continue">Skip Hotel Selection</button>
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="./assets/js/hotel-results.js"></script>
-</body>
+  </body>
 </html>
