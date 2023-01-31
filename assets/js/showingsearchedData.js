@@ -868,9 +868,9 @@ function savingGOINGdata(event) {
        arrivaltime = datadiv.children[3].children[0].innerText;
        cost = datadiv.children[5].children[0].innerText;
        
-    localStorage.setItem("ONEWAYdeparttime",departtime)
-    localStorage.setItem("ONEWAYarrivaltime",arrivaltime)
-    localStorage.setItem("ONEWAYcost",cost)
+    localStorage.setItem("ONEWAYdeparttime",departtime);
+    localStorage.setItem("ONEWAYarrivaltime",arrivaltime);
+    localStorage.setItem("ONEWAYcost",cost);
 }
 
 function savingRETURNdata(event) {
@@ -882,9 +882,9 @@ function savingRETURNdata(event) {
     arrivaltime = datadiv.children[3].children[0].innerText;
     cost = datadiv.children[5].children[0].innerText;
     
- localStorage.setItem("RETURNdeparttime",departtime)
- localStorage.setItem("RETURNarrivaltime",arrivaltime)
- localStorage.setItem("RETURNcost",cost)
+ localStorage.setItem("RETURNdeparttime",departtime);
+ localStorage.setItem("RETURNarrivaltime",arrivaltime);
+ localStorage.setItem("RETURNcost",cost);
 }
 
 
