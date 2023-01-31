@@ -888,6 +888,5 @@ function savingRETURNdata(event) {
 }
 
 
-tonextpage.addEventListener("click",)
 
 
