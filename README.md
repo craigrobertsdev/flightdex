@@ -1,17 +1,16 @@
 # Project 1
-## flightdex
+## flightDex
 
 ### User Story
 ```
-AS A traveler
-I WANT to see the weather outlook for multiple cities
-SO THAT I can plan a trip accordingly
+As a user
+I WANT a website where I can scan and look for deals for domestic flights within Australia at specific times and select hotels for destination and also see local events.
+
 ```
 
 ### Acceptance Criteria
 ```
-As a user
-I WANT a website where I can scan and look for deals for domestic flights within Australia at specific times. When user click on website then they are presented with a website that give an option for flight which includes 
+When user click on website then they are presented with a website that give an option for flight which includes 
 
 -start location 
 -final location 
