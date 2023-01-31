@@ -19,7 +19,7 @@
   <body>
     <header>
       <h1 class="title has-text-centered">Welcome to FlightDex!</h1>
-      <h2 class="subtitle has-text-centered">Your #1 Flight, Event & Hotel searcher!</h2>
+      <h2 class="subtitle has-text-centered">Your #1 Flight, Event & Hotel searcher for Domestic Australian Travel!</h2>
     </header>
 
     <!--This will be the form to input dates & destinations etc!-->
@@ -27,14 +27,14 @@
       <!--Location Input - add Autocomplete-->
       <div class="columns">
         <div class="column is-5 is-offset-1">
-          <div class="control is-loading">
+          <div class="control">
             <input id="departure" class="input is-rounded is-primary" placeholder="Leaving From?" />
           </div>
         </div>
 
         <!--Location Input - add Autocomplete-->
         <div class="column is-5">
-          <div class="control is-loading">
+          <div class="control">
             <input id="arrival" class="input is-rounded is-primary" placeholder="Going To?" />
           </div>
         </div>
@@ -49,17 +49,16 @@
 
       <div class="columns">
         <!--Class Input-->
-        <div class="column is-3 is-offset-1">
+        <div class="column is-5 is-offset-1 has-text-centered">
           <div class="select is-rounded is-primary is-outlined">
             <select id="select1">
               <option id="economy" value="ECONOMY">Economy Class</option>
               <option id="business" value="BUSINESS">Business Class</option>
-              <option id="first" value="FIRST">First Class</option>
             </select>
           </div>
         </div>
 
-        <!--Return/One-Way Input-->
+        <!-- Return/One-Way Input -->
         <div class="column is-4 has-text-centered">
           <div class="select is-rounded is-primary is-outlined">
             <select id="select2">
@@ -73,10 +72,10 @@
         <div class="column is-3 has-text-right">
           <div class="select is-rounded is-primary is-outlined">
             <select id="select3">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
+              <option value="1">1 Person</option>
+              <option value="2">2 People</option>
+              <option value="3">3 People</option>
+              <option value="4">4 People</option>
             </select>
           </div>
         </div>
