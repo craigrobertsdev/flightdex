@@ -201,18 +201,16 @@ function toTitleCase(inputString) {
     .join(' ');
 }
 
-function processBooking(event){
-  event.preventDefault();
+
+
+function changeButton(){
+  var button = document.getElementById('continue')
+  buttonData = button.innerHTML = 'Continue to Total Cost'
 }
 
-function handleSelectedEvent(event) {
-  if ($(selectedEvent).attr('id') === event.target.parent('div').attr('id')) {
-    $(selectedEvent).removeClass('selected');
-    selectedEvent = null;
-  } else {
-    selectedEvent = $(event.target).parent('div');
-    $(selectedEvent).addClass('selected')
-  }
+function button(){
+  location.assign('./final-results.html')
 }
 
+document.getElementById('continue').addEventListener('click', button)
 getEvents(url);
