@@ -26,7 +26,7 @@ departureCity = (departureCityChange[0].toUpperCase() + departureCityChange.subs
 
 function inputData(){
     CityInput = document.createElement('p')
-    CityInput.innerHTML = (departureCity + '  to  ' + arrivalCity)
+    CityInput.innerHTML = (departureCity + '  to  ' + arrivalCity + ' leaving on the ')
     document.getElementById('p1').appendChild(CityInput)
 
     var dateChangeA = arrivalDate.split('-')
@@ -46,7 +46,7 @@ function inputData(){
     leaveArriveTime = (leaveArriveTime[1])
     
     leaveDateInput = document.createElement('p')
-    leaveDateInput.innerHTML = (changedArrivalDate + ' At ' + leaveDepartTime + '<br>And Arrive at ' + leaveArriveTime)
+    leaveDateInput.innerHTML = (changedArrivalDate + ' departing at ' + leaveDepartTime + '<br>and arriving at ' + leaveArriveTime + '.')
     document.getElementById('p2').appendChild(leaveDateInput)
 
     leaveCostValue = leaveCost.split(' ')
@@ -54,7 +54,7 @@ function inputData(){
     flightTotalCost = leaveTotalCost
 
     leaveCost = document.createElement('p')
-    leaveCost.innerHTML = ('Total cost of flight to ' + arrivalCity + ' = $' + leaveTotalCost)
+    leaveCost.innerHTML = ('Cost of flight to ' + arrivalCity + ': $' + leaveTotalCost)
     document.getElementById('p6').appendChild(leaveCost)
 
 
@@ -65,12 +65,12 @@ function inputData(){
         returnDepartTime = returnDepart.split(' - ')
         returnDepartTime = (returnDepartTime[1])
 
-        returnArriveTime = returnArrive.split(' - ')
+        returnArriveTime = returnArrive.split(' - ') 
         returnArriveTime = (returnArriveTime[1])
 
 
         returnDateInput = document.createElement('p')
-        returnDateInput.innerHTML = (changedDepartureDate + ' At ' + returnDepartTime + '<br>And Arrive at ' + returnArriveTime)
+        returnDateInput.innerHTML = (changedDepartureDate + ' departing at ' + returnDepartTime + '<br>and arriving at ' + returnArriveTime  + '.')
         document.getElementById('p3').appendChild(returnDateInput)
 
         returnCostValue = returnCost.split(' ')
@@ -81,11 +81,11 @@ function inputData(){
         //console.log(flightTotalCost)
     
         returnCost = document.createElement('p')
-        returnCost.innerHTML = ('Total cost of flight to ' + departureCity + ' = $' + returnTotalCost)
+        returnCost.innerHTML = ('Cost of flight to ' + departureCity + ': $' + returnTotalCost)
         document.getElementById('p6').appendChild(returnCost)
 
         fTotalCost = document.createElement('p')
-        fTotalCost.innerHTML = ('Total cost of flights = $' + flightTotalCost)
+        fTotalCost.innerHTML = ('Total cost of return flight: $' + flightTotalCost)
         document.getElementById('p6').appendChild(fTotalCost)
     }
 
@@ -168,7 +168,7 @@ function finalTotal(){
     //console.log(totalCost)
 
     finalTotalCost = document.createElement('p')
-    finalTotalCost.innerHTML = ('Total cost = $' + totalCost)
+    finalTotalCost.innerHTML = ('$' + totalCost)
     document.getElementById('p7').appendChild(finalTotalCost)
 }
 
@@ -178,3 +178,7 @@ function button(){
 }
 
 inputData()
+
+finalTotalCost.style.color = '#00d1b2'
+finalTotalCost.style.textAlign ='center'
+finalTotalCost.style.fontSize='40px'
