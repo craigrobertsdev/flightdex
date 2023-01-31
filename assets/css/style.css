@@ -24,8 +24,9 @@ h2 {
   padding-bottom: 5px;
 }
 
-#input, #result {
-  margin:auto;
+#input,
+#result {
+  margin: auto;
   background-color: white;
   width: 80%;
   border: 2px lightgray solid;
@@ -49,7 +50,7 @@ h2 {
 
 #weather-event {
   width: 90%;
-  margin:auto;
+  margin: auto;
   background-color: white;
   border-radius: 25px;
   padding: 20px;
@@ -66,12 +67,16 @@ h2 {
 }
 
 .container:hover {
-  border:5px solid black;
+  border: 5px solid black;
   border-radius: 10px;
   cursor: pointer;
 }
 
 #selected {
   border-style: solid;
+}
+
+.selected {
+  border: 2px solid black;
 }
 
