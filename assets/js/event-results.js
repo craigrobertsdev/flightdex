@@ -197,4 +197,16 @@ function toTitleCase(inputString) {
     .join(' ');
 }
 
+
+
+function changeButton(){
+  var button = document.getElementById('continue')
+  buttonData = button.innerHTML = 'Continue to Total Cost'
+}
+
+function button(){
+  location.assign('./final-results.html')
+}
+
+document.getElementById('continue').addEventListener('click', button)
 getEvents(url);
