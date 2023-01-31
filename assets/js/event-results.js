@@ -223,9 +223,16 @@ function setSelectedEvent() {
   const eventName = $(selectedEvent).find('.header').text();
   let eventPrice = $(selectedEvent).find('.price-range').text();
   eventPrice = eventPrice.split(' ')[2];
-  const eventStart = $(selectedEvent).find('.start-event').text();
-  const eventEnd = $(selectedEvent).find('.end-event').text();
-  localStorage.setItem('eventData', JSON.stringify({ eventName: eventName, eventPrice: eventPrice, eventStart: eventStart, eventEnd: eventEnd }));
+  if (eventPrice.startsWith('See')) {
+    eventPrice = null;
+  }
+  const eventDate = $(selectedEvent).find('.start-event').text();
+  const eventTime = $(selectedEvent).find('.end-event').text();
+  const eventData = { eventName: eventName, eventPrice: eventPrice, eventDate: eventDate, eventTime: eventTime };
+  if (eventPrice) {
+    eventData.eventPrice = eventPrice;
+  }
+  localStorage.setItem('eventData', JSON.stringify(eventData));
 }
 
 function changeConfirmButtonText(flightSelected) {
