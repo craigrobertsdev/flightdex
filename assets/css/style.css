@@ -24,8 +24,9 @@ h2 {
   padding-bottom: 5px;
 }
 
-#input, #result {
-  margin:auto;
+#input,
+#result {
+  margin: auto;
   background-color: white;
   width: 80%;
   border: 2px lightgray solid;
@@ -49,7 +50,7 @@ h2 {
 
 #weather-event {
   width: 90%;
-  margin:auto;
+  margin: auto;
   background-color: white;
   border-radius: 25px;
   padding: 20px;
@@ -66,7 +67,7 @@ h2 {
 }
 
 .container:hover {
-  border:5px solid black;
+  border: 5px solid black;
   border-radius: 10px;
   cursor: pointer;
 }
@@ -74,6 +75,7 @@ h2 {
 #selected {
   border-style: solid;
 }
+
 
 #tonextpage {
   font-size: 1em;
@@ -83,6 +85,15 @@ h2 {
   display:inline-block;
   left:400px;
   height: 2rem;
+<<<<<<< HEAD
   bottom: 2rem;
+=======
+  bottom:3.5rem;
+  right: 50px;
+
+.selected {
+  border: 2px solid black;
+
+>>>>>>> a60101e09839bd5eedac9a32217663534a733338
 }
 

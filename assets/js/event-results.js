@@ -22,9 +22,10 @@ const keywordInput = $('#keyword-input');
 const searchButton = $('#event-search-button');
 const startDateInput = $('#start-date');
 const endDateInput = $('#end-date');
+const bookingBtn = $('#complete-booking');
 const location = localStorage.getItem('arrivalcityname');
 const [latitude, longitude] = await getLatLong(location);
-
+let selectedEvent;
 // stores different options for building a query string
 const options = {};
 
@@ -40,6 +41,8 @@ let url = buildUrl(options);
 let resultData;
 
 $(titleText).text(`Showing events within ${options.radius}km of ${toTitleCase(location)}`);
+$(resultsSection).on('click', '.event-card', handleSelectedEvent);
+$('#continue').on('click', completeBooking);
 
 // takes an options object, iterates over it and produces a query string that the TicketMaster API accepts.
 function buildUrl(options) {
@@ -102,6 +105,7 @@ function displayResults(resultData) {
   const iterations = resultData.length > 10 ? 10 : resultData.length;
 
   for (let i = 0; i < iterations; i++) {
+    const eventCard = $(`<div class="event-card" id=event${i + 1}></div>`);
     const eventName = resultData[i].name;
     const startDate = resultData[i].dates.start.localDate;
     const startTime = resultData[i].dates.start.localTime;
@@ -111,8 +115,12 @@ function displayResults(resultData) {
 
     const eventHeaderEl = $('<p></p>').text(eventName).addClass('header');
     const dateTimeEl = $('<p></p>').addClass('date-time');
-    const startDateEl = $('<span></span>').text('Date: ' + startDate);
-    const startTimeEl = $('<span></span>').text('Time: ' + startTime);
+    const startDateEl = $('<span></span>')
+      .text('Date: ' + startDate)
+      .addClass('start-event');
+    const startTimeEl = $('<span></span>')
+      .text('Time: ' + startTime)
+      .addClass('end-event');
     $(dateTimeEl).append(startDateEl, startTimeEl);
 
     const priceRangeEl = $('<p></p>')
@@ -124,7 +132,8 @@ function displayResults(resultData) {
       .addClass('genre');
     const eventUrlEl = $('<a></a>').attr('href', eventUrl).attr('target', '_blank').text('Link to event booking').addClass('link');
 
-    $(resultsSection).append(eventHeaderEl, dateTimeEl, priceRangeEl, genreEl, eventUrlEl);
+    $(eventCard).append(eventHeaderEl, dateTimeEl, priceRangeEl, genreEl, eventUrlEl);
+    $(resultsSection).append(eventCard);
   }
 }
 
@@ -197,16 +206,42 @@ function toTitleCase(inputString) {
     .join(' ');
 }
 
-
-
-function changeButton(){
-  var button = document.getElementById('continue')
-  buttonData = button.innerHTML = 'Continue to Total Cost'
+function handleSelectedEvent(event) {
+  if ($(selectedEvent).attr('id') === $(event.target).parent('div').attr('id')) {
+    console.log($(event.target).parent('div'));
+    $(selectedEvent).removeClass('selected');
+    selectedEvent === null;
+    changeConfirmButtonText(false);
+    localStorage.removeItem('selectedEvent');
+  } else {
+    $(selectedEvent).removeClass('selected');
+    selectedEvent = $(event.target).parent('div');
+    $(selectedEvent).addClass('selected');
+    changeConfirmButtonText(true);
+    setSelectedEvent();
+  }
 }
 
-function button(){
-  location.assign('./final-results.html')
+function setSelectedEvent() {
+  const eventName = $(selectedEvent).find('.header').text();
+  let eventPrice = $(selectedEvent).find('.price-range').text();
+  eventPrice = eventPrice.split(' ')[2];
+  const eventStart = $(selectedEvent).find('.start-event').text();
+  const eventEnd = $(selectedEvent).find('.end-event').text();
+  localStorage.setItem('eventData', JSON.stringify({ eventName: eventName, eventPrice: eventPrice, eventStart: eventStart, eventEnd: eventEnd }));
 }
 
-document.getElementById('continue').addEventListener('click', button)
+function changeConfirmButtonText(flightSelected) {
+  const button = $('#continue');
+  if (flightSelected) {
+    $(button).text('Finalise booking');
+  } else {
+    $(button).text('Skip event selection');
+  }
+}
+
+function completeBooking(event) {
+  window.location.href = './final-results.html';
+}
+
 getEvents(url);
