@@ -64,3 +64,14 @@ h2 {
   border: 2px lightgray solid;
   border-radius: 25px;
 }
+
+.container:hover {
+  border:5px solid black;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+#selected {
+  border-style: solid;
+}
+
