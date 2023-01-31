@@ -863,37 +863,28 @@ function savingGOINGdata(event) {
     event.stopPropagation();
     console.log(event.currentTarget);
     let datadiv = event.currentTarget;
-    let departuredataobj = new Object ()
-       departuredataobj.departurecity = datadiv.children[0].children[0].innerText;
-       departuredataobj.arrivalcity = datadiv.children[1].children[0].innerText;
-       departuredataobj.departtime = datadiv.children[2].children[0].innerText;
-       departuredataobj.arrivaltime = datadiv.children[3].children[0].innerText;
-       departuredataobj.class = datadiv.children[4].children[0].innerText;
-       departuredataobj.cost = datadiv.children[5].children[0].innerText;
-       departuredataobj.passenager = datadiv.children[6].children[0].innerText;
-        
-       console.log(datadiv)
-    console.log(departuredataobj)
-
-    localStorage.setItem("selectedDEPARTUREdata",departuredataobj)
+    
+       departtime = datadiv.children[2].children[0].innerText;
+       arrivaltime = datadiv.children[3].children[0].innerText;
+       cost = datadiv.children[5].children[0].innerText;
+       
+    localStorage.setItem("ONEWAYdeparttime",departtime)
+    localStorage.setItem("ONEWAYarrivaltime",arrivaltime)
+    localStorage.setItem("ONEWAYcost",cost)
 }
 
 function savingRETURNdata(event) {
     event.stopPropagation();
     console.log(event.currentTarget);
     let datadiv = event.currentTarget;
-    let departuredataobj = new Object ()
-       departuredataobj.departurecity = datadiv.children[0].children[0].innerText;
-       departuredataobj.arrivalcity = datadiv.children[1].children[0].innerText;
-       departuredataobj.departtime = datadiv.children[2].children[0].innerText;
-       departuredataobj.arrivaltime = datadiv.children[3].children[0].innerText;
-       departuredataobj.class = datadiv.children[4].children[0].innerText;
-       departuredataobj.cost = datadiv.children[5].children[0].innerText;
-       departuredataobj.passenager = datadiv.children[6].children[0].innerText;
-      
-    console.log("hi")
-
-    localStorage.setItem("selectedRETURNdata",departuredataobj)
+    
+    departtime = datadiv.children[2].children[0].innerText;
+    arrivaltime = datadiv.children[3].children[0].innerText;
+    cost = datadiv.children[5].children[0].innerText;
+    
+ localStorage.setItem("RETURNdeparttime",departtime)
+ localStorage.setItem("RETURNarrivaltime",arrivaltime)
+ localStorage.setItem("RETURNcost",cost)
 }
 
 
