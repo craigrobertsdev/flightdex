@@ -146,12 +146,11 @@ async function makingQueryDATA() {
   if (wayvalue === 'ONEWAY') {
     const departureDate = localStorage.getItem('departureDate');
     console.log(departureDate);
-    let arrivaldateONEWAY = dayjs(departureDate).add(1,'day');
+    let arrivaldateONEWAY = dayjs(departureDate).add(1, 'day');
     console.log(arrivaldateONEWAY);
-    let add1date = arrivaldateONEWAY.format('YYYY-MM-DD')
+    let add1date = arrivaldateONEWAY.format('YYYY-MM-DD');
     console.log(add1date);
-    localStorage.setItem("arrivalDate",add1date);
-    
+    localStorage.setItem('arrivalDate', add1date);
 
     const oneWayResponse = await onewayDATA();
     const oneWayData = await oneWayResponse.json();
@@ -242,14 +241,16 @@ function manipulateDates() {
   const traveldate = localStorage.getItem('date');
   let dateformatchange = traveldate.split(' ');
   let DEdateformatchange = dateformatchange[0].split('/');
-  let ARdateformatchange = dateformatchange[2].split('/');
+  if (dateformatchange[2]) {
+    let ARdateformatchange = dateformatchange[2].split('/');
+    let ARchanged = ARdateformatchange[2] + '-' + ARdateformatchange[0] + '-' + ARdateformatchange[1];
+    ARdateforquery = ARchanged;
+    localStorage.setItem('arrivalDate', ARdateforquery);
+  }
 
   let DEchanged = DEdateformatchange[2] + '-' + DEdateformatchange[0] + '-' + DEdateformatchange[1];
-  let ARchanged = ARdateformatchange[2] + '-' + ARdateformatchange[0] + '-' + ARdateformatchange[1];
   DEdateforquery = DEchanged;
-  ARdateforquery = ARchanged;
   localStorage.setItem('departureDate', DEdateforquery);
-  localStorage.setItem('arrivalDate', ARdateforquery);
 }
 
 async function callApis() {
