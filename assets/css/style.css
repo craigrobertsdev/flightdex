@@ -67,3 +67,7 @@ h2 {
   cursor: pointer;
 }
 
+#selected {
+  border-style: solid;
+}
+
