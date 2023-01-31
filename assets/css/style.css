@@ -85,15 +85,6 @@ h2 {
   display:inline-block;
   left:400px;
   height: 2rem;
-<<<<<<< HEAD
   bottom: 2rem;
-=======
-  bottom:3.5rem;
-  right: 50px;
-
-.selected {
-  border: 2px solid black;
-
->>>>>>> a60101e09839bd5eedac9a32217663534a733338
 }
 
