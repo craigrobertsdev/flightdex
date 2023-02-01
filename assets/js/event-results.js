@@ -17,17 +17,21 @@ const filterOptions = $('#filter-options');
 const radiusInput = $('#radius-input');
 const keywordInput = $('#keyword-input');
 const searchButton = $('#event-search-button');
-const startDateInput = $('#start-date');
-const endDateInput = $('#end-date');
-const bookingBtn = $('#complete-booking');
+const continueBtn = $('#continue');
 const location = localStorage.getItem('arrivalcityname');
 const [latitude, longitude] = await getLatLong(location);
-let selectedEvent;
+let selectedEvent, startDateFilterValue, endDateFilterValue;
 // stores different options for building a query string
 const options = {};
 
+// if flight is one way, add 1 month to the departure date then use that to query api
 options.startDateTime = localStorage.getItem('departureDate');
-options.endDateTime = localStorage.getItem('arrivalDate');
+if (localStorage.getItem('WAYvalue') === 'ONEWAY') {
+  const departureDate = localStorage.getItem('date').split('-')[0];
+  options.endDateTime = convertToApiDate(departureDate, true);
+} else {
+  options.endDateTime = localStorage.getItem('arrivalDate');
+}
 options.geoPoint = Geohash.encode(latitude, longitude, 8);
 
 // Default radius to search for from accommodation location. Can be modified by user in radiusInput
@@ -39,7 +43,7 @@ let resultData;
 
 $(titleText).text(`Showing events within ${options.radius}km of ${toTitleCase(location)}`);
 $(resultsSection).on('click', '.event-card', handleSelectedEvent);
-$('#continue').on('click', completeBooking);
+$(continueBtn).on('click', completeBooking);
 
 // takes an options object, iterates over it and produces a query string that the TicketMaster API accepts.
 function buildUrl(options) {
@@ -110,9 +114,7 @@ function displayResults(resultData) {
 
     const eventHeaderEl = $('<p></p>').text(eventName).addClass('header column is-2 is-offset-1');
     const dateTimeEl = $('<p></p>').addClass('date-time column is-2');
-    const startDateEl = $('<span></span>')
-      .text(startDate)
-      .addClass('start-event');
+    const startDateEl = $('<span></span>').text(startDate).addClass('start-event');
     const startTimeEl = $('<span></span>')
       .text(' at ' + startTime)
       .addClass('end-event');
@@ -177,12 +179,12 @@ $(searchButton).on('click', function (event) {
     options.keyword = $(keywordInput).val();
   }
 
-  if ($(startDateInput).val()) {
-    options.startDateTime = $(startDateInput).val();
+  if (startDateFilterValue) {
+    options.startDateTime = startDateFilterValue;
   }
 
-  if ($(endDateInput).val()) {
-    options.endDateTime = $(endDateInput).val();
+  if (endDateFilterValue) {
+    options.endDateTime = endDateFilterValue;
   }
 
   const queryString = buildUrl(options);
@@ -242,35 +244,36 @@ function changeConfirmButtonText(flightSelected) {
   }
 }
 
-function completeBooking(event) {
+function completeBooking() {
   window.location.href = './final-results.html';
+}
+
+// returns date in YYYY-MM-DD format
+function convertToApiDate(date, addMonth) {
+  const dateArr = date.split('/');
+  const year = dateArr[2];
+  let month;
+  if (addMonth) {
+    month = `0${+dateArr[0] + 1}`;
+  } else {
+    month = dateArr[0];
+  }
+  const day = dateArr[1];
+  return `${year}-${month}-${day}`;
 }
 
 getEvents(url);
 
 // Bulma Calendar
-// Initialize all input of type date
-var calendars = bulmaCalendar.attach('[type="date"]', {
-  isRange: true,
-});
-
-$('#select2').on('change', handleCalendarChange);
-
-// toggles the type of date picker based on whether or not there is a return date required
-function handleCalendarChange(event) {
-  if ($(event.target).val() === 'ONEWAY') {
-    $('#date-picker').children()[0].remove();
-    $('#date-picker').append('<input type="date"/>');
-    calendars = bulmaCalendar.attach('[type="date"]', {
-      isRange: false,
-    });
-  } else {
-    $('#date-picker').children()[0].remove();
-    $('#date-picker').append('<input type="date"/>');
-    calendars = bulmaCalendar.attach('[type="date"]', {
-      isRange: true,
-    });
-  }
+// Initialize all input of type date.
+if (localStorage.getItem('WAYvalue') === 'ONEWAY') {
+  var calendars = bulmaCalendar.attach('[type="date"]', {
+    isRange: false,
+  });
+} else {
+  var calendars = bulmaCalendar.attach('[type="date"]', {
+    isRange: true,
+  });
 }
 
 // Loop on each calendar initialized
@@ -278,9 +281,11 @@ function initialiseCalendar() {
   for (var i = 0; i < calendars.length; i++) {
     // Add listener to select event
     calendars[i].on('select', (date) => {
-      console.log(date.data.value());
-      localStorage.setItem('date', date.data.value());
-      console.log(date.data.startDate);
+      const dates = date.data.value().split('-');
+      startDateFilterValue = convertToApiDate(dates[0].trim(), false);
+      if (dates.length === 2) {
+        endDateFilterValue = convertToApiDate(dates[1].trim(), false);
+      }
     });
   }
 }
