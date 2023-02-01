@@ -987,9 +987,9 @@ function tonextpagebutton() {
   if (count > 0 && REcount > 0) {
     window.location.href = './hotel-results.html'
 
-  } else if (count > 0) {
+  } else if (count > 0 &&  REcount === 0 && value === 'ONEWAY') {
     window.location.href = './hotel-results.html'
-  }
+  } 
   else {
     tonextpage.innerHTML = 'choose flights';
   }
