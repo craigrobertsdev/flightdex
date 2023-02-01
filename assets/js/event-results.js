@@ -12,7 +12,7 @@ import Geohash from './geohash.js';
 */
 
 const titleText = $('#title');
-const resultsSection = $('#results');
+const resultsSection = $('#result');
 const filterOptions = $('#filter-options');
 const radiusInput = $('#radius-input');
 const keywordInput = $('#keyword-input');
@@ -96,13 +96,11 @@ function getEvents(url) {
 function displayResults(resultData) {
   $(titleText).text(`Showing events within ${options.radius}km of ${toTitleCase(location)}`);
   $(resultsSection).html('');
-  // replace the event results header after clearing all html
-  $(resultsSection).append($('<p class="has-text-weight-bold">Event Results</p>'));
 
   const iterations = resultData.length > 10 ? 10 : resultData.length;
 
   for (let i = 0; i < iterations; i++) {
-    const eventCard = $(`<div class="event-card" id=event${i + 1}></div>`);
+    const eventCard = $(`<div class="event-card columns" id=event${i + 1}></div>`);
     const eventName = resultData[i].name;
     const startDate = resultData[i].dates.start.localDate;
     const startTime = resultData[i].dates.start.localTime;
@@ -110,24 +108,24 @@ function displayResults(resultData) {
     const genre = resultData[i].classifications[0].genre?.name ? resultData[i].classifications[0].genre.name : 'Miscellaneous';
     const eventUrl = resultData[i].url;
 
-    const eventHeaderEl = $('<p></p>').text(eventName).addClass('header');
-    const dateTimeEl = $('<p></p>').addClass('date-time');
+    const eventHeaderEl = $('<p></p>').text(eventName).addClass('header column is-2 is-offset-1');
+    const dateTimeEl = $('<p></p>').addClass('date-time column is-2');
     const startDateEl = $('<span></span>')
-      .text('Date: ' + startDate)
+      .text(startDate)
       .addClass('start-event');
     const startTimeEl = $('<span></span>')
-      .text('Time: ' + startTime)
+      .text(' at ' + startTime)
       .addClass('end-event');
     $(dateTimeEl).append(startDateEl, startTimeEl);
 
     const priceRangeEl = $('<p></p>')
       .text('Tickets from: ' + priceRangeMin)
-      .addClass('price-range');
+      .addClass('price-range column is-2');
 
     const genreEl = $('<p></p>')
       .text('Event Type: ' + genre)
-      .addClass('genre');
-    const eventUrlEl = $('<a></a>').attr('href', eventUrl).attr('target', '_blank').text('Link to event booking').addClass('link');
+      .addClass('genre column is-2');
+    const eventUrlEl = $('<a></a>').attr('href', eventUrl).attr('target', '_blank').text('Link to event booking').addClass('link column is-2');
 
     $(eventCard).append(eventHeaderEl, dateTimeEl, priceRangeEl, genreEl, eventUrlEl);
     $(resultsSection).append(eventCard);
@@ -249,3 +247,51 @@ function completeBooking(event) {
 }
 
 getEvents(url);
+
+// Bulma Calendar
+// Initialize all input of type date
+var calendars = bulmaCalendar.attach('[type="date"]', {
+  isRange: true,
+});
+
+$('#select2').on('change', handleCalendarChange);
+
+// toggles the type of date picker based on whether or not there is a return date required
+function handleCalendarChange(event) {
+  if ($(event.target).val() === 'ONEWAY') {
+    $('#date-picker').children()[0].remove();
+    $('#date-picker').append('<input type="date"/>');
+    calendars = bulmaCalendar.attach('[type="date"]', {
+      isRange: false,
+    });
+  } else {
+    $('#date-picker').children()[0].remove();
+    $('#date-picker').append('<input type="date"/>');
+    calendars = bulmaCalendar.attach('[type="date"]', {
+      isRange: true,
+    });
+  }
+}
+
+// Loop on each calendar initialized
+function initialiseCalendar() {
+  for (var i = 0; i < calendars.length; i++) {
+    // Add listener to select event
+    calendars[i].on('select', (date) => {
+      console.log(date.data.value());
+      localStorage.setItem('date', date.data.value());
+      console.log(date.data.startDate);
+    });
+  }
+}
+
+// To access to bulmaCalendar instance of an element
+var element = document.querySelector('#my-element');
+if (element) {
+  // bulmaCalendar instance is available as element.bulmaCalendar
+  element.bulmaCalendar.on('select', function (datepicker) {
+    console.log(datepicker.data.value());
+  });
+}
+
+initialiseCalendar();

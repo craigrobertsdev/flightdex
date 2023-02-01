@@ -16,16 +16,16 @@
     <script
       src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"
       integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U="
-      crossorigin="anonymous"
-    ></script>
-
+      crossorigin="anonymous">
+    </script>
+    
     <title>FlightDex!</title>
   </head>
 
   <body>
     <header>
-      <h1 class="title has-text-centered">Welcome to FlightDex!</h1>
-      <h2 class="subtitle has-text-centered">Your #1 Flight, Event & Hotel searcher for Domestic Australian Travel!</h2>
+      <h1 class="title has-text-centered">Welcome to <span style="color: #00d1b2">FlightDex</span>!</h1>
+      <h2 class="subtitle has-text-centered">Your <span style="color: #00d1b2">#1</span> Flight, Event & Hotel searcher for Domestic Australian Travel!</h2>
     </header>
 
     <!--This will be the form to input dates & destinations etc!-->
@@ -38,7 +38,7 @@
           </div>
         </div>
 
-        <!--Location Input - add Autocomplete-->
+        <!--Location Input-->
         <div class="column is-5">
           <div class="control">
             <input id="arrival" class="input is-rounded is-primary" placeholder="Going To?" />
@@ -55,7 +55,7 @@
 
       <div class="columns">
         <!--Class Input-->
-        <div class="column is-5 is-offset-1 has-text-centered">
+        <div class="column is-3 is-offset-1 has-text-centered">
           <div class="select is-rounded is-primary is-outlined">
             <select id="select1">
               <option id="economy" value="ECONOMY">Economy Class</option>
@@ -74,8 +74,8 @@
           </div>
         </div>
 
-        <!--No. of people -->
-        <div class="column is-3 has-text-right">
+        <!--No. of people Input-->
+        <div class="column is-3 has-text-centered">
           <div class="select is-rounded is-primary is-outlined">
             <select id="select3">
               <option value="1">1 Person</option>
@@ -95,6 +95,7 @@
       </div>
     </div>
 
+    <!--Page Tagline-->
     <footer>
       <h2 id="tagline" class="subtitle has-text-centered">Your next dream vacation is just one search away!</h2>
     </footer>
@@ -107,3 +108,4 @@
     <script src="./assets/js/index.js"></script>
   </body>
 </html>
+ 

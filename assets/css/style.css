@@ -4,19 +4,6 @@ header {
   padding-bottom: 20px;
 }
 
-/* Search Page */
-#search {
-  margin: auto;
-  border: solid #00d1b2 1px;
-}
-
-/* Flights Page */
-#results-subtitle {
-  margin: auto;
-  width: 80%;
-  padding-bottom: 5px;
-}
-
 #input,
 #result {
   margin: auto;
@@ -25,6 +12,135 @@ header {
   border: 2px lightgray solid;
   border-radius: 25px;
   padding: 20px;
+}
+
+/* Search Page */
+#search {
+  margin: auto;
+  border: solid #00d1b2 1px;
+}
+
+#tagline {
+padding: 5px;
+}
+
+#to-hotel {
+  margin:auto;
+  width: 80%;
+  padding: 10px;
+}
+
+#slider{
+  padding:10px;
+  padding-bottom:0px;
+}
+
+input[type=range] {
+  height: 26px;
+  -webkit-appearance: none;
+  margin: 10px 0;
+  width: 100%;
+}
+input[type=range]:focus {
+  outline: none;
+}
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 6px;
+  cursor: pointer;
+  animate: 0.2s;
+  box-shadow: 0px 0px 0px #00D1B2;
+  background: #00D1B2;
+  border-radius: 6px;
+  border: 0px solid #00D1B2;
+}
+input[type=range]::-webkit-slider-thumb {
+  box-shadow: 0px 0px 0px #00D1B2;
+  border: 2px solid #00D1B2;
+  height: 18px;
+  width: 18px;
+  border-radius: 15px;
+  background: #FFFFFF;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -7px;
+}
+input[type=range]:focus::-webkit-slider-runnable-track {
+  background: #00D1B2;
+}
+input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 6px;
+  cursor: pointer;
+  animate: 0.2s;
+  box-shadow: 0px 0px 0px #00D1B2;
+  background: #00D1B2;
+  border-radius: 6px;
+  border: 0px solid #00D1B2;
+}
+input[type=range]::-moz-range-thumb {
+  box-shadow: 0px 0px 0px #00D1B2;
+  border: 2px solid #00D1B2;
+  height: 18px;
+  width: 18px;
+  border-radius: 15px;
+  background: #FFFFFF;
+  cursor: pointer;
+}
+input[type=range]::-ms-track {
+  width: 100%;
+  height: 6px;
+  cursor: pointer;
+  animate: 0.2s;
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+input[type=range]::-ms-fill-lower {
+  background: #00D1B2;
+  border: 0px solid #00D1B2;
+  border-radius: 12px;
+  box-shadow: 0px 0px 0px #00D1B2;
+}
+input[type=range]::-ms-fill-upper {
+  background: #00D1B2;
+  border: 0px solid #00D1B2;
+  border-radius: 12px;
+  box-shadow: 0px 0px 0px #00D1B2;
+}
+input[type=range]::-ms-thumb {
+  margin-top: 1px;
+  box-shadow: 0px 0px 0px #00D1B2;
+  border: 2px solid #00D1B2;
+  height: 18px;
+  width: 18px;
+  border-radius: 15px;
+  background: #FFFFFF;
+  cursor: pointer;
+}
+input[type=range]:focus::-ms-fill-lower {
+  background: #00D1B2;
+}
+input[type=range]:focus::-ms-fill-upper {
+  background: #00D1B2;
+}
+
+
+/* Flights Page */
+#results-subtitle {
+  margin: auto;
+  padding-top:25px;
+}
+
+/* Hotel Page */
+#to-event {
+  margin:auto;
+  width:80%;
+  padding:10px;
+}
+
+.selected {
+  border: 2px solid #00d1b2;
 }
 
 /* Events Page */
@@ -41,26 +157,26 @@ header {
   margin: auto;
 }
 
-#weather-event {
-  width: 90%;
-  margin: auto;
-  background-color: white;
-  border-radius: 25px;
-  padding: 20px;
-}
-
 #event-result {
   border: 2px lightgray solid;
   border-radius: 25px;
 }
 
-#weather {
-  border: 2px lightgray solid;
-  border-radius: 25px;
+#title{
+  margin: auto;
+  width: 80%;
+  padding:10px;
 }
 
+#finalRes {
+  margin:auto;
+  width: 80%;
+  padding:10px
+}
+
+/* stuff */
 .container:hover {
-  border: 5px solid black;
+  border: 2px solid #00d1b2;
   border-radius: 10px;
   cursor: pointer;
 }
@@ -69,20 +185,5 @@ header {
   border-style: solid;
 }
 
-#tonextpage {
-  font-size: 1em;
-  padding-left: 10px;
-  padding-right: 10px;
-  position: relative;
-  display: inline-block;
-  left: 400px;
-  height: 2rem;
-  bottom: 2rem;
-}
-
-.selected {
-  border: 2px solid black;
-
-}
 
 

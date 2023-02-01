@@ -15,10 +15,10 @@
   <body>
     <header>
       <h1 class="title has-text-centered"><span style="color: #00d1b2">FlightDex</span>!</h1>
-      <p class="subtitle" id="results-subtitle">Results for Hotels in Your Final Destination</p>
     </header>
 
     <div id="result">
+      <p class="subtitle" id="results-subtitle">Results for Hotels in Your Final Destination</p>
       <div class="box">
         <div id="results" class="columns is-multiline">
           <div class="column is-2 has-text-weight-bold">
@@ -44,7 +44,9 @@
       <h2 id="loading">Loading...</h2>
     </div>
 
-    <button style="padding: 20px" class="button is-rounded is-primary is-outline" id="continue">Skip Hotel Selection</button>
+    <div id="to-event">
+      <button style="padding: 20px" class="button is-rounded is-primary is-outlined" id="continue">Skip Hotel Selection</button>
+    </div>
 
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="./assets/js/hotel-results.js"></script>

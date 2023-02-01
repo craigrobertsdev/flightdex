@@ -12,20 +12,28 @@
     
     <title>FlightDex Flight Results</title>
   </head>
+  
   <body>
     <header>
-      <h1 class="title has-text-centered">FlightDex</h1>
-      <p class="subtitle" id="results-subtitle">The best flight results for:</p>
-      <button id="tonextpage">To Hotel page</button>
+      <h1 class="title has-text-centered"><span style="color: #00d1b2">FlightDex</span>!</h1>
     </header>
-
+    
     <!--Results for flights will display here-->
     <div id="result">
-      <div id="slider">
-        <p>Add a price range with the slider below!</p>
-        <input id="sliderWithValue" class="slider has-output-tooltip is-fullwidth" min="0" max="1000"  step="any" type="range">
-        <p id="p">Price : <output id="value"></output></p>
-      </div>
+      <!--Results slider & subheadings-->
+      <div class="columns">
+        <div class="column">
+          <p class="subtitle" id="results-subtitle">The best flight results for:</p>
+        </div>
+
+        <div>
+          <div id="slider">
+            <p>Add a max price with the slider!</p>
+            <input id="sliderWithValue" class="slider has-output-tooltip is-fullwidth" min="0" max="1000"  step="any" type="range"> 
+            <p id="p">$<output id="value"></output></p>
+          </div>
+        </div>
+      </div>  
       
       <!--Need to add a sort by feature-->
 
@@ -88,9 +96,12 @@
       </div>
     </div>
     
-    
-    <!--Link JS file-->
+    <!--Button to go to select hotel page-->
+    <div id="to-hotel">
+      <button class="button is-rounded is-primary is-outlined" id="tonextpage">Choose Hotels</button>
+    </div>  
 
+    <!--Link JS file-->
     <script src="./assets/js/showingsearchedData.js"></script>
   </body>
 </html>

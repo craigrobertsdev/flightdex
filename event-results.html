@@ -16,11 +16,9 @@
 
   <body>
     <header>
-      <h1 class="title has-text-centered">Welcome to FlightDex!</h1>
-      <button id="continue" class="button is-rounded is-primary is-outlined">Skip Events Selection</button>
+      <h1 class="title has-text-centered"><span style="color: #00d1b2">FlightDex</span>!</h1>
     </header>
 
-    <h1 id="title"></h1>
     <!--Seach input-->
     <section id="search-section" class="box">
       <div class="columns">
@@ -53,16 +51,12 @@
 
       <!--Dates-->
       <div class="columns">
-        <div class="column is-10 is-offset-1">
-          <p>
-            <label for="start-date">Enter start search date</label>
-            <input type="date" id="start-date" />
-            <label for="end-date">Enter end search date</label>
-            <input type="date" id="end-date" />
-          </p>
+        <div class="column is-10 is-offset-1" id="date-picker">
+          <input type="date" />
         </div>
       </div>
 
+      <!--Search Button-->
       <div class="columns is-centered">
         <div class="column is-full has-text-centered">
           <button id="event-search-button" class="button is-rounded is-primary is-outlined">Search</button>
@@ -70,14 +64,13 @@
       </div>
     </section>
 
-    <div class="columns box" id="weather-event">
-      <div class="column" id="event-result">
-        <section id="results">
-          <a href="" target=""></a>
+    <h1 id="title"></h1>
+    <div id="result" class="box">
+      <a href="" target=""></a>
+    </div>
 
-          <p class="has-text-weight-bold">Event Results</p>
-        </section>
-      </div>
+    <div id="finalRes">
+     <button id="continue" class="button is-rounded is-primary is-outlined">Skip Events Selection</button>
     </div>
     <!-- <script type="module">
       import Geohash from './assets/js/geohash.js';

@@ -149,7 +149,11 @@ async function cityCoordinates(city) {
       responsePriceT +
       ' ' +
       responsePriceC;
-
+    
+    // listD.className='columns';
+    // listHeading.setAttribute('class', 'column is-2');
+    // listP.setAttribute('class', 'column is-2');
+    
     //remove loading text
     document.getElementById('loading').innerHTML = '';
 
@@ -157,7 +161,7 @@ async function cityCoordinates(city) {
     listD.appendChild(listHeading);
     listD.appendChild(listP);
     results.appendChild(listD);
-  }
+  } 
   //function to wait for hotel selection
   //eventFunction(responseLength);
 }
