@@ -13,12 +13,14 @@ function handleCalendarChange(event) {
     calendars = bulmaCalendar.attach('[type="date"]', {
       isRange: false,
     });
+    initialiseCalendar();
   } else {
     $('#date-picker').children()[0].remove();
     $('#date-picker').append('<input type="date"/>');
     calendars = bulmaCalendar.attach('[type="date"]', {
       isRange: true,
     });
+    initialiseCalendar();
   }
 }
 

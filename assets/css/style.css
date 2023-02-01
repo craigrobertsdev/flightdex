@@ -69,24 +69,20 @@ header {
   border-style: solid;
 }
 
-
 #tonextpage {
   font-size: 1em;
-  padding-left:10px;
-  padding-right:10px;
-  position:relative;
-  display:inline-block;
-  left:400px;
+  padding-left: 10px;
+  padding-right: 10px;
+  position: relative;
+  display: inline-block;
+  left: 400px;
   height: 2rem;
-<<<<<<< HEAD
   bottom: 2rem;
-=======
-  bottom:3.5rem;
-  right: 50px;
+}
 
 .selected {
   border: 2px solid black;
 
->>>>>>> a60101e09839bd5eedac9a32217663534a733338
 }
+
 
