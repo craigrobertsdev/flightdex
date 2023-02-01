@@ -149,7 +149,11 @@ async function cityCoordinates(city) {
       responsePriceT +
       ' ' +
       responsePriceC;
-
+    
+    // listD.className='columns';
+    // listHeading.setAttribute('class', 'column is-2');
+    // listP.setAttribute('class', 'column is-2');
+    
     //remove loading text
     document.getElementById('loading').innerHTML = '';
 
