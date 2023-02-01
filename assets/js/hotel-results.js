@@ -161,7 +161,7 @@ async function cityCoordinates(city) {
     listD.appendChild(listHeading);
     listD.appendChild(listP);
     results.appendChild(listD);
-  }
+  } 
   //function to wait for hotel selection
   //eventFunction(responseLength);
 }
