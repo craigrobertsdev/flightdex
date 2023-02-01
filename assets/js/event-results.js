@@ -1,15 +1,8 @@
 import Geohash from './geohash.js';
 
-// Example API call   'https://app.ticketmaster.com/discovery/v2/events.json?countryCode=US&apikey=Rokm7oUpGBonFqFDXXiA7tcSkqAaiQh4';
+// Example API call 'https://app.ticketmaster.com/discovery/v2/events.json?countryCode=US&apikey=Rokm7oUpGBonFqFDXXiA7tcSkqAaiQh4';
 // apikey=Rokm7oUpGBonFqFDXXiA7tcSkqAaiQh4
 // expected query string format: ?lat={laitude}&long={longitude}&arrival={arrivalDate}&departure={departureDate}
-
-/* 
-  When the user selects their flights, then they are presented with a list of events for their destination location
-  The list is divided by date for each day they are there
-  Each day is subdivied into event category and is able to be sorted by cost and distance from location (using Maps API)
-  User has option to enter their location. If they do so, the events will display the distance from them using Leaflet
-*/
 
 const titleText = $('#title');
 const resultsSection = $('#result');
@@ -67,7 +60,6 @@ async function getLatLong(location) {
 }
 
 function getEvents(url) {
-  console.log(url);
   fetch(url)
     .then((response) => {
       // if fetch request successful, return response in JSON format
@@ -205,11 +197,10 @@ function toTitleCase(inputString) {
 
 function handleSelectedEvent(event) {
   if ($(selectedEvent).attr('id') === $(event.target).parent('div').attr('id')) {
-    console.log($(event.target).parent('div'));
     $(selectedEvent).removeClass('selected');
     selectedEvent === null;
     changeConfirmButtonText(false);
-    localStorage.removeItem('selectedEvent');
+    localStorage.removeItem('eventData');
   } else {
     $(selectedEvent).removeClass('selected');
     selectedEvent = $(event.target).parent('div');
@@ -249,11 +240,11 @@ function completeBooking() {
 }
 
 // returns date in YYYY-MM-DD format
-function convertToApiDate(date, addMonth) {
+function convertToApiDate(date, addToMonth) {
   const dateArr = date.split('/');
   const year = dateArr[2];
   let month;
-  if (addMonth) {
+  if (addToMonth) {
     month = `0${+dateArr[0] + 1}`;
   } else {
     month = dateArr[0];
@@ -288,15 +279,6 @@ function initialiseCalendar() {
       }
     });
   }
-}
-
-// To access to bulmaCalendar instance of an element
-var element = document.querySelector('#my-element');
-if (element) {
-  // bulmaCalendar instance is available as element.bulmaCalendar
-  element.bulmaCalendar.on('select', function (datepicker) {
-    console.log(datepicker.data.value());
-  });
 }
 
 initialiseCalendar();
