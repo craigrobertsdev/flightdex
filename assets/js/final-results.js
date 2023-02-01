@@ -19,7 +19,7 @@ const eventData = JSON.parse(localStorage.getItem('eventData'));
 
 let eventName, eventPrice, eventDate, eventTime;
 
-// add values if an event has been selected
+// adding data to events variables
 if (eventData) {
   eventName = eventData.eventName;
   eventPrice = eventData.eventPrice;
@@ -27,17 +27,20 @@ if (eventData) {
   eventTime = eventData.eventTime;
 }
 
+//change city name from full caps to proper noun formatting
 arrivalCityChange = arrivalCity.toLowerCase();
 arrivalCity = arrivalCityChange[0].toUpperCase() + arrivalCityChange.substring(1);
 
 var departureCityChange = departureCity.toLowerCase();
 departureCity = departureCityChange[0].toUpperCase() + departureCityChange.substring(1);
 
+//input data for flights
 function inputData() {
   CityInput = document.createElement('p');
   CityInput.innerHTML = departureCity + '  to  ' + arrivalCity + ' leaving on the ';
   document.getElementById('p1').appendChild(CityInput);
 
+  //separating data inside local storage to input correctly 
   var dateChangeA = arrivalDate.split('-');
   var changedArrivalDate = dateChangeA[2] + '-' + dateChangeA[1] + '-' + dateChangeA[0];
 
@@ -50,6 +53,7 @@ function inputData() {
   var leaveArriveTime = leaveArrive.split(' - ');
   leaveArriveTime = leaveArriveTime[1];
 
+  //appending data for leaving flight
   leaveDateInput = document.createElement('p');
   leaveDateInput.innerHTML = changedArrivalDate + ' departing at ' + leaveDepartTime + '<br>and arriving at ' + leaveArriveTime + '.';
   document.getElementById('p2').appendChild(leaveDateInput);
@@ -62,10 +66,12 @@ function inputData() {
   leaveCost.innerHTML = 'Cost of flight to ' + arrivalCity + ': $' + leaveTotalCost;
   document.getElementById('p6').appendChild(leaveCost);
 
+  //if statement for return flights 
   if (wayValue == 'ONEWAY') {
     const returnElement = document.getElementById('p3');
     returnElement.remove();
   } else {
+    //getting data from local storage
     returnDepartTime = returnDepart.split(' - ');
     returnDepartTime = returnDepartTime[1];
 
@@ -75,12 +81,12 @@ function inputData() {
     returnDateInput = document.createElement('p');
     returnDateInput.innerHTML = changedDepartureDate + ' departing at ' + returnDepartTime + '<br>and arriving at ' + returnArriveTime + '.';
     document.getElementById('p3').appendChild(returnDateInput);
-
+    //fix final numebr result
     returnCostValue = returnCost.split(' ');
     returnTotalCost = Number(returnCostValue[0]);
     flightTotalCost = returnTotalCost + leaveTotalCost;
     flightTotalCost = flightTotalCost.toFixed(2);
-
+    //append onto page
     returnCost = document.createElement('p');
     returnCost.innerHTML = 'Cost of flight to ' + departureCity + ': $' + returnTotalCost;
     document.getElementById('p6').appendChild(returnCost);
@@ -92,6 +98,7 @@ function inputData() {
 
   hotelFunction();
 
+  //creates button for final booking and home button
   bookButton = document.createElement('button');
   bookButton.innerHTML = 'Book Now!';
   document.getElementById('resultChild').appendChild(bookButton);
@@ -103,6 +110,7 @@ function inputData() {
   homeButton.addEventListener('click', button);
 }
 
+//function for checking if a hotel was selected and if so inputting that data onto the page
 function hotelFunction() {
   if (hotelName == null) {
     const hotelElement = document.getElementById('p4');
@@ -123,6 +131,7 @@ function hotelFunction() {
   finalTotal();
 }
 
+//check for event data and if so log to page data received
 function eventFunction() {
   const eventElement = document.getElementById('p5');
   if (eventData === null) {
@@ -140,6 +149,7 @@ function eventFunction() {
   }
 }
 
+//work out total cost of all flights, hotel and event data and log to website
 function finalTotal() {
   if (hotelTotalCost == null) {
     hotelTotal = 0;
@@ -155,6 +165,7 @@ function finalTotal() {
   document.getElementById('p7').appendChild(finalTotalCost);
 }
 
+//function for home button to return to main pag and clear local storage
 function button() {
   localStorage.clear();
   location.assign('./index.html');
