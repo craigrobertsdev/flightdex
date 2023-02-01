@@ -1,5 +1,5 @@
 # Project 1
-## flightDex
+## FlightDex
 
 ### User Story
 ```
