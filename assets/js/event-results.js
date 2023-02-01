@@ -19,15 +19,21 @@ const keywordInput = $('#keyword-input');
 const searchButton = $('#event-search-button');
 const startDateInput = $('#start-date');
 const endDateInput = $('#end-date');
-const bookingBtn = $('#complete-booking');
+const continueBtn = $('#continue');
 const location = localStorage.getItem('arrivalcityname');
 const [latitude, longitude] = await getLatLong(location);
 let selectedEvent;
 // stores different options for building a query string
 const options = {};
 
+// if flight is one way, add 1 month to the departure date then use that to query api
 options.startDateTime = localStorage.getItem('departureDate');
-options.endDateTime = localStorage.getItem('arrivalDate');
+if (localStorage.getItem('WAYvalue') === 'ONEWAY') {
+  const departureDate = localStorage.getItem('date').split('-')[0];
+  options.endDateTime = convertToApiDate(departureDate);
+} else {
+  options.endDateTime = localStorage.getItem('arrivalDate');
+}
 options.geoPoint = Geohash.encode(latitude, longitude, 8);
 
 // Default radius to search for from accommodation location. Can be modified by user in radiusInput
@@ -39,7 +45,7 @@ let resultData;
 
 $(titleText).text(`Showing events within ${options.radius}km of ${toTitleCase(location)}`);
 $(resultsSection).on('click', '.event-card', handleSelectedEvent);
-$('#continue').on('click', completeBooking);
+$(continueBtn).on('click', completeBooking);
 
 // takes an options object, iterates over it and produces a query string that the TicketMaster API accepts.
 function buildUrl(options) {
@@ -110,9 +116,7 @@ function displayResults(resultData) {
 
     const eventHeaderEl = $('<p></p>').text(eventName).addClass('header column is-2 is-offset-1');
     const dateTimeEl = $('<p></p>').addClass('date-time column is-2');
-    const startDateEl = $('<span></span>')
-      .text(startDate)
-      .addClass('start-event');
+    const startDateEl = $('<span></span>').text(startDate).addClass('start-event');
     const startTimeEl = $('<span></span>')
       .text(' at ' + startTime)
       .addClass('end-event');
@@ -242,8 +246,17 @@ function changeConfirmButtonText(flightSelected) {
   }
 }
 
-function completeBooking(event) {
+function completeBooking() {
   window.location.href = './final-results.html';
+}
+
+// returns date in YYYY-MM-DD format
+function convertToApiDate(date) {
+  const dateArr = date.split('/');
+  const year = dateArr[2];
+  const month = `0${+dateArr[1] + 1}`;
+  const day = dateArr[1];
+  return `${year}-${month}-${day}`;
 }
 
 getEvents(url);

@@ -16,10 +16,16 @@ var hotelTotalCost = '';
 var flightTotalCost = '';
 let eventTotalCost = '';
 const eventData = JSON.parse(localStorage.getItem('eventData'));
-const eventName = eventData.eventName;
-const eventPrice = eventData.eventPrice;
-const eventDate = eventData.eventDate;
-const eventTime = eventData.eventTime;
+
+let eventName, eventPrice, eventDate, eventTime;
+
+// add values if an event has been selected
+if (eventData) {
+  eventName = eventData.eventName;
+  eventPrice = eventData.eventPrice;
+  eventDate = eventData.eventDate;
+  eventTime = eventData.eventTime;
+}
 
 arrivalCityChange = arrivalCity.toLowerCase();
 arrivalCity = arrivalCityChange[0].toUpperCase() + arrivalCityChange.substring(1);
