@@ -31,7 +31,7 @@ if (self.name != 'reload') {
 localStorage.clear();
 
 // fetching currency API
-async function getCurrencyData() {
+function getCurrencyData() {
   const api = 'https://api.exchangerate-api.com/v4/latest/eur';
 
   return fetch(`${api}`);
@@ -43,7 +43,7 @@ function saveCurrencyData(data) {
 // generate new access-token whenever app starts
 // if user stays in search page(index page) for more than 20 mins, it will generated new access-token
 
-async function getApiToken() {
+function getApiToken() {
   const TOKENUrl = 'https://api.amadeus.com/v1/security/oauth2/token';
   return fetch(TOKENUrl, {
     method: 'POST',
@@ -60,9 +60,8 @@ function saveToken(data) {
 }
 
 // getting departure IATA code from finding cityname API
-async function DEgetIATAcodeDATA() {
+function DEgetIATAcodeDATA() {
   let FetchHEADER = token_type + ' ' + accessToken;
-  console.log('entering DEgetIATAcodeDATA()');
   let DErequestUrl =
     'https://api.amadeus.com/v1/reference-data/locations?subType=CITY&keyword=' +
     userdeparture.value.toUpperCase() +
@@ -78,13 +77,11 @@ function saveDepartureIataData(data) {
   localStorage.setItem('departurecitycode', DEiatacode);
   departurecityname = userdeparture.value.toUpperCase();
   localStorage.setItem('departurecityname', departurecityname);
-  console.log('returning from DEgetIATAcodeDATA()');
 }
 
 // getting arrival IATA code from finding cityname API
-async function ARgetIATAcodeDATA() {
+function ARgetIATAcodeDATA() {
   let FetchHEADER = token_type + ' ' + accessToken;
-  console.log('entering ARgetIATAcodeDATA()');
   let DErequestUrl =
     'https://api.amadeus.com/v1/reference-data/locations?subType=CITY&keyword=' +
     arrival.value.toUpperCase() +
@@ -100,7 +97,6 @@ function saveArrivalIataData(data) {
   localStorage.setItem('arrivalcitycode', ARiatacode);
   arrivalcityname = arrival.value.toUpperCase();
   localStorage.setItem('arrivalcityname', arrivalcityname);
-  console.log('returning from ARgetIATAcodeDATA()');
 }
 
 search.addEventListener('click', makingQueryDATA);
@@ -112,8 +108,6 @@ async function makingQueryDATA() {
 
   var select1 = document.getElementById('select1');
   selectedClass = select1.value;
-
-  //console.log(selectedClass);
 
   var select2 = document.getElementById('select2');
   var wayvalue = select2.value;
@@ -133,10 +127,6 @@ async function makingQueryDATA() {
   // get data from APIs for flight queries
   const [currencyData, departureData, arrivalData] = await callApis();
 
-  console.log(currencyData);
-  console.log(departureData);
-  console.log(arrivalData);
-
   // save the necessary information
   saveCurrencyData(currencyData);
   saveArrivalIataData(arrivalData);
@@ -145,16 +135,12 @@ async function makingQueryDATA() {
   // call once all data has been obtained and saved to local storage
   if (wayvalue === 'ONEWAY') {
     const departureDate = localStorage.getItem('departureDate');
-    console.log(departureDate);
     let arrivaldateONEWAY = dayjs(departureDate).add(1, 'day');
-    console.log(arrivaldateONEWAY);
     let add1date = arrivaldateONEWAY.format('YYYY-MM-DD');
-    console.log(add1date);
     localStorage.setItem('arrivalDate', add1date);
 
     const oneWayResponse = await onewayDATA();
     const oneWayData = await oneWayResponse.json();
-    //localStorage.setItem("arrivalDate",)
     saveOneWayData(oneWayData);
   } else {
     const oneWayResponse = onewayDATA().then((response) => {
@@ -174,10 +160,9 @@ async function makingQueryDATA() {
 }
 ('https://api.amadeus.com/v2/shopping/flight-offers?originLocationCode=SYD&destinationLocationCode=ADL&departureDate=2023-01-17&adults=1&travelClass=ECONOMY&nonStop=false&max=250');
 //going flight
-async function onewayDATA() {
+function onewayDATA() {
   let FetchHEADER = token_type + ' ' + accessToken;
   let deIatacode = localStorage.getItem('departurecitycode');
-  console.log(deIatacode);
   let requestUrlgoing =
     'https://api.amadeus.com/v2/shopping/flight-offers?originLocationCode=' +
     deIatacode +
@@ -199,14 +184,12 @@ async function onewayDATA() {
 function saveOneWayData(data) {
   finalGoingdata = data;
   localStorage.setItem('finalGoingdata', JSON.stringify(finalGoingdata));
-  console.log('returning from onewayDATA()');
 }
 
 // return flight
-async function returnDATA() {
+function returnDATA() {
   let FetchHEADER = token_type + ' ' + accessToken;
   let deIatacode = localStorage.getItem('departurecitycode');
-  console.log(deIatacode);
   let requestUrlreturn =
     'https://api.amadeus.com/v2/shopping/flight-offers?originLocationCode=' +
     ARiatacode +
@@ -228,7 +211,6 @@ async function returnDATA() {
 function saveReturnData(data) {
   finalreturndata = data;
   localStorage.setItem('finalreturndata', JSON.stringify(finalreturndata));
-  console.log('returning from returnDATA()');
 }
 
 //going next page function
@@ -267,7 +249,6 @@ async function callApis() {
   });
   // awaitng the processing of the JSON response
   const responses = await Promise.all([currencyResponse, departureResponse, arrivalResponse]);
-  console.log(responses);
 
   return [responses[0], responses[1], responses[2]];
 }
