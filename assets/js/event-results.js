@@ -16,6 +16,7 @@ const [latitude, longitude] = await getLatLong(location);
 let selectedEvent, startDateFilterValue, endDateFilterValue;
 // stores different options for building a query string
 const options = {};
+let eventData = {};
 
 // if flight is one way, add 1 month to the departure date then use that to query api
 options.startDateTime = localStorage.getItem('departureDate');
@@ -196,6 +197,7 @@ function toTitleCase(inputString) {
 }
 
 function handleSelectedEvent(event) {
+  event.stopPropagation();
   if ($(selectedEvent).attr('id') === $(event.target).parent('div').attr('id')) {
     $(selectedEvent).removeClass('selected');
     selectedEvent === null;
@@ -206,7 +208,6 @@ function handleSelectedEvent(event) {
     selectedEvent = $(event.target).parent('div');
     $(selectedEvent).addClass('selected');
     changeConfirmButtonText(true);
-    setSelectedEvent();
   }
 }
 
@@ -219,7 +220,7 @@ function setSelectedEvent() {
   }
   const eventDate = $(selectedEvent).find('.start-event').text();
   const eventTime = $(selectedEvent).find('.end-event').text();
-  const eventData = { eventName: eventName, eventPrice: eventPrice, eventDate: eventDate, eventTime: eventTime };
+  eventData = { eventName: eventName, eventPrice: eventPrice, eventDate: eventDate, eventTime: eventTime };
   if (eventPrice) {
     eventData.eventPrice = eventPrice;
   }
@@ -236,6 +237,7 @@ function changeConfirmButtonText(flightSelected) {
 }
 
 function completeBooking() {
+  setSelectedEvent();
   window.location.href = './final-results.html';
 }
 
