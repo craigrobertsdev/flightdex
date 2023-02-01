@@ -29,7 +29,11 @@ let lengthofRightdata = 0;
 let lengthtogoforDELETE = 0;
 let lengthreturnforDELETE = 0;
 let Slidervalue = 0;
+let count = 0;
+let REcount = 0;
 
+
+// condition if the flight user want is oneway or return 
 if (value === 'ONEWAY') {
   returnh3.setAttribute('style', 'display:none;');
   returndiv.setAttribute('style', 'display:none;');
@@ -39,6 +43,8 @@ if (value === 'ONEWAY') {
 }
 
 //showing one way tickets
+// conditions : 1. picking right data from data of flight API 2.showing no data message if there is no rightdata
+//3. showing flight tickets if there are right datas.
 function onewayFlightData() {
   console.log(departurecityname);
   console.log(arrivalcityname);
@@ -159,6 +165,9 @@ function onewayFlightData() {
 }
 
 //showing return tickets
+//showing one way tickets
+// conditions : 1. picking right data from data of flight API(onway and return) 2.showing no data message if there is no rightdata
+//3. showing flight tickets if there are right datas.
 function returnFlightData() {
   console.log(departurecityname);
   console.log(arrivalcityname);
@@ -230,10 +239,7 @@ function returnFlightData() {
   if (lengthofRightdata === 1) {
     NewLengthofRightdata = lengthofRightdata + 1;
   } else if (lengthofRightdata === 0) {
-    // data 없음 페이지
-
     NOdata();
-
     return;
   } else {
     NewLengthofRightdata = lengthofRightdata * 2;
@@ -280,31 +286,31 @@ function returnFlightData() {
         departurecityname + ' (' + finalGoingdata.data[ONEWAYcorrectdatas[j]].itineraries[0].segments[0].departure.iataCode + ')';
       arrivalcity.textContent = arrivalcityname + ' (' + finalGoingdata.data[ONEWAYcorrectdatas[j]].itineraries[0].segments[0].arrival.iataCode + ')';
 
-        
-            ticket.addEventListener("click", savingGOINGdata);
-            ticket.classList = "columns TOticket container";
-            DEcitydiv.setAttribute("class", "column is-2");
-            DEtimediv.setAttribute("class", "column is-2");
-            ARcitydiv.setAttribute("class", "column is-2");
-            ARtimediv.setAttribute("class", "column is-2");
-            Classdiv.setAttribute("class", "column is-1");
-            Costdiv.setAttribute("class", "column is-1");
-            Passenagerdiv.setAttribute("class", "column is-1");
+
+      ticket.addEventListener("click", savingGOINGdata);
+      ticket.classList = "columns TOticket container";
+      DEcitydiv.setAttribute("class", "column is-2");
+      DEtimediv.setAttribute("class", "column is-2");
+      ARcitydiv.setAttribute("class", "column is-2");
+      ARtimediv.setAttribute("class", "column is-2");
+      Classdiv.setAttribute("class", "column is-1");
+      Costdiv.setAttribute("class", "column is-1");
+      Passenagerdiv.setAttribute("class", "column is-1");
 
 
-            departurecity.textContent = departurecityname + " (" + finalGoingdata.data[ONEWAYcorrectdatas[j]].itineraries[0].segments[0].departure.iataCode + ")";
-            arrivalcity.textContent = arrivalcityname + " (" + finalGoingdata.data[ONEWAYcorrectdatas[j]].itineraries[0].segments[0].arrival.iataCode + ")";
+      departurecity.textContent = departurecityname + " (" + finalGoingdata.data[ONEWAYcorrectdatas[j]].itineraries[0].segments[0].departure.iataCode + ")";
+      arrivalcity.textContent = arrivalcityname + " (" + finalGoingdata.data[ONEWAYcorrectdatas[j]].itineraries[0].segments[0].arrival.iataCode + ")";
 
-            let DEdatefromDATA = finalGoingdata.data[ONEWAYcorrectdatas[j]].itineraries[0].segments[0].departure.at;
-            const DEdateformatchange = DEdatefromDATA.split('T');
-            const actualDEdate = DEdateformatchange[0];
-            const actualDEtime = DEdateformatchange[1];
-            let actualfromDATA = finalGoingdata.data[ONEWAYcorrectdatas[j]].itineraries[0].segments[0].arrival.at;
-            const ARdateformatchange = actualfromDATA.split('T');
-            const actualARdate = DEdateformatchange[0];
-            const actualARtime = ARdateformatchange[1];
-            DEtime.textContent = actualDEdate + ' - ' + actualDEtime;
-            ARtime.textContent = actualARdate + ' - ' + actualARtime;
+      let DEdatefromDATA = finalGoingdata.data[ONEWAYcorrectdatas[j]].itineraries[0].segments[0].departure.at;
+      const DEdateformatchange = DEdatefromDATA.split('T');
+      const actualDEdate = DEdateformatchange[0];
+      const actualDEtime = DEdateformatchange[1];
+      let actualfromDATA = finalGoingdata.data[ONEWAYcorrectdatas[j]].itineraries[0].segments[0].arrival.at;
+      const ARdateformatchange = actualfromDATA.split('T');
+      const actualARdate = DEdateformatchange[0];
+      const actualARtime = ARdateformatchange[1];
+      DEtime.textContent = actualDEdate + ' - ' + actualDEtime;
+      ARtime.textContent = actualARdate + ' - ' + actualARtime;
 
       flightclass.textContent = finalGoingdata.data[ONEWAYcorrectdatas[j]].travelerPricings[0].fareDetailsBySegment[0].cabin;
       let AUDprice = currencydata.rates.AUD * finalGoingdata.data[ONEWAYcorrectdatas[j]].price.total;
@@ -418,6 +424,7 @@ function returnFlightData() {
   }
 }
 
+//showing no data message
 function NOdata() {
   const ticket = document.createElement('div');
   const p1 = document.createElement('p');
@@ -435,9 +442,18 @@ function NOdata() {
   destination.insertAdjacentElement('afterend', ticket);
 }
 
+
+
+//<----------- tuning slider part -------------------->
+//Basical struture is same with above only some variable(count,recount) added
+// needed to overlap codes because the conditions different for sorting out right data
+//(above code: sort by right IATAcode / under code: sort by right IATA code and user's  max price they selected)
 slider.addEventListener('click', Decide);
 
+
 function Decide() {
+  count = 0;
+  REcount = 0;
   if (value === 'ONEWAY') {
     Deleteonewayresult();
   } else {
@@ -445,6 +461,7 @@ function Decide() {
   }
 }
 
+//Function to clear existing data to show the tickets sorted by new condition(oneway)
 function Deleteonewayresult() {
   const Newslidervalue = document.getElementById('sliderWithValue');
   const nodataresult = document.querySelector('.nodata');
@@ -466,6 +483,7 @@ function Deleteonewayresult() {
   SortingbyPRICEonewaytickets();
 }
 
+//Function to clear existing data to show the tickets sorted by new condition(return)
 function Deletereturnresult() {
   const Newslidervalue = document.getElementById('sliderWithValue');
   const nodataresult = document.querySelector('.nodata');
@@ -491,6 +509,7 @@ function Deletereturnresult() {
   SortingbyPRICEreturntickets();
 }
 
+//Function showing newly sorted tickets(oneway)
 function SortingbyPRICEonewaytickets() {
   for (i = 0; i < 20; i++) {
     if (currencydata.rates.AUD * finalGoingdata.data[i].price.total > 1000) {
@@ -614,6 +633,8 @@ function SortingbyPRICEonewaytickets() {
     }
   }
 }
+
+//Function showing newly sorted tickets(retuurn)
 function SortingbyPRICEreturntickets() {
   for (i = 0; i < 20; i++) {
     if (currencydata.rates.AUD * finalGoingdata.data[i].price.total > 1000 || currencydata.rates.AUD * finalreturndata.data[i].price.total > 1000) {
@@ -859,6 +880,7 @@ function SortingbyPRICEreturntickets() {
   }
 }
 
+//<------ showing current value of slider to show the max price to user --->
 const slidercurrentvalue = document.querySelector('#value');
 const input = document.querySelector('#sliderWithValue');
 
@@ -872,86 +894,86 @@ input.addEventListener('input', (event) => {
 
 
 
-  let count = 0;
-  
-  function savingGOINGdata(event) {
-      event.stopPropagation();
-      console.log(event.currentTarget);
-  
-      console.log(count);
-      if (count === 0) {
-          let datadiv = event.currentTarget;
-  
-          departtime = datadiv.children[2].children[0].innerText;
-          arrivaltime = datadiv.children[3].children[0].innerText;
-          cost = datadiv.children[5].children[0].innerText;
-  
-          event.currentTarget.setAttribute("id", "picked");
-          event.currentTarget.setAttribute("style", "background-color:#00d1b2; border-radius: 10px;");
-          localStorage.setItem("ONEWAYdeparttime", departtime);
-          localStorage.setItem("ONEWAYarrivaltime", arrivaltime);
-          localStorage.setItem("ONEWAYcost", cost);
-          count++;
-  
-      }
-      if (count > 0) {
-  
-          let datadiv = event.currentTarget;
-  
-          departtime = datadiv.children[2].children[0].innerText;
-          arrivaltime = datadiv.children[3].children[0].innerText;
-          cost = datadiv.children[5].children[0].innerText;
-  
-          const picked = document.querySelector('#picked');
-          picked.setAttribute("style", " ");
-          picked.setAttribute("id", " ");
-          event.currentTarget.setAttribute("id", "picked");
-          event.currentTarget.setAttribute("style", "background-color:#00d1b2; border-radius: 10px;");
-          localStorage.setItem("ONEWAYdeparttime", departtime);
-          localStorage.setItem("ONEWAYarrivaltime", arrivaltime);
-          localStorage.setItem("ONEWAYcost", cost);
-          count++;
-      }
-  
+
+//function showing selected tickets by user and save the data in localstorage(going)
+function savingGOINGdata(event) {
+  event.stopPropagation();
+  console.log(event.currentTarget);
+
+  console.log(count);
+  if (count === 0) {
+    let datadiv = event.currentTarget;
+
+    departtime = datadiv.children[2].children[0].innerText;
+    arrivaltime = datadiv.children[3].children[0].innerText;
+    cost = datadiv.children[5].children[0].innerText;
+
+    event.currentTarget.setAttribute("id", "picked");
+    event.currentTarget.setAttribute("style", "background-color:#00d1b2; border-radius: 10px;");
+    localStorage.setItem("ONEWAYdeparttime", departtime);
+    localStorage.setItem("ONEWAYarrivaltime", arrivaltime);
+    localStorage.setItem("ONEWAYcost", cost);
+    count++;
+
+  }
+  if (count > 0) {
+
+    let datadiv = event.currentTarget;
+
+    departtime = datadiv.children[2].children[0].innerText;
+    arrivaltime = datadiv.children[3].children[0].innerText;
+    cost = datadiv.children[5].children[0].innerText;
+
+    const picked = document.querySelector('#picked');
+    picked.setAttribute("style", " ");
+    picked.setAttribute("id", " ");
+    event.currentTarget.setAttribute("id", "picked");
+    event.currentTarget.setAttribute("style", "background-color:#00d1b2; border-radius: 10px;");
+    localStorage.setItem("ONEWAYdeparttime", departtime);
+    localStorage.setItem("ONEWAYarrivaltime", arrivaltime);
+    localStorage.setItem("ONEWAYcost", cost);
+    count++;
   }
 
-let REcount = 0;
+}
+
+//function showing selected tickets by user and save the data in localstorage(return)
 function savingRETURNdata(event) {
-    event.stopPropagation();
-    console.log(event.currentTarget);
-    if (REcount === 0) {
-        let datadiv = event.currentTarget;
+  event.stopPropagation();
+  console.log(event.currentTarget);
+  if (REcount === 0) {
+    let datadiv = event.currentTarget;
 
-        departtime = datadiv.children[2].children[0].innerText;
-        arrivaltime = datadiv.children[3].children[0].innerText;
-        cost = datadiv.children[5].children[0].innerText;
+    departtime = datadiv.children[2].children[0].innerText;
+    arrivaltime = datadiv.children[3].children[0].innerText;
+    cost = datadiv.children[5].children[0].innerText;
 
-        event.currentTarget.setAttribute("id", "REpicked");
-        event.currentTarget.setAttribute("style", "background-color:#00d1b2; border-radius: 10px;");
-        localStorage.setItem("RETURNdeparttime", departtime);
-        localStorage.setItem("RETURNarrivaltime", arrivaltime);
-        localStorage.setItem("RETURNcost", cost);
-        REcount++;
+    event.currentTarget.setAttribute("id", "REpicked");
+    event.currentTarget.setAttribute("style", "background-color:#00d1b2; border-radius: 10px;");
+    localStorage.setItem("RETURNdeparttime", departtime);
+    localStorage.setItem("RETURNarrivaltime", arrivaltime);
+    localStorage.setItem("RETURNcost", cost);
+    REcount++;
 
-    }
-    if (REcount > 0) {
+  }
+  if (REcount > 0) {
 
-        let datadiv = event.currentTarget;
+    let datadiv = event.currentTarget;
 
-        departtime = datadiv.children[2].children[0].innerText;
-        arrivaltime = datadiv.children[3].children[0].innerText;
-        cost = datadiv.children[5].children[0].innerText;
+    departtime = datadiv.children[2].children[0].innerText;
+    arrivaltime = datadiv.children[3].children[0].innerText;
+    cost = datadiv.children[5].children[0].innerText;
 
-        const REpicked = document.querySelector('#REpicked');
-        REpicked.setAttribute("style", " ");
-        REpicked.setAttribute("id", " ");
-        event.currentTarget.setAttribute("id", "REpicked");
-        event.currentTarget.setAttribute("style", "background-color:#00d1b2;  border-radius: 10px;");
-        localStorage.setItem("RETURNdeparttime", departtime);
-        localStorage.setItem("RETURNarrivaltime", arrivaltime);
-        localStorage.setItem("RETURNcost", cost);
-        REcount++;
-    }
+    const REpicked = document.querySelector('#REpicked');
+    REpicked.setAttribute("style", " ");
+    REpicked.setAttribute("id", " ");
+    event.currentTarget.setAttribute("id", "REpicked");
+    event.currentTarget.setAttribute("style", "background-color:#00d1b2;  border-radius: 10px;");
+    localStorage.setItem("RETURNdeparttime", departtime);
+    localStorage.setItem("RETURNarrivaltime", arrivaltime);
+    localStorage.setItem("RETURNcost", cost);
+    REcount++;
+  }
 
 
 }
@@ -959,13 +981,18 @@ function savingRETURNdata(event) {
 
 tonextpage.addEventListener('click', tonextpagebutton);
 
-
+// funtion going next hotel page if user selected flight tickets
+// if user didn't select, the page won't go to next page and shows choose flights message in button
 function tonextpagebutton() {
-    if (count>0 && REcount>0){
-        window.location.href = './hotel-results.html'
-    } else {
-        tonextpage.innerHTML = 'choose flights';
-    }
+  if (count > 0 && REcount > 0) {
+    window.location.href = './hotel-results.html'
+
+  } else if (count > 0) {
+    window.location.href = './hotel-results.html'
+  }
+  else {
+    tonextpage.innerHTML = 'choose flights';
+  }
 }
 
 
