@@ -41,7 +41,7 @@ We feel our major Success was working as a team of four individuals who are very
 
 >## [**Link to live GitPage**](https://craigrobertsdev.github.io/flightdex/)
 
-![FlightDex]()
+![FlightDex](./assets/Photo/FlightDex%20Main%20Page.png)
 
 ---
 UADL 2023
