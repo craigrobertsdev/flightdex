@@ -20,22 +20,16 @@ async function tokenFunction() {
     method: 'POST',
     body: 'grant_type=client_credentials&client_id=BrtG02hEbIco7uiyR3DRJAvGMMtMHVbe&client_secret=piDWDBPQ5cjMQOdm',
   });
-  console.log(response.status);
   response = await response.json();
-  console.log(response);
   var token = response.access_token;
-  console.log(token);
   tokenType = 'Bearer ' + token;
-  console.log(tokenType);
 
   //run function to get city data
   cityCoordinates(cityCode);
 }
 //function for Location selection and hotel listing
 async function cityCoordinates(city) {
-  console.log(city);
   var hotelData = 'https://test.api.amadeus.com/v1/reference-data/locations/hotels/by-city?cityCode=' + city;
-  console.log(hotelData);
 
   //fetch hotelData URL and wait until the call is complete
   let response = await fetch(hotelData, {
@@ -43,16 +37,12 @@ async function cityCoordinates(city) {
   });
 
   //If response fails
-  console.log(response.ok);
   if (!response.ok) {
-    console.log(response);
     return;
   }
 
   //convert response to json and if results are <150 limit
   response = await response.json();
-  console.log(response);
-  console.log(response.data.length);
   if (response.data.length < 150) {
     var iLength = response.data.length;
   } else {
@@ -63,7 +53,6 @@ async function cityCoordinates(city) {
   var hotelIdTag = new Array();
   for (i = 0; i < iLength; i++) {
     hotelIdTag.push(response.data[i].hotelId);
-    //console.log(hotelIdTag)
   }
 
   //create another Array of all URLs to be called by the API
@@ -77,7 +66,6 @@ async function cityCoordinates(city) {
     arrive +
     '&checkOutDate=' +
     depart;
-  //console.log(hotelInfo)
 
   //One fetch request to call all URLs
   var responseTwo = await fetch(hotelInfo, {
@@ -85,41 +73,30 @@ async function cityCoordinates(city) {
   });
 
   //If response fails
-  console.log(responseTwo.ok);
   if (!responseTwo.ok) {
-    console.log(responseTwo);
     return;
   }
 
   //await until response has compiled
   responseTwo = await responseTwo.json();
-  console.log(responseTwo);
 
   responseLength = responseTwo.data.length;
-  console.log(responseLength);
 
   //for each URL that contains data collect the data for Name, Check in, Check out, Guests, Cost per night, Cost total and Currency used
   for (i = 0; i < responseLength; i++) {
     responseName = responseTwo.data[i].hotel.name;
-    //console.log(responseName)
 
     responseCheckin = responseTwo.data[i].offers[0].checkInDate;
-    //console.log(responseCheckin)
 
     responseCheckout = responseTwo.data[i].offers[0].checkOutDate;
-    //console.log(responseCheckout)
 
     responseGuests = responseTwo.data[i].offers[0].guests.adults;
-    //console.log(responseGuests)
 
     responsePriceB = responseTwo.data[i].offers[0].price.variations.average.base;
-    //console.log(responsePriceB)
 
     responsePriceT = responseTwo.data[i].offers[0].price.total;
-    //console.log(responsePriceT)
 
     responsePriceC = responseTwo.data[i].offers[0].price.currency;
-    //console.log(responsePriceC)
 
     //create a new div for each result and add p and h2 values
     listD = document.createElement('div');
@@ -149,11 +126,7 @@ async function cityCoordinates(city) {
       responsePriceT +
       ' ' +
       responsePriceC;
-    
-    // listD.className='columns';
-    // listHeading.setAttribute('class', 'column is-2');
-    // listP.setAttribute('class', 'column is-2');
-    
+
     //remove loading text
     document.getElementById('loading').innerHTML = '';
 
@@ -161,37 +134,20 @@ async function cityCoordinates(city) {
     listD.appendChild(listHeading);
     listD.appendChild(listP);
     results.appendChild(listD);
-  } 
-  //function to wait for hotel selection
-  //eventFunction(responseLength);
+  }
 }
-
-//event listener for all hotel options
-// function eventFunction(length) {
-//   selectedInput = document.getElementsByClassName('hotel');
-//   for (var i = 0; i < length; i++) {
-//     console.log(i);
-//     selectedInput[i].addEventListener('click', logResult);
-//   }
-// }
 
 //function to get data from selected hotel and input into local storage
 function logResult(event) {
   var requestedName = event.target;
   var divParent = requestedName.parentElement;
-  //   divParent.setAttribute('id', 'selected');
-  //console.log(divParent)
   var h2 = divParent.querySelector('h2');
   h2 = h2.innerHTML;
-  console.log(h2);
 
   hotelSelected = divParent.querySelector('p');
-  //console.log(hotelSelected)
   hotelSelected = hotelSelected.innerText;
   hotelArray = hotelSelected.split('$');
-  console.log(hotelArray);
   var hotelTotalCost = hotelArray[2];
-  console.log(hotelTotalCost);
 
   localStorage.setItem('hotelName', h2);
   localStorage.setItem('hotelCost', hotelTotalCost);
@@ -207,9 +163,6 @@ function changeButton() {
 
 //button function to remove any old event data and continue to next page
 function button() {
-  //ADD!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  //localStorage.removeItem()
-  //localStorage.removeItem()
   location.assign('./event-results.html');
 }
 

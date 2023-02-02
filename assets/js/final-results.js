@@ -39,14 +39,10 @@ function inputData() {
   document.getElementById('p1').appendChild(CityInput);
 
   var dateChangeA = arrivalDate.split('-');
-  //console.log(dateChangeA)
   var changedArrivalDate = dateChangeA[2] + '-' + dateChangeA[1] + '-' + dateChangeA[0];
-  //console.log(changedArrivalDate)
 
   var dateChangeD = departureDate.split('-');
-  //console.log(dateChangeD)
   var changedDepartureDate = dateChangeD[2] + '-' + dateChangeD[1] + '-' + dateChangeD[0];
-  //console.log(changedDepartureDate)
 
   var leaveDepartTime = leaveDepart.split(' - ');
   leaveDepartTime = leaveDepartTime[1];
@@ -82,10 +78,8 @@ function inputData() {
 
     returnCostValue = returnCost.split(' ');
     returnTotalCost = Number(returnCostValue[0]);
-    //console.log(returnTotalCost)
     flightTotalCost = returnTotalCost + leaveTotalCost;
     flightTotalCost = flightTotalCost.toFixed(2);
-    //console.log(flightTotalCost)
 
     returnCost = document.createElement('p');
     returnCost.innerHTML = 'Cost of flight to ' + departureCity + ': $' + returnTotalCost;
@@ -110,7 +104,6 @@ function inputData() {
 }
 
 function hotelFunction() {
-  //console.log(hotelName)
   if (hotelName == null) {
     const hotelElement = document.getElementById('p4');
     hotelElement.remove();
@@ -154,19 +147,9 @@ function finalTotal() {
     hotelTotal = hotelTotalCost;
   }
 
-  //if(eventTotalCost == null){
-  //    eventTotal = 0
-  //}else{
-  //    eventTotal = eventTotalCost
-  //}
-
-  //console.log(flightTotalCost)
-  //console.log(hotelTotalCost)
-  //console.log(eventTotalCost)
-
   var totalCost = +hotelTotalCost + +flightTotalCost + +eventTotalCost;
-  //console.log(totalCost)
 
+  totalCost = totalCost.toFixed(2);
   finalTotalCost = document.createElement('p');
   finalTotalCost.innerHTML = '$' + totalCost;
   document.getElementById('p7').appendChild(finalTotalCost);

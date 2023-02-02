@@ -6,18 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- Bulma  -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
     <!--Linked CSS-->
-    <link rel="stylesheet" href="./assets/css/style.css">
-    
+    <link rel="stylesheet" href="./assets/css/style.css" />
+
     <title>FlightDex Flight Results</title>
   </head>
-  
+
   <body>
     <header>
       <h1 class="title has-text-centered"><span style="color: #00d1b2">FlightDex</span>!</h1>
     </header>
-    
+
     <!--Results for flights will display here-->
     <div id="result">
       <!--Results slider & subheadings-->
@@ -29,12 +29,12 @@
         <div>
           <div id="slider">
             <p>Add a max price with the slider!</p>
-            <input id="sliderWithValue" class="slider has-output-tooltip is-fullwidth" min="0" max="1000"  step="any" type="range"> 
+            <input id="sliderWithValue" class="slider has-output-tooltip is-fullwidth" min="0" max="1000" step="any" type="range" />
             <p id="p">$<output id="value"></output></p>
           </div>
         </div>
-      </div>  
-      
+      </div>
+
       <!--Need to add a sort by feature-->
 
       <!--Flights to the destination-->
@@ -65,7 +65,7 @@
           </div>
         </div>
       </div>
-      
+
       <!--Flights from the destination-->
       <div id="returndiv" class="box">
         <h3 class="subtitle">Flights from</h3>
@@ -95,11 +95,11 @@
         </div>
       </div>
     </div>
-    
+
     <!--Button to go to select hotel page-->
     <div id="to-hotel">
       <button class="button is-rounded is-primary is-outlined" id="tonextpage">Choose Hotels</button>
-    </div>  
+    </div>
 
     <!--Link JS file-->
     <script src="./assets/js/showingsearchedData.js"></script>
