@@ -12,6 +12,7 @@ var wayValue = localStorage.getItem('WAYvalue');
 var passenger = localStorage.getItem('PASSENAGERvalue');
 var hotelName = localStorage.getItem('hotelName');
 var hotelCost = localStorage.getItem('hotelCost');
+hotelCost = hotelCost.split('$')[1];
 var hotelTotalCost = '';
 var flightTotalCost = '';
 // let eventTotalCost = '';
