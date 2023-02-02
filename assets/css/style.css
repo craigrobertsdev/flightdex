@@ -132,6 +132,10 @@ input[type=range]:focus::-ms-fill-upper {
   padding-top:25px;
 }
 
+#results {
+  width:100%;
+}
+
 /* Hotel Page */
 #to-event {
   margin:auto;
@@ -141,6 +145,7 @@ input[type=range]:focus::-ms-fill-upper {
 
 .selected {
   border: 2px solid #00d1b2;
+  border-radius: 10px;
 }
 
 /* Events Page */
@@ -173,7 +178,12 @@ input[type=range]:focus::-ms-fill-upper {
   padding:10px
 }
 
-/* stuff */
+/* Final Page */
+#finalBtn{
+  margin:auto;
+  width:80%;
+  padding:10px;
+}
 .container:hover {
   border: 2px solid #00d1b2;
   border-radius: 10px;
