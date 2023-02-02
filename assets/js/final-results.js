@@ -92,13 +92,9 @@ function inputData() {
 
   hotelFunction();
 
-  bookButton = document.createElement('button');
-  bookButton.innerHTML = 'Book Now!';
-  document.getElementById('resultChild').appendChild(bookButton);
+  var bookButton = document.getElementById('#bookButton');
 
-  homeButton = document.createElement('button');
-  homeButton.innerHTML = 'Home';
-  document.getElementById('resultChild').appendChild(homeButton);
+  homeButton = document.getElementById('homeButton');
 
   homeButton.addEventListener('click', button);
 }
@@ -116,7 +112,7 @@ function hotelFunction() {
     hotelTotalCost = Number(hotelCostValue[0]);
 
     hotelCost = document.createElement('p');
-    hotelCost.innerHTML = 'Total cost of Hotel = $' + hotelTotalCost;
+    hotelCost.innerHTML = 'Total cost of Hotel: $' + hotelTotalCost;
     document.getElementById('p6').appendChild(hotelCost);
   }
   eventFunction();
@@ -163,5 +159,4 @@ function button() {
 inputData();
 
 finalTotalCost.style.color = '#00d1b2';
-finalTotalCost.style.textAlign = 'center';
 finalTotalCost.style.fontSize = '40px';

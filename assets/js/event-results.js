@@ -5,7 +5,7 @@ import Geohash from './geohash.js';
 // expected query string format: ?lat={laitude}&long={longitude}&arrival={arrivalDate}&departure={departureDate}
 
 const titleText = $('#title');
-const resultsSection = $('#result');
+const resultsSection = $('#results');
 const filterOptions = $('#filter-options');
 const radiusInput = $('#radius-input');
 const keywordInput = $('#keyword-input');
@@ -114,13 +114,13 @@ function displayResults(resultData) {
     $(dateTimeEl).append(startDateEl, startTimeEl);
 
     const priceRangeEl = $('<p></p>')
-      .text('Tickets from: ' + priceRangeMin)
+      .text(priceRangeMin)
       .addClass('price-range column is-2');
 
     const genreEl = $('<p></p>')
-      .text('Event Type: ' + genre)
+      .text(genre)
       .addClass('genre column is-2');
-    const eventUrlEl = $('<a></a>').attr('href', eventUrl).attr('target', '_blank').text('Link to event booking').addClass('link column is-2');
+    const eventUrlEl = $('<a></a>').attr('href', eventUrl).attr('target', '_blank').text('Book Now').addClass('link column is-2');
 
     $(eventCard).append(eventHeaderEl, dateTimeEl, priceRangeEl, genreEl, eventUrlEl);
     $(resultsSection).append(eventCard);
