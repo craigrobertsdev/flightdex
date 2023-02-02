@@ -113,13 +113,9 @@ function displayResults(resultData) {
       .addClass('end-event');
     $(dateTimeEl).append(startDateEl, startTimeEl);
 
-    const priceRangeEl = $('<p></p>')
-      .text(priceRangeMin)
-      .addClass('price-range column is-2');
+    const priceRangeEl = $('<p></p>').text(priceRangeMin).addClass('price-range column is-2');
 
-    const genreEl = $('<p></p>')
-      .text(genre)
-      .addClass('genre column is-2');
+    const genreEl = $('<p></p>').text(genre).addClass('genre column is-2');
     const eventUrlEl = $('<a></a>').attr('href', eventUrl).attr('target', '_blank').text('Book Now').addClass('link column is-2');
 
     $(eventCard).append(eventHeaderEl, dateTimeEl, priceRangeEl, genreEl, eventUrlEl);
@@ -200,7 +196,7 @@ function handleSelectedEvent(event) {
   event.stopPropagation();
   if ($(selectedEvent).attr('id') === $(event.target).parent('div').attr('id')) {
     $(selectedEvent).removeClass('selected');
-    selectedEvent === null;
+    selectedEvent = null;
     changeConfirmButtonText(false);
     localStorage.removeItem('eventData');
   } else {
@@ -215,10 +211,11 @@ function setSelectedEvent() {
   if (selectedEvent) {
     const eventName = $(selectedEvent).find('.header').text();
     let eventPrice = $(selectedEvent).find('.price-range').text();
-    eventPrice = eventPrice.split(' ')[2];
-    // if (eventPrice.startsWith('See')) {
-    //   eventPrice = null;
-    // }
+    eventPrice = eventPrice.split('$')[1];
+
+    if (eventPrice.startsWith('See')) {
+      eventPrice = null;
+    }
     const eventDate = $(selectedEvent).find('.start-event').text();
     const eventTime = $(selectedEvent).find('.end-event').text();
     eventData = { eventName: eventName, eventPrice: eventPrice, eventDate: eventDate, eventTime: eventTime };
