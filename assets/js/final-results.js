@@ -14,18 +14,18 @@ var hotelName = localStorage.getItem('hotelName');
 var hotelCost = localStorage.getItem('hotelCost');
 var hotelTotalCost = '';
 var flightTotalCost = '';
-let eventTotalCost = '';
+// let eventTotalCost = '';
 const eventData = JSON.parse(localStorage.getItem('eventData'));
 
 let eventName, eventPrice, eventDate, eventTime;
 
 // add values if an event has been selected
-if (eventData) {
-  eventName = eventData.eventName;
-  eventPrice = eventData.eventPrice;
-  eventDate = eventData.eventDate;
-  eventTime = eventData.eventTime;
-}
+// if (eventData) {
+//   eventName = eventData.eventName;
+//   eventPrice = eventData.eventPrice;
+//   eventDate = eventData.eventDate;
+//   eventTime = eventData.eventTime;
+// }
 
 arrivalCityChange = arrivalCity.toLowerCase();
 arrivalCity = arrivalCityChange[0].toUpperCase() + arrivalCityChange.substring(1);
@@ -115,7 +115,7 @@ function hotelFunction() {
     hotelCost.innerHTML = 'Total cost of Hotel: $' + hotelTotalCost;
     document.getElementById('p6').appendChild(hotelCost);
   }
-  eventFunction();
+  //eventFunction();
   finalTotal();
 }
 
@@ -143,7 +143,8 @@ function finalTotal() {
     hotelTotal = hotelTotalCost;
   }
 
-  var totalCost = +hotelTotalCost + +flightTotalCost + +eventTotalCost;
+  var totalCost = +hotelTotalCost + +flightTotalCost;
+  //  + +eventTotalCost;
 
   totalCost = totalCost.toFixed(2);
   finalTotalCost = document.createElement('p');
