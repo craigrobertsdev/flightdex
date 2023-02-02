@@ -216,9 +216,9 @@ function setSelectedEvent() {
     const eventName = $(selectedEvent).find('.header').text();
     let eventPrice = $(selectedEvent).find('.price-range').text();
     eventPrice = eventPrice.split(' ')[2];
-    if (eventPrice.startsWith('See')) {
-      eventPrice = null;
-    }
+    // if (eventPrice.startsWith('See')) {
+    //   eventPrice = null;
+    // }
     const eventDate = $(selectedEvent).find('.start-event').text();
     const eventTime = $(selectedEvent).find('.end-event').text();
     eventData = { eventName: eventName, eventPrice: eventPrice, eventDate: eventDate, eventTime: eventTime };
