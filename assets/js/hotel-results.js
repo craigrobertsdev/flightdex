@@ -1,6 +1,14 @@
 var results = document.getElementById('results');
 var tokenType = '';
 
+var nameD = '';
+var inD = '';
+var outD = '';
+var guestsD = '';
+var priceBD = '';
+var priceCD = '';
+var priceTD = '';
+
 //Getting parameters to search from localstorage
 var cityCode = localStorage.getItem('arrivalcitycode');
 var arrive = localStorage.getItem('departureDate');
@@ -98,41 +106,44 @@ async function cityCoordinates(city) {
 
     responsePriceC = responseTwo.data[i].offers[0].price.currency;
 
-    //create a new div for each result and add p and h2 values
+    // create a new div for each result and add p and h2 values
     listD = document.createElement('div');
     listD.className = 'hotel';
     listD.id = `hotel${i + 1}`;
-    var listP = document.createElement('p');
-    var listHeading = document.createElement('h2');
+    var nameD = document.createElement('div');
+    var inD = document.createElement('div');
+    var outD = document.createElement('div');
+    var guestsD = document.createElement('div');
+    var priceBD = document.createElement('div');
+    var priceCD = document.createElement('div');
+    var priceTD = document.createElement('div');
 
-    listHeading.innerHTML = responseName;
+    listD.classList = 'columns hotel'
+    nameD.setAttribute('class', 'column is-2');
+    inD.setAttribute('class', 'column is-2');
+    outD.setAttribute('class', 'column is-2');
+    guestsD.setAttribute('class', 'column is-2');
+    priceBD.setAttribute('class', 'column is-2');
+    priceTD.setAttribute('class', 'column is-2');
 
-    //Output for HTML
-    listP.innerHTML =
-      'Check In - ' +
-      responseCheckin +
-      '   Check Out - ' +
-      responseCheckout +
-      '<br>' +
-      'guests - ' +
-      responseGuests +
-      '<br>' +
-      'Cost per Night - $' +
-      responsePriceB +
-      ' ' +
-      responsePriceC +
-      '<br>' +
-      'Total Cost - $' +
-      responsePriceT +
-      ' ' +
-      responsePriceC;
+    nameD.innerHTML = responseName +  ' ';
+    inD.innerHTML = responseCheckin + ' ';
+    outD.innerHTML = responseCheckout + ' ';
+    guestsD.innerHTML = responseGuests + ' ';
+    priceBD.innerHTML = '$' + responsePriceB + ' ';
+    priceTD.innerHTML =  '$' + responsePriceT;
 
     //remove loading text
     document.getElementById('loading').innerHTML = '';
 
-    //Append h2 and p into div and append to HTML
-    listD.appendChild(listHeading);
-    listD.appendChild(listP);
+    //Append div and append to HTML
+    listD.appendChild(nameD);
+    listD.appendChild(inD);
+    listD.appendChild(outD);
+    listD.appendChild(guestsD);
+    listD.appendChild(priceBD);
+    listD.appendChild(priceTD);
+
     results.appendChild(listD);
   }
 }
@@ -141,17 +152,17 @@ async function cityCoordinates(city) {
 function logResult(event) {
   var requestedName = event.target;
   var divParent = requestedName.parentElement;
-  var h2 = divParent.querySelector('h2');
-  h2 = h2.innerHTML;
+  var h2 = divParent.children[0].innerHTML;
 
-  hotelSelected = divParent.querySelector('p');
+  hotelSelected = document.querySelector('p');
   hotelSelected = hotelSelected.innerText;
   hotelArray = hotelSelected.split('$');
-  var hotelTotalCost = hotelArray[2];
+  var hotelTotalCost = divParent.children[5].innerHTML;
+
 
   localStorage.setItem('hotelName', h2);
   localStorage.setItem('hotelCost', hotelTotalCost);
-
+  
   changeButton();
 }
 

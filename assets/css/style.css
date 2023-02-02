@@ -21,73 +21,73 @@ header {
 }
 
 #tagline {
-padding: 5px;
+  padding: 5px;
 }
 
 #to-hotel {
-  margin:auto;
+  margin: auto;
   width: 80%;
   padding: 10px;
 }
 
-#slider{
-  padding:10px;
-  padding-bottom:0px;
+#slider {
+  padding: 10px;
+  padding-bottom: 0px;
 }
 
-input[type=range] {
+input[type='range'] {
   height: 26px;
   -webkit-appearance: none;
   margin: 10px 0;
   width: 100%;
 }
-input[type=range]:focus {
+input[type='range']:focus {
   outline: none;
 }
-input[type=range]::-webkit-slider-runnable-track {
+input[type='range']::-webkit-slider-runnable-track {
   width: 100%;
   height: 6px;
   cursor: pointer;
   animate: 0.2s;
-  box-shadow: 0px 0px 0px #00D1B2;
-  background: #00D1B2;
+  box-shadow: 0px 0px 0px #00d1b2;
+  background: #00d1b2;
   border-radius: 6px;
-  border: 0px solid #00D1B2;
+  border: 0px solid #00d1b2;
 }
-input[type=range]::-webkit-slider-thumb {
-  box-shadow: 0px 0px 0px #00D1B2;
-  border: 2px solid #00D1B2;
+input[type='range']::-webkit-slider-thumb {
+  box-shadow: 0px 0px 0px #00d1b2;
+  border: 2px solid #00d1b2;
   height: 18px;
   width: 18px;
   border-radius: 15px;
-  background: #FFFFFF;
+  background: #ffffff;
   cursor: pointer;
   -webkit-appearance: none;
   margin-top: -7px;
 }
-input[type=range]:focus::-webkit-slider-runnable-track {
-  background: #00D1B2;
+input[type='range']:focus::-webkit-slider-runnable-track {
+  background: #00d1b2;
 }
-input[type=range]::-moz-range-track {
+input[type='range']::-moz-range-track {
   width: 100%;
   height: 6px;
   cursor: pointer;
   animate: 0.2s;
-  box-shadow: 0px 0px 0px #00D1B2;
-  background: #00D1B2;
+  box-shadow: 0px 0px 0px #00d1b2;
+  background: #00d1b2;
   border-radius: 6px;
-  border: 0px solid #00D1B2;
+  border: 0px solid #00d1b2;
 }
-input[type=range]::-moz-range-thumb {
-  box-shadow: 0px 0px 0px #00D1B2;
-  border: 2px solid #00D1B2;
+input[type='range']::-moz-range-thumb {
+  box-shadow: 0px 0px 0px #00d1b2;
+  border: 2px solid #00d1b2;
   height: 18px;
   width: 18px;
   border-radius: 15px;
-  background: #FFFFFF;
+  background: #ffffff;
   cursor: pointer;
 }
-input[type=range]::-ms-track {
+input[type='range']::-ms-track {
   width: 100%;
   height: 6px;
   cursor: pointer;
@@ -96,51 +96,55 @@ input[type=range]::-ms-track {
   border-color: transparent;
   color: transparent;
 }
-input[type=range]::-ms-fill-lower {
-  background: #00D1B2;
-  border: 0px solid #00D1B2;
+input[type='range']::-ms-fill-lower {
+  background: #00d1b2;
+  border: 0px solid #00d1b2;
   border-radius: 12px;
-  box-shadow: 0px 0px 0px #00D1B2;
+  box-shadow: 0px 0px 0px #00d1b2;
 }
-input[type=range]::-ms-fill-upper {
-  background: #00D1B2;
-  border: 0px solid #00D1B2;
+input[type='range']::-ms-fill-upper {
+  background: #00d1b2;
+  border: 0px solid #00d1b2;
   border-radius: 12px;
-  box-shadow: 0px 0px 0px #00D1B2;
+  box-shadow: 0px 0px 0px #00d1b2;
 }
-input[type=range]::-ms-thumb {
+input[type='range']::-ms-thumb {
   margin-top: 1px;
-  box-shadow: 0px 0px 0px #00D1B2;
-  border: 2px solid #00D1B2;
+  box-shadow: 0px 0px 0px #00d1b2;
+  border: 2px solid #00d1b2;
   height: 18px;
   width: 18px;
   border-radius: 15px;
-  background: #FFFFFF;
+  background: #ffffff;
   cursor: pointer;
 }
-input[type=range]:focus::-ms-fill-lower {
-  background: #00D1B2;
+input[type='range']:focus::-ms-fill-lower {
+  background: #00d1b2;
 }
-input[type=range]:focus::-ms-fill-upper {
-  background: #00D1B2;
+input[type='range']:focus::-ms-fill-upper {
+  background: #00d1b2;
 }
-
 
 /* Flights Page */
 #results-subtitle {
   margin: auto;
-  padding-top:25px;
+  padding-top: 25px;
+}
+
+#results {
+  width: 100%;
 }
 
 /* Hotel Page */
 #to-event {
-  margin:auto;
-  width:80%;
-  padding:10px;
+  margin: auto;
+  width: 80%;
+  padding: 10px;
 }
 
 .selected {
   border: 2px solid #00d1b2;
+  border-radius: 10px;
 }
 
 /* Events Page */
@@ -162,19 +166,23 @@ input[type=range]:focus::-ms-fill-upper {
   border-radius: 25px;
 }
 
-#title{
+#title {
   margin: auto;
-  width: 80%;
-  padding:10px;
+  padding: 10px;
 }
 
 #finalRes {
-  margin:auto;
+  margin: auto;
   width: 80%;
-  padding:10px
+  padding: 10px;
 }
 
-/* stuff */
+/* Final Page */
+#finalBtn {
+  margin: auto;
+  width: 80%;
+  padding: 10px;
+}
 .container:hover {
   border: 2px solid #00d1b2;
   border-radius: 10px;
@@ -185,5 +193,6 @@ input[type=range]:focus::-ms-fill-upper {
   border-style: solid;
 }
 
-
-
+.hotel {
+  width: 100%;
+}

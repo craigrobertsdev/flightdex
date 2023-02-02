@@ -5,7 +5,7 @@ import Geohash from './geohash.js';
 // expected query string format: ?lat={laitude}&long={longitude}&arrival={arrivalDate}&departure={departureDate}
 
 const titleText = $('#title');
-const resultsSection = $('#result');
+const resultsSection = $('#results');
 const filterOptions = $('#filter-options');
 const radiusInput = $('#radius-input');
 const keywordInput = $('#keyword-input');
@@ -16,6 +16,7 @@ const [latitude, longitude] = await getLatLong(location);
 let selectedEvent, startDateFilterValue, endDateFilterValue;
 // stores different options for building a query string
 const options = {};
+let eventData = {};
 
 // if flight is one way, add 1 month to the departure date then use that to query api
 options.startDateTime = localStorage.getItem('departureDate');
@@ -112,14 +113,10 @@ function displayResults(resultData) {
       .addClass('end-event');
     $(dateTimeEl).append(startDateEl, startTimeEl);
 
-    const priceRangeEl = $('<p></p>')
-      .text('Tickets from: ' + priceRangeMin)
-      .addClass('price-range column is-2');
+    const priceRangeEl = $('<p></p>').text(priceRangeMin).addClass('price-range column is-2');
 
-    const genreEl = $('<p></p>')
-      .text('Event Type: ' + genre)
-      .addClass('genre column is-2');
-    const eventUrlEl = $('<a></a>').attr('href', eventUrl).attr('target', '_blank').text('Link to event booking').addClass('link column is-2');
+    const genreEl = $('<p></p>').text(genre).addClass('genre column is-2');
+    const eventUrlEl = $('<a></a>').attr('href', eventUrl).attr('target', '_blank').text('Book Now').addClass('link column is-2');
 
     $(eventCard).append(eventHeaderEl, dateTimeEl, priceRangeEl, genreEl, eventUrlEl);
     $(resultsSection).append(eventCard);
@@ -196,9 +193,10 @@ function toTitleCase(inputString) {
 }
 
 function handleSelectedEvent(event) {
+  event.stopPropagation();
   if ($(selectedEvent).attr('id') === $(event.target).parent('div').attr('id')) {
     $(selectedEvent).removeClass('selected');
-    selectedEvent === null;
+    selectedEvent = null;
     changeConfirmButtonText(false);
     localStorage.removeItem('eventData');
   } else {
@@ -206,24 +204,26 @@ function handleSelectedEvent(event) {
     selectedEvent = $(event.target).parent('div');
     $(selectedEvent).addClass('selected');
     changeConfirmButtonText(true);
-    setSelectedEvent();
   }
 }
 
 function setSelectedEvent() {
-  const eventName = $(selectedEvent).find('.header').text();
-  let eventPrice = $(selectedEvent).find('.price-range').text();
-  eventPrice = eventPrice.split(' ')[2];
-  if (eventPrice.startsWith('See')) {
-    eventPrice = null;
+  if (selectedEvent) {
+    const eventName = $(selectedEvent).find('.header').text();
+    let eventPrice = $(selectedEvent).find('.price-range').text();
+    eventPrice = eventPrice.split('$')[1];
+
+    if (eventPrice.startsWith('See')) {
+      eventPrice = null;
+    }
+    const eventDate = $(selectedEvent).find('.start-event').text();
+    const eventTime = $(selectedEvent).find('.end-event').text();
+    eventData = { eventName: eventName, eventPrice: eventPrice, eventDate: eventDate, eventTime: eventTime };
+    if (eventPrice) {
+      eventData.eventPrice = eventPrice;
+    }
+    localStorage.setItem('eventData', JSON.stringify(eventData));
   }
-  const eventDate = $(selectedEvent).find('.start-event').text();
-  const eventTime = $(selectedEvent).find('.end-event').text();
-  const eventData = { eventName: eventName, eventPrice: eventPrice, eventDate: eventDate, eventTime: eventTime };
-  if (eventPrice) {
-    eventData.eventPrice = eventPrice;
-  }
-  localStorage.setItem('eventData', JSON.stringify(eventData));
 }
 
 function changeConfirmButtonText(flightSelected) {
@@ -236,6 +236,7 @@ function changeConfirmButtonText(flightSelected) {
 }
 
 function completeBooking() {
+  setSelectedEvent();
   window.location.href = './final-results.html';
 }
 

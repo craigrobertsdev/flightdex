@@ -12,9 +12,9 @@ var wayValue = localStorage.getItem('WAYvalue');
 var passenger = localStorage.getItem('PASSENAGERvalue');
 var hotelName = localStorage.getItem('hotelName');
 var hotelCost = localStorage.getItem('hotelCost');
+hotelCost = hotelCost.split('$')[1];
 var hotelTotalCost = '';
 var flightTotalCost = '';
-let eventTotalCost = '';
 const eventData = JSON.parse(localStorage.getItem('eventData'));
 
 let eventName, eventPrice, eventDate, eventTime;
@@ -98,14 +98,11 @@ function inputData() {
 
   hotelFunction();
 
-  //creates button for final booking and home button
-  bookButton = document.createElement('button');
-  bookButton.innerHTML = 'Book Now!';
-  document.getElementById('resultChild').appendChild(bookButton);
+  // capture reference to the book button for later functionality
+  var bookButton = document.getElementById('#bookButton');
 
-  homeButton = document.createElement('button');
-  homeButton.innerHTML = 'Home';
-  document.getElementById('resultChild').appendChild(homeButton);
+
+  homeButton = document.getElementById('homeButton');
 
   homeButton.addEventListener('click', button);
 }
@@ -124,7 +121,7 @@ function hotelFunction() {
     hotelTotalCost = Number(hotelCostValue[0]);
 
     hotelCost = document.createElement('p');
-    hotelCost.innerHTML = 'Total cost of Hotel = $' + hotelTotalCost;
+    hotelCost.innerHTML = 'Total cost of Hotel: $' + hotelTotalCost;
     document.getElementById('p6').appendChild(hotelCost);
   }
   eventFunction();
@@ -141,9 +138,8 @@ function eventFunction() {
     eventText.textContent = eventName;
     eventElement.append(eventText);
     if (eventPrice) {
-      eventTotalCost = eventPrice.split('$')[1];
       eventCost = document.createElement('p');
-      eventCost.innerHTML = 'Total cost of events = $' + eventTotalCost;
+      eventCost.innerHTML = 'Total cost of events: $' + eventPrice;
       document.getElementById('p6').appendChild(eventCost);
     }
   }
@@ -156,8 +152,11 @@ function finalTotal() {
   } else {
     hotelTotal = hotelTotalCost;
   }
-
-  var totalCost = +hotelTotalCost + +flightTotalCost + +eventTotalCost;
+  var totalCost = +hotelTotalCost + +flightTotalCost;
+  if (eventPrice) {
+    console.log(eventPrice);
+    totalCost += +eventPrice;
+  }
 
   totalCost = totalCost.toFixed(2);
   finalTotalCost = document.createElement('p');
@@ -174,5 +173,4 @@ function button() {
 inputData();
 
 finalTotalCost.style.color = '#00d1b2';
-finalTotalCost.style.textAlign = 'center';
 finalTotalCost.style.fontSize = '40px';
