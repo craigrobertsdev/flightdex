@@ -22,7 +22,7 @@ No dependencies are required to use this page.
 
 ## Usage
 
-This project is deployed at [https://craigrobertsdev.github.io/flightdex/](https://craigrobertsdev.github.io/flightdex/).
+This project is deployed using GitHub Pages [here](https://craigrobertsdev.github.io/flightdex/).
 
 Simply choose your departure and arrival locations (currently only works for domestic flights), and look through select your flights, accommodation and events for when you arrive.
 
